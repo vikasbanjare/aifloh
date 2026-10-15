@@ -98,13 +98,16 @@ function makePerson() {
     const lid = part(new Mesh(new TorusGeometry(0.018, 0.0045, 6, 14, Math.PI), dark), s * 0.042, 0.13, 0.112);
     lid.rotation.z = Math.PI;
     closed.add(lid);
-    open.add(part(new Mesh(new SphereGeometry(0.014, 12, 10), dark), s * 0.042, 0.128, 0.114));
+    open.add(part(new Mesh(new SphereGeometry(0.017, 12, 10), dark), s * 0.042, 0.128, 0.112));
     const brow = rbox(0.045, 0.01, 0.01, 0.005, hair, s * 0.044, 0.165, 0.112);
     brow.rotation.z = s * -0.12;
     head.add(brow);
   }
   open.visible = false;
   head.add(closed, open);
+  const mouth = part(new Mesh(new TorusGeometry(0.022, 0.004, 6, 14, Math.PI * 0.8), clay('#7a4a3a', 0.6)), 0, 0.068, 0.116);
+  mouth.rotation.z = Math.PI * 1.1;
+  head.add(mouth);
 
   const arm = (s: number) => {
     const sh = new Group();
@@ -115,10 +118,14 @@ function makePerson() {
     const el = new Group();
     el.position.y = -0.29;
     sh.add(el);
+    el.add(part(new Mesh(new SphereGeometry(0.054, 16, 12), skin), 0, 0, 0));
     el.add(part(new Mesh(new CapsuleGeometry(0.05, 0.19, 4, 12), skin), 0, -0.12, 0));
-    const hand = part(new Mesh(new SphereGeometry(0.052, 16, 12), skin), 0, -0.27, 0.008);
-    hand.scale.set(0.8, 1.15, 0.65);
+    const hand = part(new Mesh(new CapsuleGeometry(0.042, 0.06, 4, 12), skin), 0, -0.27, 0.006);
+    hand.scale.set(1.0, 1.0, 0.62);
     el.add(hand);
+    const thumb = part(new Mesh(new CapsuleGeometry(0.016, 0.04, 4, 8), skin), s * -0.035, -0.24, 0.02);
+    thumb.rotation.z = s * 0.5;
+    el.add(thumb);
     return { sh, el };
   };
   const L = arm(1), R = arm(-1);
@@ -131,6 +138,7 @@ function makePerson() {
     const kn = new Group();
     kn.position.y = -0.42;
     hip.add(kn);
+    kn.add(part(new Mesh(new SphereGeometry(0.07, 16, 12), pants), 0, 0, 0));
     kn.add(part(new Mesh(new CapsuleGeometry(0.06, 0.3, 4, 14), pants), 0, -0.2, 0));
     kn.add(rbox(0.095, 0.065, 0.21, 0.03, sock, 0, -0.43, 0.045));
     return { hip, kn };
