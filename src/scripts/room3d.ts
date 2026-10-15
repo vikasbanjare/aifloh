@@ -16,6 +16,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 export type Room = { dispose: () => void; frameTimes: number[] };
 
@@ -493,6 +494,12 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     gtao.blendIntensity = 0.85;
     composer.addPass(gtao);
   }
+  // shallow focus, like a macro lens on a real miniature (desktop only)
+  let bokeh: BokehPass | null = null;
+  if (!small) {
+    bokeh = new BokehPass(scene, camera, { focus: 4, aperture: 0.0016, maxblur: 0.006 });
+    composer.addPass(bokeh);
+  }
   composer.addPass(new OutputPass());
 
   // ---------------------------------------------------------------- camera: [progress, position, look-at]
@@ -613,6 +620,7 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     screenLight.intensity = on * 0.9;
 
     placeCamera(p);
+    if (bokeh) (bokeh.uniforms as any).focus.value = camera.position.distanceTo(camLook);
     composer.render();
     if (first) { first = false; onFirstFrame(); }
     if (visible) raf = requestAnimationFrame(frame);

@@ -221,3 +221,8 @@ Additive gradient planes slanting from the window plus a sun patch on the floor.
 Step-back review (iter-30). Since the film went in, the risk is time: seven screens of scrolling stand between a recruiter and the work. Added a 'Skip intro' pill (streaming-player idiom, not 'scroll to explore') at bottom right while the film is live; it jumps to the end card (#start) and hides on the title card. Also found the film started 66 px down the page (the sticky glass header takes flow), so its bottom edge, the status line and the skip control sat below the fold on phones; the film now pulls up under the header (-66 px). Drift check: the film added one motif (the clock), no extra decoration elsewhere. Next: simplify the rooms below the film so the page after the film is shorter.
 - Scores: H8 T9 C8 S9 D9 M8 I9 K9 A10 P9 = 88.
 - Decision: KEPT.
+
+## iter-31 · Tilt-shift depth of field: the room reads as a real miniature
+Lens: distinctiveness. Added a BokehPass (desktop only, after GTAO) with focus locked each frame to the camera-to-subject distance, aperture 0.0016, max blur 0.006. The clock close-up gets a macro-lens falloff on the lamp and drawer; over-the-shoulder at the desk softens his head in the foreground; the wide end shot stays crisp. This is the visual cue that makes a 3D room read as a hand-made miniature. Phones keep the plain render (no AO, no DOF) for speed.
+- Scores: H8 T9 C8 S9 D10 M8 I9 K9 A10 P9 = 89.
+- Decision: KEPT.

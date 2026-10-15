@@ -36,5 +36,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 28 | 8 | 9 | 8 | 8 | 9 | 8 | 9 | 8 | 10 | 9 | **86** | KEPT | 86 = baseline; kept under Vikas's standing ask for a premium character (no category dropped) |
 | 29 | 8 | 9 | 8 | 8 | 9 | 8 | 9 | 8 | 10 | 9 | **86** | REJECTED | 86; the shafts read as glass panels, not light |
 | 30 | 8 | 9 | 8 | 9 | 9 | 8 | 9 | 9 | 10 | 9 | **88** | KEPT | 88 |
+| 31 | 8 | 9 | 8 | 9 | 10 | 8 | 9 | 9 | 10 | 9 | **89** | KEPT | 89 |
 
-**CURRENT BEST: iter-30** (tag `best`; new baseline after the film hero)
+**CURRENT BEST: iter-31** (tag `best`; new baseline after the film hero)
