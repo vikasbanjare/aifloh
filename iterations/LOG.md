@@ -231,3 +231,8 @@ Lens: distinctiveness. Added a BokehPass (desktop only, after GTAO) with focus l
 Lens: colour and contrast. The closing wide shot centred the room, so the white headline sat over the cream floor slab. On wide screens the camera now pans along its right axis as it pulls back (up to 4.4 units by aspect), placing the room centre-right with the headline on the dark background; the final camera is further out so the whole box fits. Depth of field eases off in the wide shot so the room stays crisp, and focus uses the subject distance, not the shifted look point. Phones keep the centred framing (title already sits on dark below the room). Posters regenerated to match.
 - Scores: H8 T9 C9 S9 D10 M8 I9 K9 A10 P9 = 90.
 - Decision: KEPT.
+
+## iter-33 · Film runs into the end card with no seam
+Lens: would a top studio ship this. Where the film ended and the end card began there was a hard horizontal seam: ACES tone mapping renders the scene background (#1c1a1e) as #0e0c0f, and the lens vignette darkened the bottom further, while the end card used the raw #1c1a1e. The film, stage and end card now share the rendered colour (#0e0c0f, sampled from the poster), and the vignette only darkens the sides and the top, so the film flows straight into 'Vikas Banjare, or Bubu…'. A seam is a defect, not a taste call, so this is kept at a tied total.
+- Scores: H8 T9 C9 S9 D10 M8 I9 K9 A10 P9 = 90.
+- Decision: KEPT.

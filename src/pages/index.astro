@@ -231,7 +231,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <style>
   /* ---------- the film ---------- */
   /* the film runs under the floating glass nav (the sticky header takes 66 px of flow: 10 px gap + 56 px bar) */
-  .film { --night: #1c1a1e; position: relative; margin-top: -66px; background: var(--night); color: var(--color-bg); }
+  .film { --night: #0e0c0f; position: relative; margin-top: -66px; background: var(--night); color: var(--color-bg); }
   .film.is-live { height: 720svh; }
   .film-stage { position: relative; height: 100svh; min-height: 30rem; overflow: hidden; background: var(--night); }
   .film.is-live .film-stage { position: sticky; top: 0; }
@@ -241,9 +241,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .film.is-live .poster-start { display: block; }
   .film.is-live .poster-end { display: none; }
   .film-stage.is-3d .film-poster { visibility: hidden; }
-  /* vignette: the edges fall off like a lens */
+  /* vignette: the sides and top fall off like a lens; the bottom stays clean so the film runs into the end card */
   .film-stage:global(.no-vignette)::after { display: none; }
-  .film-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(0 0 0 / 0.45)); }
+  .film-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgb(0 0 0 / 0.32), transparent 16%, transparent 84%, rgb(0 0 0 / 0.32)), linear-gradient(rgb(0 0 0 / 0.3), transparent 22%); }
 
   /* the clock you scroll: big, quiet, always there */
   .hud { position: absolute; z-index: 3; left: var(--gutter); top: clamp(5rem, 13vh, 7.5rem); margin: 0; display: flex; align-items: baseline; gap: 0.35em; padding: 0.35em 0.7em 0.4em; border-radius: 18px; font-family: var(--font-mono); color: var(--color-bg); background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
@@ -286,7 +286,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); margin-right: 0.6em; vertical-align: 0.05em; }
 
   /* the end card: who, and how to start */
-  .endcard { display: grid; gap: var(--space-8); align-items: end; padding-block: var(--space-16); background: #1c1a1e; color: var(--color-bg); box-shadow: 0 0 0 100vmax #1c1a1e; clip-path: inset(0 -100vmax); }
+  .endcard { display: grid; gap: var(--space-8); align-items: end; padding-block: var(--space-16); background: #0e0c0f; color: var(--color-bg); box-shadow: 0 0 0 100vmax #0e0c0f; clip-path: inset(0 -100vmax); }
   .endcard > * { min-width: 0; }
   .who-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 0; }
   .see { color: #b9b6ad; font-size: var(--text-sm); }
