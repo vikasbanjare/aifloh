@@ -1,5 +1,6 @@
 ---
 import PageHead from '../../components/PageHead.astro';
+import BuiltTabs from '../../components/BuiltTabs.astro';
 import Base from '../../layouts/Base.astro';
 import StandIn from '../../components/StandIn.astro';
 import { loadContent } from '../../lib/content';
@@ -9,6 +10,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: '
 ---
 <Base title="Lab" description="Experiments, including the ones that failed. Each one says what I tried and what happened.">
   <PageHead kicker="Lab" title="Experiments, failures included." lede="Each one says what I tried, what happened and what I'd do next." count={experiments.length} />
+  <BuiltTabs />
   <section class="wrap section">
     <ol class="lab" role="list">
       {experiments.map((e) => (

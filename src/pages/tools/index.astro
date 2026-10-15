@@ -1,5 +1,6 @@
 ---
 import PageHead from '../../components/PageHead.astro';
+import BuiltTabs from '../../components/BuiltTabs.astro';
 import Base from '../../layouts/Base.astro';
 import StandIn from '../../components/StandIn.astro';
 import { loadContent } from '../../lib/content';
@@ -11,6 +12,7 @@ const ctaLabel = (t: (typeof tools)[number]) => ({ open: 'Open', download: 'Down
 ---
 <Base title="Tools" description="Software I built for video, images and creator workflows: plugins, web apps and small utilities.">
   <PageHead kicker="Tools" title="Software that does the grind." lede="Plugins, web apps and small utilities I built for video, images and creator workflows." count={tools.length} />
+  <BuiltTabs />
   <section class="wrap section">
     <div class="cat-filter" hidden role="group" aria-label="Filter by category">
       <button type="button" class="btn" aria-pressed="true" data-cat="">All</button>

@@ -1,0 +1,12 @@
+---
+// The "things I built" family: software, experiments and the code behind them, as one hub.
+import HubTabs from './HubTabs.astro';
+import { loadContent } from '../lib/content';
+const c = loadContent();
+const tabs = [
+  { path: '/tools/', label: 'Tools', count: c.tools.length },
+  { path: '/lab/', label: 'Experiments', count: c.experiments.length },
+  { path: '/code/', label: 'Code', count: c.repos.length },
+].filter((t) => t.count > 0);
+---
+<HubTabs label="Things I built" tabs={tabs} />

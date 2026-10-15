@@ -1,0 +1,37 @@
+---
+// One hub, several views. Plain links (no JS), so each view is a real page that works in every
+// in-app browser and keeps its old URL. Used by Free (all / image / video / skills) and Built
+// (tools / lab / code).
+import { href } from '../lib/href';
+interface Tab { path: string; label: string; count?: number }
+interface Props { label: string; tabs: Tab[] }
+const { label, tabs } = Astro.props;
+const here = Astro.url.pathname.replace(/\/?$/, '/');
+---
+<nav class="tabs wrap" aria-label={label}>
+  <ul role="list">
+    {tabs.map((t) => {
+      const url = href(t.path);
+      const on = here === url.replace(/\/?$/, '/');
+      return (
+        <li>
+          <a href={url} aria-current={on ? 'page' : undefined}>
+            {t.label}{t.count !== undefined && <span class="n">{t.count}</span>}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>
+<style>
+  .tabs ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+  .tabs a {
+    display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4);
+    border: 1px solid var(--color-line-strong); border-radius: 999px; text-decoration: none;
+    font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted);
+    transition: color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard);
+  }
+  .tabs a[aria-current='page'] { background: var(--color-text); border-color: var(--color-text); color: var(--color-bg); }
+  .n { font-family: var(--font-mono); font-size: var(--text-xs); opacity: 0.7; }
+  @media (hover: hover) { .tabs a:not([aria-current]):hover { color: var(--color-text); border-color: var(--color-text); } }
+</style>

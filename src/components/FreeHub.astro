@@ -4,14 +4,25 @@ import CodeWordBox from './CodeWordBox.astro';
 import AfterCopy from './AfterCopy.astro';
 import InAppBanner from './InAppBanner.astro';
 import PageHead from './PageHead.astro';
+import HubTabs from './HubTabs.astro';
+import { loadContent } from '../lib/content';
 import type { Resource } from '../lib/schema';
 interface Props { heading: string; promise: string; items: Resource[]; codeword?: boolean; kicker?: string }
 const { heading, promise, items, codeword = true, kicker = 'Free' } = Astro.props;
+const all = loadContent().resources;
+const n = (t: string) => all.filter((r) => r.type === t).length;
+const tabs = [
+  { path: '/free/', label: 'Everything', count: all.length },
+  { path: '/prompts/image/', label: 'Image prompts', count: n('prompt-image') },
+  { path: '/prompts/video/', label: 'Video prompts', count: n('prompt-video') },
+  { path: '/skills/', label: 'Claude skills', count: n('skill') },
+].filter((t) => t.count > 0);
 ---
 <div class="wrap"><InAppBanner /></div>
 <PageHead kicker={kicker} title={heading} lede={promise} count={items.length}>
   {codeword && <div class="cw-wrap rise-3"><CodeWordBox /></div>}
 </PageHead>
+<HubTabs label="Free, by type" tabs={tabs} />
 <section class="wrap hub">
   <Ledger items={items} />
   <AfterCopy />

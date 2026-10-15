@@ -1,5 +1,6 @@
 ---
 import PageHead from '../../components/PageHead.astro';
+import BuiltTabs from '../../components/BuiltTabs.astro';
 import Base from '../../layouts/Base.astro';
 import { loadContent } from '../../lib/content';
 import { href } from '../../lib/href';
@@ -26,6 +27,7 @@ function bar(langs: Record<string, number>) {
 ---
 <Base title="Code" description="The GitHub repos behind the tools, experiments and skills on this site. Read at build time; your browser never calls GitHub.">
   <PageHead kicker="Code" title="The repos behind it all." lede="The code behind the tools, experiments and skills here. Each repo is listed on purpose." count={repos.length} />
+  <BuiltTabs />
   <section class="wrap section">
     {groups.map((g) => {
       const items = repos.filter((r) => r.group === g.key);
