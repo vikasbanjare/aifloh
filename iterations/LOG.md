@@ -241,3 +241,10 @@ Lens: would a top studio ship this. Where the film ended and the end card began 
 Lens: motion and story. Between the alarm and sitting up nothing happened to him; the clock rang by itself. Now, half asleep, his left arm swings out toward the bedside table (shoulder abducts and lifts, elbow loosens, head turns toward it) and the clock's blinking stops the moment the reach lands (ringing ends at p 0.284). One small human beat that makes him a character, not a mannequin.
 - Scores: H8 T9 C9 S9 D10 M8 I10 K9 A10 P9 = 91.
 - Decision: KEPT.
+
+## iter-35 · Step-back review (no code change)
+Since the film baseline (iter-27, 86) the best is 91: character joints and face (28), Skip intro and full-bleed stage (30), tilt-shift depth of field (31), closing shot framed for the title (32), no seam into the end card (33), the alarm tap (34). One rejection (sunbeams, 29).
+- Drift: all recent changes live inside the film; nothing decorative was added to the rooms below. Good.
+- What reads weakest now: the page after the film. It jumps from a dark cinematic room into the old lime catalogue band, then ink, paper, cobalt and paper again: five colour rooms after one dark film is a lot of switching. The film earned the right to be the one loud moment; the rest should get quieter.
+- Next (simplifies): test giving the post-film rooms one calmer rhythm (fewer colour switches), and measure page length on phones after the film.
+- Decision: REVIEW (best stays iter-34 at 91).
