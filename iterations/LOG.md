@@ -123,3 +123,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: I 7→8; also helps K slightly (already 8).
 - Scores: H8 T8 C8 S8 D8 M8 I8 K8 A9 P9 = 82.
 - Decision: KEPT.
+
+## iter-13 · Visible focus on the dark wall; numbers hidden from screen readers
+- Hypothesis: cobalt focus rings were nearly invisible on the ink gallery, and every section heading was announced with its '( 0n )' prefix.
+- Change: lime 3 px focus ring with offset on prints and controls inside the dark room; aria-hidden on the five '( 0n )' labels.
+- Verify: all checks pass; LH 96/100/100/100; axe 0; keyboard-tabbed screenshot shows a clear lime ring on the first print.
+- Critique: A 9→10 for this page: semantic headings, visible focus on every band (paper, lime, ink, cobalt), alt text, live regions polite.
+- Scores: H8 T8 C8 S8 D8 M8 I8 K8 A10 P9 = 83.
+- Decision: KEPT.
