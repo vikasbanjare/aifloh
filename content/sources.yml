@@ -62,11 +62,12 @@ items:
     publish: false
     note: This site. Flip once it has an aifloh.yml.
 
-  # SKILLS (repo vikasbanjare/aifloh-skills, one folder per skill; clean copies prepared)
+  # SKILLS (repo vikasbanjare/aifloh-skills, one folder per skill)
   - { repo: vikasbanjare/aifloh-skills, path: deck-director, group: skills, publish: false, note: Design set. }
   - { repo: vikasbanjare/aifloh-skills, path: logo-director, group: skills, publish: false, note: Design set. }
   - { repo: vikasbanjare/aifloh-skills, path: logo-identity-strategist, group: skills, publish: false, note: Design set. }
   - { repo: vikasbanjare/aifloh-skills, path: brand-design-studio, group: skills, publish: false, note: Design set. Generic brand template. }
+  - { repo: vikasbanjare/aifloh-skills, path: carousel-post-design, group: skills, publish: false, note: Design set. New skill. }
   - { repo: vikasbanjare/aifloh-skills, path: motion-designer, group: skills, publish: false, note: Design set. }
   - { repo: vikasbanjare/aifloh-skills, path: thumbnail-prompt-generator, group: skills, publish: false, note: Prompt set. }
   - { repo: vikasbanjare/aifloh-skills, path: seedance-director, group: skills, publish: false, note: Prompt set. }
