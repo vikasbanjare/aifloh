@@ -247,7 +247,8 @@ html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .cat > li, .index > li, .ledger > li {
-      animation: row-in linear both;
+      /* longhands: the minifier folds a timeline into the shorthand, which Chrome then rejects */
+      animation-name: row-in; animation-timing-function: linear; animation-fill-mode: both; animation-duration: auto;
       animation-timeline: view();
       animation-range: entry 0% entry 60%;
     }

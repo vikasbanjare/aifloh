@@ -159,3 +159,8 @@ Lens: mobile. Room titles were 44px on a 375 screen, so the poster rhythm of the
 Lens: would a top studio ship this. At 768 the four steps wrapped 'Make with AI' in narrow columns; 2x2 until 64rem aligns them under the two cards. Clearly tidier, but too small to move any rubric category, so the total ties best and the rule says revert. Added to BACKLOG to ride along with the next tablet-focused iteration.
 - Scores: H9 T8 C8 S9 D9 M9 I8 K9 A10 P9 = 88.
 - Decision: REJECTED.
+
+## iter-19 · Scroll motion that actually runs: steps write on, rows rise, thread grows
+Lens: motion and interaction. Building a write-on for the Studio steps showed animationName 'none'. Cause: the CSS minifier folds animation-timeline into the animation shorthand (e.g. 'animation: linear both row-in view()'), which Chrome rejects, so the whole declaration was dropped. Since iter-00 the catalogue row rise-in and the margin thread growth were silently static. Fix: longhands (name, timing, fill, duration auto, then timeline), which the minifier leaves alone. New: the four steps reveal left to right in sequence between cover 4% and 44% of their view timeline (hand half first, then machine). Verified with computed clip-path at four scroll positions, every row ends visible at page bottom, reduced-motion and no-support stay static. Screens use reducedMotion so full-page shots show the end state.
+- Scores: H9 T8 C8 S9 D9 M9 I9 K9 A10 P9 = 89.
+- Decision: KEPT.

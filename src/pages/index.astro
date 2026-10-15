@@ -336,7 +336,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     .room-m::after { border-color: var(--color-b); }
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
-        .room::before { transform-origin: top; animation: thread linear both; animation-timeline: view(); animation-range: entry 20% cover 55%; }
+        .room::before { transform-origin: top; animation-name: thread; animation-timing-function: linear; animation-fill-mode: both; animation-duration: auto; animation-timeline: view(); animation-range: entry 20% cover 55%; }
       }
     }
   }
@@ -429,6 +429,18 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .s-b .s-n, .s-c .s-n { color: var(--color-b); }
   .steps b { font-size: var(--t-lede); letter-spacing: -0.02em; }
   .s-d { color: var(--color-text-muted); font-size: var(--text-sm); max-width: 28ch; }
+  /* the method line writes itself left to right as the steps scroll in: hand first, then machine */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .steps { view-timeline: --steps block; }
+      .steps li { animation-name: step-in; animation-timing-function: linear; animation-fill-mode: both; animation-duration: auto; animation-timeline: --steps; }
+      .steps li:nth-child(1) { animation-range: cover 4% cover 20%; }
+      .steps li:nth-child(2) { animation-range: cover 12% cover 28%; }
+      .steps li:nth-child(3) { animation-range: cover 20% cover 36%; }
+      .steps li:nth-child(4) { animation-range: cover 28% cover 44%; }
+    }
+  }
+  @keyframes step-in { from { clip-path: inset(-12px 100% -4px 0); } to { clip-path: inset(-12px -12px -4px 0); } }
   @media (min-width: 48rem) { .steps { grid-template-columns: repeat(4, 1fr); gap: 0; } .steps li { padding-right: var(--space-4); } }
 
   /* ---------- instruments ---------- */
