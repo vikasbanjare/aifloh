@@ -1,0 +1,113 @@
+---
+import { href } from '../lib/href';
+import { SOCIALS, GITHUB_URL } from '../lib/config';
+
+const sections = [
+  { path: '/library', label: 'Library' },
+  { path: '/lab', label: 'Lab' },
+  { path: '/code', label: 'Code' },
+  { path: '/skills', label: 'Skills' },
+  { path: '/prompts/image', label: 'Image prompts' },
+  { path: '/prompts/video', label: 'Video prompts' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <nav aria-label="More sections">
+      <h2 class="footer-h">Explore</h2>
+      <ul role="list">
+        {sections.map((s) => <li><a href={href(s.path)}>{s.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <section aria-labelledby="footer-follow">
+      <h2 class="footer-h" id="footer-follow">Follow</h2>
+      <ul role="list">
+        {
+          SOCIALS.map((s) =>
+            s.url ? (
+              <li>
+                <a href={s.url} rel="me noopener" data-track="Follow Click" data-track-platform={s.platform}>
+                  {s.label}
+                </a>
+              </li>
+            ) : (
+              <li>
+                {s.label} <span class="stand-in">Stand-in</span>
+              </li>
+            ),
+          )
+        }
+        <li><a href={GITHUB_URL} rel="me noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="footer-email">
+      <h2 class="footer-h" id="footer-email">New drops by email</h2>
+      <p class="small"><span class="stand-in">Needs backend</span> Email sign-up arrives in a later step.</p>
+    </section>
+  </div>
+  <div class="wrap footer-base">
+    <p class="small"><a href={href('/privacy')}>Anonymous visit counts. No cookies.</a></p>
+    <p class="small">© AI-Floh</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-12);
+    border-top: 1px solid var(--color-line);
+    padding-block: var(--space-8) var(--space-4);
+    font-size: var(--text-sm);
+  }
+  .footer-grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+  @media (min-width: 48rem) {
+    .footer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .footer-h {
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  li {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+    color: var(--color-text-muted);
+  }
+  .small {
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+  .footer-base a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+</style>

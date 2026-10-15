@@ -1,0 +1,28 @@
+{
+  "name": "aifloh-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && node scripts/check-content.mjs",
+    "test": "node --test tests/*.test.ts",
+    "new:resource": "node scripts/new-item.mjs resource",
+    "new:tool": "node scripts/new-item.mjs tool",
+    "new:experiment": "node scripts/new-item.mjs experiment",
+    "new:work": "node scripts/new-item.mjs work"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "22.19.1",
+    "typescript": "5.9.3"
+  }
+}
