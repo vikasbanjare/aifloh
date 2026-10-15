@@ -189,3 +189,11 @@ Lens: copy and CTA. The Free band listed five Claude skills in a row (newest fir
 Lens: performance (aiming at P). Lighthouse LCP is the hero intro paragraph with 2.0 s render delay: the intro holds the hero rise animations until it ends. Removing the intro would undo a feature Vikas asked for, and making the text skip the fade only games the metric, so neither was done. Real fix found instead: the intro replayed on every return to home (Free -> logo -> intro again). The pre-paint script now skips it when document.referrer is this site's own origin. No storage, no cookie; reduced-motion still skips it; the CSP hash updates automatically (no console errors). Cold arrival unchanged. Scored on Interaction (9 -> 10: intro once, scroll motion now runs, draw tool, 3D on demand); Performance stays 9 because the cold LCP did not move.
 - Scores: H9 T9 C9 S9 D9 M9 I10 K9 A10 P9 = 92.
 - Decision: KEPT.
+
+## iter-25 · Step-back review (no code change)
+Looked at the whole phone page (iter-24, 5,836 px; iter-00 was 7,062 px) and the 1440 page as a sequence, not section by section.
+- Drift: none toward decoration since iter-20. Changes since then were type size, colour of the stops, motion that was silently broken, and an intro that replayed. The brand line motif is at its limit (margin thread, Fig. 1, steps, favicon): no new line motifs.
+- What still reads weakest: (1) the Free band repeats 'Claude skill' five times, so the range is invisible (iter-23 patch in stash); (2) the two STAND-IN tags in the Tools band look unfinished, but they are required labels (Section 1), so the fix is real content, not design; (3) the ContentIntel plate is small for the only product shot on the page (backlog #7).
+- Scoring note: eight of ten categories are at 9. Single small fixes now tie and get reverted, which is correct per the rules. Next iterations bundle related fixes into one hypothesis or target a specific 10.
+- Next (simplifies): iter-26 makes the Free band show the range (one row per type) and drops the now-redundant per-row repetition on phones.
+- Decision: REVIEW (no score change, best stays iter-24 at 92).
