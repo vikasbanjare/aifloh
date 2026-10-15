@@ -126,7 +126,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     </ol>
   </section>
 
-  <section class="room wrap" aria-labelledby="built-h">
+  <section class="room room-m wrap" aria-labelledby="built-h">
     <h2 id="built-h" class="room-h"><span class="label n">( 04 )</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
@@ -324,6 +324,28 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
 
   .more { margin: var(--space-8) 0 0; }
+  /* ---------- the margin ledger: one thread down the page. Hand (lime wobble) through most rooms,
+     machine (straight cobalt) through Tools. Drawn by scroll where supported; simply there elsewhere. ---------- */
+  @media (min-width: 64rem) {
+    .room { position: relative; }
+    .room::before {
+      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 10px); top: 0; bottom: 0; width: 20px;
+      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNjAiIHZpZXdCb3g9IjAgMCAyMCAxNjAiPjxwYXRoIGQ9Ik0xMCAwIEMgMTYgMjAsIDQgMzgsIDEwIDU4IFMgMTcgOTYsIDkgMTE4IFMgNCAxNDYsIDEwIDE2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjhmMDAwIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==") repeat-y center top / 20px 160px; pointer-events: none;
+    }
+    .room-m::before { background: linear-gradient(var(--color-b), var(--color-b)) center top / 3px 100% no-repeat; }
+    .room::after {
+      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 6px); top: calc(var(--space-16) + 0.45em); width: 12px; height: 12px;
+      background: var(--color-bg); border: 2px solid var(--color-text); pointer-events: none;
+    }
+    .room-m::after { border-color: var(--color-b); }
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        .room::before { transform-origin: top; animation: thread linear both; animation-timeline: view(); animation-range: entry 20% cover 55%; }
+      }
+    }
+  }
+  @keyframes thread { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
 
   /* ---------- index rows: wall labels ---------- */
   .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
