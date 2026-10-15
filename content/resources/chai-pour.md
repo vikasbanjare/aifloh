@@ -25,4 +25,4 @@ video:
     - { n: 2, seconds: 5, camera: macro top-down, action: steam rising, audio: quiet room tone }
 tested: { on: 2026-10-08, tool: Seedance, version: STAND-IN }
 ---
-STAND-IN.
+STAND-IN. Not yet tested on a real post.

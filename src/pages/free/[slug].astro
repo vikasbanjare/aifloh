@@ -27,7 +27,7 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
 <Base title={r.title} description={r.summary} ogImage={`/og/${r.slug}.png`}>
   <article class="wrap section res">
     <InAppBanner />
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/free/')}>Free</a> / {TYPE_LABEL[r.type]}</nav>
+    <nav class="kick label" aria-label="Breadcrumb"><a href={href('/free/')}>( Free )</a> <span>{TYPE_LABEL[r.type]}</span></nav>
     <h1>{r.title}</h1>
     {r.titleHi && <p class="title-hi" lang="hi">{r.titleHi}</p>}
     <p class="lede">{r.summary}</p>
@@ -36,7 +36,7 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
       <Stamp tested={r.tested} />
       {r.version && <span class="muted">v{r.version}</span>}
       {r.standIn && <StandIn />}
-      <span class="muted">Code word: <strong class="a">{r.codeWord}</strong></span>
+      <span class="word label" title="The code word from the post">/{r.codeWord}</span>
     </p>
 
     {r.type === 'skill' && r.skill && (
@@ -145,10 +145,14 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
   });
 </script>
 <style>
-  .res h1 { font-size: clamp(2.25rem, 1.2rem + 4vw, 4.5rem); max-width: 18ch; }
+  .res h1 { font-size: var(--t-row); font-size: clamp(2.5rem, 1rem + 5vw, 5.5rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; max-width: 16ch; }
+  .kick { display: flex; gap: var(--space-3); align-items: center; margin-bottom: var(--space-6); color: var(--color-text-muted); }
+  .kick a { color: var(--color-b); text-decoration: none; }
+  .kick::after { content: ''; flex: 1; max-width: 12rem; height: 1px; background: var(--color-text); }
+  .word { padding: 0.35em 0.7em; background: var(--color-a-fill); color: var(--color-a-ink); border: 1px solid var(--color-text); font-weight: 600; }
   .title-hi { color: var(--color-text-muted); }
   .meta { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; max-width: none; }
-  .h2 { font-size: var(--text-lg); margin-top: var(--space-12); }
+  .h2 { font-size: var(--t-row-sm); font-weight: 800; letter-spacing: -0.035em; margin-top: var(--space-12); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
   .small { font-size: var(--text-sm); }
   .skill-facts { margin: var(--space-6) 0; }

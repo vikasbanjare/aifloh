@@ -21,4 +21,4 @@ body: |-
   7. No AI tells: warped hands, garbled micro-text, plastic skin.
 tested: { on: 2026-10-04, tool: Photoshop, version: STAND-IN }
 ---
-STAND-IN.
+STAND-IN. Not yet tested on a real post.
