@@ -11,5 +11,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 04 | 7 | 7 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **75** | KEPT | About balanced |
 | 05 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | KEPT | room titles at display scale |
 | 06 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | REJECTED | thread removal, no gain |
+| 07 | 8 | 8 | 8 | 7 | 7 | 7 | 7 | 8 | 9 | 9 | **78** | KEPT | everything above the fold at 1440 |
 
-**CURRENT BEST: iter-05** (tag `best`)
+**CURRENT BEST: iter-07** (tag `best`)

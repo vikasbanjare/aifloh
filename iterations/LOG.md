@@ -71,3 +71,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: equal total, no category improved by a full point. Rule says only strictly better is kept.
 - Scores: H7 T8 C8 S7 D7 M7 I7 K7 A9 P9 = 76.
 - Decision: REJECTED.
+
+## iter-07 · Hero actions beside Fig. 1 on wide screens
+- Hypothesis: putting intro, CTA and code box in a 24rem column beside Fig. 1 (from 72rem) brings every hero action above the fold.
+- Change: .hero becomes a 2-column grid on wide screens; headline and status span; handwritten note hidden in this layout (no room). Phones and tablets unchanged.
+- Verify: all checks pass; LH 97/100/100/100; axe 0; 3D canvas sizes from the figure width, so it follows.
+- Critique: H 7→8 and K 7→8: at 1440x900 the whole hero, both actions and the top of the lime Free band are visible. Small loss: the margin note no longer shows on desktop.
+- Scores: H8 T8 C8 S7 D7 M7 I7 K8 A9 P9 = 78.
+- Decision: KEPT.

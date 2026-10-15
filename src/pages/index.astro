@@ -223,6 +223,15 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 <style>
   /* ---------- hero ---------- */
   .hero { padding-block: var(--space-8) var(--space-16); }
+  /* wide screens: the figure takes the stage, the actions stand beside it, all above the fold */
+  @media (min-width: 72rem) {
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) 24rem; column-gap: var(--space-12); align-items: center; }
+    .hero > .status, .hero > h1 { grid-column: 1 / -1; }
+    .hero > .fig1 { grid-column: 1; margin-top: var(--space-8); }
+    .hero > .hero-foot { grid-column: 2; margin-top: var(--space-8); grid-template-columns: minmax(0, 1fr) !important; align-items: start; }
+    .hero > .hero-foot .cw-plate { justify-self: stretch; }
+    .hero > .hero-foot .note { display: none !important; }
+  }
   .status { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin-bottom: var(--space-12); color: var(--color-text-muted); }
   .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); box-shadow: 0 0 0 1px var(--color-text); margin-right: 0.6em; vertical-align: 0.05em; }
   .display { font-size: var(--t-display); font-weight: 800; letter-spacing: -0.055em; line-height: 0.92; margin: 0; max-width: none; }
