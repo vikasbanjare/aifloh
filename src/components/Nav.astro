@@ -39,17 +39,16 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
   </nav>
 </header>
 <style>
-  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(244, 244, 241, 0.95); border-bottom: 1px solid var(--color-line); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--color-bg) 94%, transparent); border-bottom: 1px solid var(--color-text); }
   .nav { display: flex; align-items: center; gap: var(--space-4); min-height: 64px; }
   .brand-s { font-family: var(--font-serif); font-weight: 400; color: var(--color-b); font-size: 1.1em; letter-spacing: -0.01em; }
-  .brand-home { visibility: hidden; }
   .brand { display: inline-flex; align-items: baseline; gap: 2px; font-weight: 800; letter-spacing: -0.03em; font-size: 1.125rem; text-decoration: none; margin-right: auto; min-height: 44px; }
   .bdot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-top: 6px; }
   .a-dot { background: var(--color-a); margin-left: 3px; }
   .b-dot { background: var(--color-b-strong); box-shadow: 0 0 0 1px var(--color-b); }
   .nav-free {
     order: 0; display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--space-4);
-    border-radius: 999px; background: var(--color-a-fill); color: var(--color-a-ink); font-weight: 750; border: 1px solid var(--color-text); font-size: var(--text-sm); text-decoration: none;
+    border-radius: 0; background: var(--color-a-fill); color: var(--color-a-ink); font-weight: 750; border: 1px solid var(--color-text); font-size: var(--text-sm); text-decoration: none;
   }
   .nav-links { display: none; list-style: none; margin: 0; padding: 0; gap: var(--space-6); font-size: var(--text-sm); }
   .nav-links a, .nav-talk { text-decoration: none; color: var(--color-text-muted); min-height: 44px; display: inline-flex; align-items: center; transition: color var(--dur-base) var(--ease-standard); }

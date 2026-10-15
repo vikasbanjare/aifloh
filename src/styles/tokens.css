@@ -9,14 +9,14 @@
   color-scheme: light;
 
   /* Light theme (2026-10-15). Studio Night colours kept as the brand pair: lime + cobalt. */
-  --color-bg: #f4f4f1;
-  --color-panel: #ffffff;
-  --color-surface: #ffffff;
-  --color-surface-2: #ebebe6;
-  --color-text: #0e0e10;
-  --color-text-muted: #5a5a62;
-  --color-line: #dcdcd6;
-  --color-line-strong: #b9b9b2;
+  --color-bg: #f3f1ea;
+  --color-panel: #fbfaf6;
+  --color-surface: #fbfaf6;
+  --color-surface-2: #e9e6dc;
+  --color-text: #141414;
+  --color-text-muted: #5b5850;
+  --color-line: #dbd7cc;
+  --color-line-strong: #a9a596;
   --color-focus: #2b4bff;
 
   /* Colour A = made by hand. Lime is a fill/highlight only on light (1.2:1 as text). */
@@ -41,6 +41,15 @@
   --font-serif: 'Instrument Serif', 'Times New Roman', serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font-deva: 'Noto Sans Devanagari', 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  /* Type rule (Oct 2026): four steps and nothing in between.
+     Display: the one big line per page. Row: section titles and big numbers. Body: reading text.
+     Label: mono, small, uppercase; metadata only. Serif italic only inside Display, one word at a time. */
+  --t-display: clamp(3.1rem, 0.2rem + 8.7vw, 10.5rem);
+  --t-row: clamp(1.75rem, 1.1rem + 2.6vw, 3.25rem);
+  --t-row-sm: clamp(1.25rem, 0.9rem + 1.2vw, 1.875rem);
+  --t-lede: clamp(1.1875rem, 1rem + 0.5vw, 1.4375rem);
+  --t-body: 1.0625rem;
+  --t-label: 0.75rem;
   --text-xs: 0.8125rem;
   --text-sm: 0.9375rem;
   --text-md: 1.0625rem;
@@ -64,8 +73,8 @@
   --gutter: 1rem;
   --measure: 66ch;
   --page-max: 84rem;
-  --radius: 14px;
-  --radius-xl: 32px;
+  --radius: 0px;
+  --radius-xl: 0px;
   --target-min: 24px;
 
   --dur-fast: 120ms;

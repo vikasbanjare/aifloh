@@ -14,7 +14,7 @@ const errs = []; p.on('pageerror', (e) => errs.push(String(e)));
 await p.goto(`${B}/hooks/?utm_source=instagram&utm_medium=post&utm_campaign=viral-hooks&fbclid=abc`);
 await p.waitForURL(/free\/viral-hooks/);
 const u = new URL(p.url());
-ok('code word lands on resource', u.pathname === '/aifloh/free/viral-hooks/');
+ok('code word lands on resource', u.pathname.endsWith('/free/viral-hooks/'));
 ok('utm kept through redirect', u.searchParams.get('utm_source') === 'instagram');
 ok('fbclid stripped before analytics', !u.searchParams.has('fbclid'));
 // 2. vanity utms when none

@@ -1,284 +1,216 @@
 ---
-// Personal brand home: Vikas Banjare (light theme).
-// Design references, combined: neutomni.com (giant wordmark, one brand colour, mono labels, live local time,
-// solid process cards, ticket contact), jlern.com (name-letter grid with drawn icons), extrafazant.nl
-// (bold + light display mix, tilted photo and service cards, arrow-box buttons) and anfalova.art
-// (numbered project list, italic serif accents). No assets or copy were taken from them.
-// Content lives in content/portfolio.json.
+// Home, v3 (Oct 2026). One idea carried through the whole page: two hands.
+//   Lime is the marker in Vikas's hand: a drawn stroke, a highlighter fill. "Made by hand".
+//   Cobalt is the machine: exact rules, numbers, the full stop. "AI or automated".
+// One type rule (DECISIONS.md): Display / Row / Body / Label. Serif only inside Display, one word at a time.
+// Order follows the visitor's jobs (SITE-BUILD.md Section 2): free thing first, then work, studio, tools, the person.
+// Studied, not copied: recent Awwwards and Siteinspire portfolios (numbered indexes, labelled sections, status
+// lines, square corners, one loud accent). Notes in DECISIONS.md.
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Boot from '../components/Boot.astro';
-import { loadContent } from '../lib/content';
+import CodeWordBox from '../components/CodeWordBox.astro';
+import InAppBanner from '../components/InAppBanner.astro';
+import StandIn from '../components/StandIn.astro';
+import { loadContent, TYPE_LABEL } from '../lib/content';
 import { href } from '../lib/href';
 
 const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
 const c = loadContent();
-const skills = c.resources.filter((r) => r.type === 'skill').length;
-const free = c.resources.length;
-const contentintel = c.tools.find((t) => t.slug === 'contentintel');
-const captions = c.tools.find((t) => t.slug === 'cutpilot-caption-studio');
 
-// Name grid: letters of VIKAS between small line drawings of the work (24x24 viewBox, stroke = currentColor).
-const ICONS: Record<string, { label: string; svg: string; tone: 'a' | 'b' | 'ink' }> = {
-  camera: { label: 'Video shoots', tone: 'b', svg: '<rect x="2" y="7" width="14" height="11" rx="2"/><path d="M16 11l6-3v9l-6-3"/><circle cx="7" cy="12.5" r="2"/>' },
-  thumb: { label: 'Thumbnails', tone: 'a', svg: '<rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2.5"/><path d="M13 9h6M13 12h4M4 17l5-4 4 3 3-2 4 3"/>' },
-  wave: { label: 'Sound', tone: 'b', svg: '<path d="M2 12h2M6 8v8M9 5v14M12 9v6M15 6v12M18 10v4M21 12h1"/>' },
-  timeline: { label: 'Editing', tone: 'ink', svg: '<rect x="2" y="4" width="20" height="5" rx="1"/><rect x="2" y="11" width="12" height="4" rx="1"/><rect x="9" y="17" width="13" height="4" rx="1"/><path d="M15 2v20"/>' },
-  pen: { label: 'Design by hand', tone: 'a', svg: '<path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 7l3 3"/>' },
-  layers: { label: 'Motion', tone: 'b', svg: '<path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".5"/>' },
-  play: { label: 'Podcasts', tone: 'ink', svg: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z"/>' },
-  slash: { label: 'Free resources', tone: 'a', svg: '<path d="M8 20L16 4"/><path d="M3 12h3M18 12h3"/>' },
-  chip: { label: 'AI workflows', tone: 'b', svg: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/><path d="M10 13.5l1.2-3.5h1.6l1.2 3.5M10.4 12.5h3.2"/>' },
-  heart: { label: 'Storytelling', tone: 'a', svg: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>' },
-};
-const GRID: (string | { icon: string })[] = [
-  'V', { icon: 'camera' }, { icon: 'thumb' }, 'I', { icon: 'wave' },
-  { icon: 'timeline' }, 'K', { icon: 'pen' }, { icon: 'layers' }, 'A',
-  { icon: 'play' }, { icon: 'slash' }, 'S', { icon: 'chip' }, { icon: 'heart' },
-];
+// Free: real skills first, then the newest of the rest. Six rows.
+const byDate = [...c.resources].sort((a, b) => +new Date(b.date) - +new Date(a.date));
+const freePicks = [...byDate.filter((r) => !r.standIn), ...byDate.filter((r) => r.standIn)].slice(0, 6);
 
-const services = [
-  { title: 'Video', sub: 'Shoots, podcasts, trailers, edits', tone: 'svc-b', tilt: '-3deg', icon: 'camera' },
-  { title: 'Design', sub: 'Social, thumbnails, emailers, campaigns', tone: 'svc-a', tilt: '2deg', icon: 'thumb' },
-  { title: 'UI/UX', sub: 'Flows, landing pages, design systems', tone: 'svc-ink', tilt: '-1.5deg', icon: 'layers' },
-  { title: 'AI', sub: 'Workflows, plugins, Claude skills', tone: 'svc-w', tilt: '3deg', icon: 'chip' },
-];
+const work = P.projects.slice(0, 6);
+const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
+const tools = c.tools;
+
+const studio = P.services.filter((s: any) => s.title !== 'AI workflows');
+const automate = P.services.find((s: any) => s.title === 'AI workflows');
 const steps = [
-  { n: '01', a: 'Brief', b: '& plan', body: 'A short call: what you need, who it is for, where it will run.' },
-  { n: '02', a: 'Sketch', b: 'by hand', body: 'Storyboards, layouts and flows before anything is generated.' },
-  { n: '03', a: 'Make', b: '& automate', body: 'People make the calls. AI and automation carry the repetitive parts.' },
-  { n: '04', a: 'Ship', b: '& grow', body: 'Files, sources and how it was made. Then variants and support.' },
+  { a: 'Brief', body: 'A short call: what you need, who it is for, where it will run.' },
+  { a: 'Sketch', body: 'Storyboards, layouts and flows, by hand, before anything is generated.' },
+  { a: 'Make', body: 'People make the calls. AI and automation carry the repetitive parts.' },
+  { a: 'Ship', body: 'Files, sources and how it was made. Then variants and support.' },
 ];
 ---
-<Base title="Vikas Banjare" description="Vikas Banjare (Bubu): designer, editor and storyteller. Video, design, UI/UX and AI workflows. Founder of AI-Floh." bare>
+<Base title="Vikas Banjare" description="Vikas Banjare (Bubu): designer, editor and storyteller. Video, design, UI/UX and AI workflows. Founder of AI-Floh.">
   <Boot />
-  <!-- HEADER: giant wordmark + meta row -->
-  <header class="top">
-    <p class="wordmark" aria-label="Vikas Banjare">vikas<em>banjare</em></p>
-    <div class="meta wrap">
-      <p class="m-role">Designer, editor &amp; storyteller</p>
-      <nav class="m-nav" aria-label="Main">
-        <a href="#work">Work</a>
-        <a href={href('/tools/')}>Tools</a>
-        <a href={href('/free/')} class="m-free">Free</a>
-        <a href={href('/studio/')}>Studio</a>
-        <a href={href('/about/')}>About</a>
-      </nav>
-      <p class="m-right">
-        <a class="m-mail" href={`mailto:${P.profile.email}`}>{P.profile.email}</a>
-        <span class="m-time"><span class="dot-live" aria-hidden="true" />{P.profile.availability} · <time data-clock>IST</time></span>
-      </p>
-    </div>
-  </header>
+  <div class="wrap"><InAppBanner /></div>
 
-  <!-- HERO -->
+  <!-- HERO: a status line, one sentence, the code-word box. -->
   <section class="hero wrap" aria-labelledby="hero-h">
-    <p class="kick rise">Video, design <span class="serif">&amp;</span> AI workflows</p>
+    <p class="status label rise">
+      <span><span class="live" aria-hidden="true" />{P.profile.availability}</span>
+      <span><time data-clock>India (IST)</time></span>
+      <a href={`mailto:${P.profile.email}`}>{P.profile.email}</a>
+    </p>
     <h1 id="hero-h" class="display rise-2">
-      <span class="ln"><b>I keep the</b> <span class="lt">craft</span></span>
-      <span class="ln"><b>&amp; automate</b> <span class="lt">the grind</span></span>
+      <span class="l1">I keep the <span class="hand">craft<svg class="stroke" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15c40-7 92-10 146-8 50 2 97 1 146-6" /><path d="M14 20c64-6 140-7 212-4" /></svg></span><span class="stop-a">.</span></span>
+      <span class="l2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
     </h1>
-    <p class="cta rise-3">
-      <a class="sq" href="#work"><span class="sq-ico" aria-hidden="true">↓</span><span>See the work</span></a>
-      <a class="sq sq-ghost" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="home-talk"><span class="sq-ico" aria-hidden="true">→</span><span>Start a project</span></a>
-    </p>
-    <p class="equation rise-3" aria-label="Video plus design plus AI equals the full story">
-      <span>VIDEO</span><i>+</i><span>DESIGN</span><i>+</i><span>AI</span><i>=</i><span class="eq-end">THE FULL STORY</span>
-    </p>
-  </section>
-
-  <!-- NAME GRID -->
-  <section class="wrap namegrid-wrap" aria-label="What I do, in pictures">
-    <ul class="namegrid" role="list">
-      {GRID.map((cell) =>
-        typeof cell === 'string' ? (
-          <li class="ng ng-letter" aria-hidden="true"><span>{cell}</span></li>
-        ) : (
-          <li class={`ng ng-icon tone-${ICONS[cell.icon].tone}`}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[cell.icon].svg} />
-            <span class="ng-label">{ICONS[cell.icon].label}</span>
-          </li>
-        ),
-      )}
-    </ul>
-  </section>
-
-  <!-- INTRO -->
-  <section class="wrap section intro" aria-labelledby="intro-h">
-    <div class="intro-text reveal">
-      <p class="label">About</p>
-      <h2 id="intro-h" class="h2">I make work that <span class="hl">moves</span>, converts and gets <em class="s">remembered</em>.</h2>
-      <p class="lede">Eight years across video, design, UI/UX and content. These days I also build the tools and Claude skills that take the repetitive parts off the job, under my studio, AI-Floh.</p>
-      <p><a class="sq sq-ghost" href={href('/about/')}><span class="sq-ico" aria-hidden="true">→</span><span>More about me</span></a></p>
+    <div class="hero-foot rise-3">
+      <p class="intro">
+        I'm Vikas, Bubu to most. Designer, video editor and storyteller: eight years, 1000+ projects.
+        These days I also build the tools and Claude skills that take the repetitive parts off the job, under my studio, AI-Floh.
+      </p>
+      <div class="cw-plate">
+        <p class="note" aria-hidden="true">the word from my post goes here
+          <svg viewBox="0 0 60 50" class="note-arrow"><path d="M4 4c10 2 26 10 34 22 4 6 6 12 7 18" /><path d="M36 38l9 7 6-11" /></svg>
+        </p>
+        <CodeWordBox id="cw-home" />
+      </div>
     </div>
-    <figure class="polaroid reveal">
-      <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" />
-      <figcaption>{P.profile.nickname} · {P.profile.name}</figcaption>
-      <span class="sticker" aria-hidden="true">made<br />by hand</span>
-    </figure>
   </section>
 
-  <!-- NUMBERS -->
-  <section class="wrap numbers" aria-label="In numbers">
-    <ul class="stats" role="list">
-      {P.stats.map((s: any, i: number) => (
-        <li class="reveal"><span class={`st-v ${i === 1 ? 'hl' : ''}`}>{s.value}</span><span class="st-l">{s.label}</span></li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- WORK -->
-  <section class="wrap section" id="work" aria-labelledby="work-h">
-    <div class="sec-top reveal">
-      <h2 id="work-h" class="display-sm"><b>Selected</b> <span class="lt">work</span></h2>
-      <a class="sq sq-ghost" href={P.profile.behance} rel="me noopener"><span class="sq-ico" aria-hidden="true">↗</span><span>All on Behance</span></a>
-    </div>
-    <ol class="work" role="list" data-work>
-      {P.projects.map((p: any, i: number) => (
-        <li class="w-row reveal" data-cover={p.cover ? href(p.cover) : undefined}>
-          <a href={p.link} rel="noopener">
-            <span class="w-n">{String(i + 1).padStart(2, '0')}.</span>
-            <span class="w-title">{p.title}</span>
-            <span class="w-tags">{p.tags.join(', ')}</span>
-            <span class="w-year">{p.year}</span>
-            <span class="w-go" aria-hidden="true">↗</span>
-            {p.cover && <img class="w-thumb" src={href(p.cover)} alt={p.coverAlt} loading="lazy" width="600" height="400" />}
+  <!-- 01 FREE -->
+  <section class="block wrap" aria-labelledby="free-h">
+    <header class="b-head">
+      <p class="label"><span class="n">( 01 )</span> Free</p>
+      <h2 id="free-h" class="row-title">Take something useful.</h2>
+      <p class="b-note">Prompts, Claude skills and templates from my own work. No sign-up.</p>
+    </header>
+    <ol class="index" role="list">
+      {freePicks.map((r, i) => (
+        <li>
+          <a class="ix" href={href(`/free/${r.slug}/`)}>
+            <span class="ix-n label">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ix-t">{r.title} {r.standIn && <StandIn />}</span>
+            <span class="ix-m label">{TYPE_LABEL[r.type]}</span>
+            <span class="ix-w label">/{r.codeWord}</span>
+            <span class="ix-a" aria-hidden="true">→</span>
           </a>
         </li>
       ))}
     </ol>
-    <img class="w-float" alt="" aria-hidden="true" hidden />
+    <p class="more"><a class="btn btn-primary" href={href('/free/')}>All {c.resources.length} free things <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 
-  <!-- SERVICES -->
-  <section class="section services" aria-labelledby="svc-h">
-    <div class="wrap">
-      <p class="kick center reveal">What I do</p>
-      <h2 id="svc-h" class="display-sm center reveal"><b>Four things,</b> <span class="lt">done well</span></h2>
-      <ul class="svc" role="list">
-        {services.map((s) => (
-          <li class={`svc-card ${s.tone} reveal`} style={`--tilt:${s.tilt}`}>
-            <div class="svc-art">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[s.icon].svg} />
-            </div>
-            <h3>{s.title}</h3>
-            <p>{s.sub}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="wrap section" aria-labelledby="proc-h">
-    <div class="sec-top reveal">
-      <h2 id="proc-h" class="display-sm"><b>How it</b> <span class="lt">works</span></h2>
-      <p class="label">A <span aria-hidden="true">→</span> B, without extra steps</p>
-    </div>
-    <ol class="steps" role="list">
-      {steps.map((s) => (
-        <li class="step reveal">
-          <span class="step-n">{s.n}</span>
-          <h3>{s.a} <em>{s.b}</em></h3>
-          <p>{s.body}</p>
+  <!-- 02 WORK -->
+  <section class="block wrap" id="work" aria-labelledby="work-h">
+    <header class="b-head">
+      <p class="label"><span class="n">( 02 )</span> Work</p>
+      <h2 id="work-h" class="row-title">Selected work.</h2>
+      <p class="b-note">Video, design and web from the last three years. Full projects live on Behance for now.</p>
+    </header>
+    <ol class="index" role="list" data-work>
+      {work.map((w: any, i: number) => (
+        <li>
+          <a class="ix" href={w.link} rel="noopener" data-cover={w.cover ? href(w.cover) : undefined}>
+            <span class="ix-n label">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ix-t">{w.title}</span>
+            <span class="ix-m label">{w.tags.join(', ')}</span>
+            <span class="ix-w label">{w.year}</span>
+            <span class="ix-a" aria-hidden="true">↗</span>
+          </a>
         </li>
       ))}
     </ol>
+    <img class="w-float" alt="" width="360" height="240" hidden decoding="async" />
+    <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
-  <!-- BUILT -->
-  <section class="wrap section" aria-labelledby="built-h">
-    <div class="sec-top reveal">
-      <h2 id="built-h" class="display-sm"><b>Things I</b> <span class="lt">built</span></h2>
-      <a class="sq sq-ghost" href={href('/tools/')}><span class="sq-ico" aria-hidden="true">→</span><span>All tools</span></a>
-    </div>
-    <ul class="built" role="list">
-      {contentintel && (
-        <li class="win win-big reveal">
-          <p class="win-bar"><span>contentintel.in</span><span class="chip">Live</span></p>
-          <img src={href('/media/portfolio/contentintel-site.webp')} alt="The ContentIntel website" width="900" height="1347" loading="lazy" />
-          <div class="win-body"><h3>{contentintel.title}</h3><p>{contentintel.summary}</p><a class="link" href={href('/tools/contentintel/')}>About the tool →</a></div>
-        </li>
-      )}
-      {captions && (
-        <li class="win reveal">
-          <p class="win-bar"><span>caption-studio.web</span><span class="chip chip-b">Beta</span></p>
-          <div class="win-body"><h3>{captions.title}</h3><p>{captions.summary}</p><a class="link" href={href('/tools/cutpilot-caption-studio/')}>About the tool →</a></div>
-        </li>
-      )}
-      <li class="win reveal">
-        <p class="win-bar"><span>skills.zip</span><span class="chip">Free · {skills}</span></p>
-        <div class="win-body"><h3>Claude skills</h3><p>The skills I use for decks, logos, carousels, thumbnails, video prompts and writing.</p><a class="link" href={href('/skills/')}>Get the skills →</a></div>
-      </li>
-      <li class="win reveal">
-        <p class="win-bar"><span>inkline.mp4</span><span class="chip chip-b">Lab</span></p>
-        <div class="win-body"><h3>Inkline</h3><p>A 30-second engraved 3D launch film made from a pasted script.</p><a class="link" href={href('/lab/inkline/')}>See the experiment →</a></div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- FREE STRIP -->
-  <section class="wrap free-strip reveal" aria-labelledby="free-h">
-    <div>
-      <h2 id="free-h" class="display-sm"><b>{free} free</b> <span class="lt">things</span></h2>
-      <p>Every post ends with a word. Type it here and get the prompt, skill or template.</p>
-    </div>
-    <a class="sq" href={href('/free/')}><span class="sq-ico" aria-hidden="true">→</span><span>Open the free list</span></a>
-  </section>
-
-  <!-- TICKET -->
-  <section class="wrap section" aria-labelledby="ticket-h">
-    <div class="ticket reveal">
-      <div class="t-main">
-        <p class="label">Contact</p>
-        <h2 id="ticket-h" class="display-sm"><b>Ready to make</b> <span class="lt">something?</span></h2>
-        <p>Treat it like a first chat. A few lines about what you're making, who it's for and when you need it.</p>
-        <p class="t-cta">
-          <a class="sq" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="home-talk"><span class="sq-ico" aria-hidden="true">→</span><span>Email me</span></a>
-          <a class="sq sq-ghost" href={P.profile.linkedin} rel="me noopener" data-track="Follow Click" data-track-platform="linkedin"><span class="sq-ico" aria-hidden="true">in</span><span>LinkedIn</span></a>
-        </p>
+  <!-- 03 STUDIO -->
+  <section class="block wrap" aria-labelledby="studio-h">
+    <header class="b-head">
+      <p class="label"><span class="n">( 03 )</span> Studio</p>
+      <h2 id="studio-h" class="row-title">Two ways to work with AI-Floh.</h2>
+    </header>
+    <div class="pillars">
+      <div class="pillar">
+        <p class="label"><span class="sw sw-a" aria-hidden="true" />Studio · done for you</p>
+        <p class="p-lede">We make the thing: films, edits, designs and pages, with a person on every decision.</p>
+        <ul class="plain" role="list">
+          {studio.map((s: any) => <li><b>{s.title}</b><span>{s.tags.join(' · ')}</span></li>)}
+        </ul>
       </div>
-      <div class="t-stub" aria-hidden="true">
-        <p class="mono">VB / 2026</p>
-        <p class="t-big">✂</p>
-        <p class="mono">Open for work</p>
-        <p class="mono"><time data-clock>IST</time></p>
-        <p class="mono small">Made by hand · sped up by AI</p>
+      <div class="pillar">
+        <p class="label"><span class="sw sw-b" aria-hidden="true" />Automate · built for you</p>
+        <p class="p-lede">We build the machine: workflows, plugins and Claude skills that take the repeat work off your team.</p>
+        <ul class="plain" role="list">
+          {automate && <li><b>{automate.title}</b><span>{automate.tags.join(' · ')}</span></li>}
+          <li><b>Tools</b><span>{tools.map((t) => t.title).slice(0, 3).join(' · ')}</span></li>
+        </ul>
+      </div>
+    </div>
+    <ol class="steps" role="list" aria-label="How a project runs">
+      {steps.map((s, i) => (
+        <li><span class="label">{String(i + 1).padStart(2, '0')}</span><b>{s.a}</b><span>{s.body}</span></li>
+      ))}
+    </ol>
+    <p class="more"><a class="btn" href={href('/studio/')}>How a project runs <span class="arrow" aria-hidden="true">→</span></a></p>
+  </section>
+
+  <!-- 04 BUILT -->
+  <section class="block wrap" aria-labelledby="built-h">
+    <header class="b-head">
+      <p class="label"><span class="n">( 04 )</span> Built</p>
+      <h2 id="built-h" class="row-title">Software I made to skip the grind.</h2>
+    </header>
+    <div class="built">
+      <ol class="index" role="list">
+        {tools.map((t, i) => (
+          <li>
+            <a class="ix" href={href(`/tools/${t.slug}/`)}>
+              <span class="ix-n label">{String(i + 1).padStart(2, '0')}</span>
+              <span class="ix-t">{t.title} {t.standIn && <StandIn />}</span>
+              <span class="ix-m label">{t.platforms.slice(0, 2).join(', ') || t.category}</span>
+              <span class="ix-w label">{STATUS[t.status]}</span>
+              <span class="ix-a" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <figure class="plate">
+        <img src={href('/media/portfolio/contentintel-site.webp')} alt="The ContentIntel website: a dark landing page reading Know it'll work before you hit publish" width="900" height="1347" loading="lazy" decoding="async" />
+        <figcaption class="label">ContentIntel · contentintel.in</figcaption>
+      </figure>
+    </div>
+    <p class="more"><a class="btn" href={href('/tools/')}>Tools, experiments and code <span class="arrow" aria-hidden="true">→</span></a></p>
+  </section>
+
+  <!-- 05 ABOUT -->
+  <section class="block wrap" aria-labelledby="about-h">
+    <header class="b-head">
+      <p class="label"><span class="n">( 05 )</span> About</p>
+      <h2 id="about-h" class="row-title">The person behind it.</h2>
+    </header>
+    <div class="about">
+      <figure class="me">
+        <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
+        <figcaption class="label">{P.profile.nickname} · {P.profile.name}</figcaption>
+      </figure>
+      <div>
+        <p class="p-lede">Eight years across video production, motion graphics, brand design, UI/UX and content strategy. I make the work, and I build the shortcuts that let me make more of it. The taste stays human.</p>
+        <dl class="stats">
+          {P.stats.map((s: any) => <div><dt class="label">{s.label}</dt><dd>{s.value}</dd></div>)}
+        </dl>
+        <p class="more"><a class="btn" href={href('/about/')}>More about me <span class="arrow" aria-hidden="true">→</span></a></p>
       </div>
     </div>
   </section>
 </Base>
 
 <script>
-  // Live local time (India). Display only; nothing stored.
+  // Local time in India, display only; nothing stored.
   const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
   const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', hour12: false });
-  const tick = () => clocks.forEach((el) => (el.textContent = `${fmt.format(new Date())} IST`));
+  const tick = () => clocks.forEach((el) => (el.textContent = `${fmt.format(new Date())} in India`));
   tick();
   setInterval(tick, 30000);
 
-  // Reveal on scroll: hidden only once JS runs, so no-JS visitors see everything.
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce && 'IntersectionObserver' in window) {
-    document.documentElement.classList.add('js-reveal');
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }, { rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-  }
-
-  // Floating cover preview on the work list (mouse only).
+  // Cover preview that follows the pointer on the work index (fine pointers only, rows with a cover only).
   const list = document.querySelector<HTMLElement>('[data-work]');
   const float = document.querySelector<HTMLImageElement>('.w-float');
   if (list && float && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let x = 0, y = 0, raf = 0;
-    const move = () => { raf = 0; float.style.transform = `translate(${x}px, ${y}px) rotate(-3deg)`; };
+    const move = () => { raf = 0; float.style.transform = `translate(${x}px, ${y}px)`; };
     list.addEventListener('pointermove', (e) => {
-      const row = (e.target as HTMLElement).closest<HTMLElement>('.w-row');
-      const src = row?.dataset.cover;
+      const src = (e.target as HTMLElement).closest<HTMLElement>('.ix')?.dataset.cover;
       if (src) { if (float.getAttribute('src') !== src) float.src = src; float.hidden = false; } else float.hidden = true;
-      x = e.clientX + 24; y = e.clientY - 140;
+      x = e.clientX + 28; y = e.clientY - 120;
       if (!raf) raf = requestAnimationFrame(move);
     });
     list.addEventListener('pointerleave', () => (float.hidden = true));
@@ -286,176 +218,121 @@ const steps = [
 </script>
 
 <style>
-  /* ---------- header ---------- */
-  .top { padding-top: var(--space-4); border-bottom: 1px solid var(--color-text); }
-  .wordmark {
-    margin: 0; max-width: none; padding-inline: clamp(8px, 1.2vw, 20px); white-space: nowrap; overflow: hidden;
-    font-size: 19.6vw; font-weight: 850; letter-spacing: -0.07em; line-height: 0.82; color: var(--color-text);
-  }
-  .wordmark em { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.04em; color: var(--color-b); }
-  .meta { display: grid; grid-template-columns: 1fr; gap: var(--space-2); padding-block: var(--space-3) var(--space-4); font-size: var(--text-sm); align-items: center; }
-  .meta p { margin: 0; max-width: none; }
-  .m-nav { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
-  .m-nav a { text-decoration: none; min-height: 32px; display: inline-flex; align-items: center; }
-  .m-nav a:hover { color: var(--color-b); }
-  .m-free { background: var(--color-a-fill); padding-inline: var(--space-2); border: 1px solid var(--color-text); font-weight: 700; }
-  .m-right { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); align-items: center; }
-  .m-mail { font-family: var(--font-serif); font-style: italic; font-size: 1.1em; color: var(--color-b); }
-  .m-time { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
-  .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); box-shadow: 0 0 0 1px var(--color-text); }
-  @media (min-width: 56rem) {
-    .meta { grid-template-columns: 1fr auto 1fr; }
-    .m-nav { justify-content: center; }
-    .m-right { justify-content: flex-end; }
-  }
-
-  /* ---------- display type: bold sans + light serif ---------- */
-  .display, .display-sm { font-weight: 400; letter-spacing: -0.04em; line-height: 0.9; margin: 0; text-transform: uppercase; }
-  .display b, .display-sm b { font-weight: 850; letter-spacing: -0.055em; }
-  .display .lt, .display-sm .lt { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.02em; text-transform: none; font-style: italic; color: var(--color-b); }
-  .display { font-size: clamp(2.6rem, 0.6rem + 8.4vw, 9.5rem); text-align: center; }
-  .display .ln { display: block; }
-  .display-sm { font-size: clamp(2.2rem, 1rem + 4.4vw, 5.25rem); }
-  .center { text-align: center; }
-  .kick { font-family: var(--font-serif); font-size: clamp(1.3rem, 1rem + 1vw, 2rem); text-align: center; margin: 0 auto var(--space-4); letter-spacing: -0.01em; }
-  .kick .serif { font-style: italic; color: var(--color-b); }
-  .label { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 var(--space-3); }
-
   /* ---------- hero ---------- */
-  .hero { padding-block: clamp(3rem, 8vh, 6rem) var(--space-12); text-align: center; }
-  .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-3); margin: var(--space-12) auto 0; }
-  .equation { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin: var(--space-12) auto 0; max-width: none; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: var(--text-xs); letter-spacing: 0.12em; }
-  .equation i { font-style: normal; color: var(--color-b); }
-  .eq-end { background: var(--color-a-fill); padding-inline: 0.4em; }
-
-  /* square arrow-box buttons */
-  .sq { display: inline-flex; align-items: stretch; min-height: 48px; text-decoration: none; font-weight: 750; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.02em; border: 1.5px solid var(--color-text); background: var(--color-text); color: var(--color-bg); }
-  .sq > span:last-child { display: inline-flex; align-items: center; padding: 0 var(--space-4); }
-  .sq-ico { display: inline-grid; place-items: center; width: 48px; background: var(--color-a-fill); color: var(--color-a-ink); border-right: 1.5px solid var(--color-text); font-size: 1.1rem; transition: transform var(--dur-base) var(--ease-standard); }
-  .sq-ghost { background: var(--color-surface); color: var(--color-text); }
-  @media (hover: hover) {
-    .sq:hover .sq-ico { transform: translateX(3px); }
-    .sq:hover { box-shadow: 4px 4px 0 var(--color-b); }
+  .hero { padding-block: var(--space-8) var(--space-16); }
+  .hero-foot > * { min-width: 0; }
+  .status { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin-bottom: var(--space-12); }
+  .status a { color: var(--color-b); }
+  .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); box-shadow: 0 0 0 1px var(--color-text); margin-right: 0.6em; vertical-align: 0.05em; }
+  .display { font-size: var(--t-display); font-weight: 800; letter-spacing: -0.055em; line-height: 0.92; margin: 0; max-width: none; }
+  .display .l2 { display: block; }
+  .hand { position: relative; font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; padding-inline: 0.04em; white-space: nowrap; }
+  .stroke { position: absolute; left: -2%; right: -4%; bottom: -0.02em; width: 106%; height: 0.32em; z-index: -1; overflow: visible; }
+  .stroke path { fill: none; stroke: var(--color-a-fill); stroke-width: 9; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .stroke path + path { stroke-width: 5; opacity: 0.8; }
+  .stop-a { color: var(--color-a); }
+  .stop-b { color: var(--color-b); }
+  .hero-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--color-text); }
+  .intro { font-size: var(--t-body); max-width: 46ch; margin: 0; }
+  .cw-plate { position: relative; border: 1px solid var(--color-text); background: var(--color-surface); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-text); }
+  /* A margin note in Vikas's hand (desktop only): the one place the serif leaves the headline. */
+  .note { display: none; }
+  @media (min-width: 72rem) {
+    .note {
+      display: block; position: absolute; right: calc(100% + 1.25rem); top: -0.5rem; width: 13rem; margin: 0;
+      font-family: var(--font-serif); font-style: italic; font-size: 1.375rem; line-height: 1.1; color: var(--color-b); text-align: right; transform: rotate(-4deg);
+    }
+    .note-arrow { position: absolute; right: -2.6rem; top: 1.6rem; width: 3rem; height: 2.5rem; overflow: visible; }
+    .note-arrow path { fill: none; stroke: var(--color-b); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   }
-  .sq { transition: box-shadow var(--dur-base) var(--ease-standard); }
-
-  /* ---------- name grid ---------- */
-  .namegrid-wrap { padding-block: var(--space-8) var(--space-16); }
-  .namegrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--color-line); border-left: 1px solid var(--color-line); }
-  @media (min-width: 48rem) { .namegrid { grid-template-columns: repeat(5, 1fr); } }
-  .ng { aspect-ratio: 1; border-right: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); display: grid; place-items: center; position: relative; background: var(--color-surface); overflow: hidden; }
-  .ng-letter span { font-family: var(--font-serif); font-size: clamp(3rem, 2rem + 5vw, 7.5rem); line-height: 1; }
-  .ng-icon svg { width: 46%; height: 46%; transition: transform var(--dur-slow) var(--ease-standard); }
-  .tone-a svg { color: var(--color-text); fill: var(--color-a-fill); fill-opacity: 0.9; }
-  .tone-b svg { color: var(--color-b); fill: var(--color-b-soft); }
-  .tone-ink svg { color: var(--color-text); }
-  .ng-label { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: ui-monospace, Menlo, monospace; font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted); }
-  @media (hover: hover) { .ng-icon:hover svg { transform: rotate(-8deg) scale(1.12); } .ng-icon:hover { background: var(--color-bg); } }
-
-  /* ---------- intro ---------- */
-  .intro { display: grid; gap: var(--space-12); align-items: center; }
-  @media (min-width: 56rem) { .intro { grid-template-columns: 1.4fr 1fr; } }
-  .h2 { font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem); letter-spacing: -0.045em; line-height: 1; font-weight: 750; }
-  .h2 em { font-size: 1.08em; }
-  .lede { color: var(--color-text-muted); }
-  .polaroid { justify-self: center; position: relative; margin: 0; background: #fff; padding: 14px 14px 52px; box-shadow: 0 18px 40px rgba(14, 14, 16, 0.14), 0 0 0 1px rgba(14, 14, 16, 0.06); transform: rotate(4deg); width: min(320px, 80vw); }
-  .polaroid img { width: 100%; height: auto; display: block; filter: saturate(0.9); }
-  .polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; }
-  .sticker { position: absolute; top: -22px; left: -26px; width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; text-align: center; background: var(--color-a-fill); border: 1.5px solid var(--color-text); font-weight: 850; font-size: 0.8rem; line-height: 1.05; text-transform: uppercase; transform: rotate(-14deg); }
-
-  /* ---------- numbers ---------- */
-  .stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1.5px solid var(--color-text); }
-  @media (min-width: 56rem) { .stats { grid-template-columns: repeat(5, 1fr); } }
-  .stats li { display: grid; gap: var(--space-2); padding: var(--space-6) var(--space-4) var(--space-6) 0; border-bottom: 1px solid var(--color-line); }
-  .st-v { font-size: clamp(2.5rem, 1.4rem + 3.6vw, 4.75rem); font-weight: 850; letter-spacing: -0.06em; line-height: 1; justify-self: start; }
-  .st-l { font-size: var(--text-sm); color: var(--color-text-muted); }
-
-  /* ---------- section tops ---------- */
-  .sec-top { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-8); }
-
-  /* ---------- work list ---------- */
-  .work { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--color-text); }
-  .w-row { border-bottom: 1px solid var(--color-line); }
-  .w-row a { display: grid; grid-template-columns: 2.5rem 1fr auto; grid-template-areas: 'n title go' '. tags year' '. thumb thumb'; gap: var(--space-1) var(--space-3); padding: var(--space-6) 0; text-decoration: none; align-items: baseline; }
-  .w-n { grid-area: n; font-family: ui-monospace, Menlo, monospace; font-size: var(--text-sm); color: var(--color-text-muted); }
-  .w-title { grid-area: title; font-size: clamp(1.75rem, 1rem + 3.4vw, 4.25rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1; transition: color var(--dur-base) var(--ease-standard), transform var(--dur-slow) var(--ease-standard); }
-  .w-tags { grid-area: tags; color: var(--color-text-muted); font-size: var(--text-sm); }
-  .w-year { grid-area: year; font-family: ui-monospace, Menlo, monospace; font-size: var(--text-sm); }
-  .w-go { grid-area: go; font-size: 1.5rem; transition: transform var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); }
-  .w-thumb { grid-area: thumb; width: 100%; max-height: 16rem; object-fit: cover; margin-top: var(--space-3); border: 1px solid var(--color-line); }
   @media (min-width: 56rem) {
-    .w-row a { grid-template-columns: 4rem 1fr 18rem 5rem 2rem; grid-template-areas: 'n title tags year go'; align-items: center; }
-    .w-thumb { display: none; }
+    .hero-foot { grid-template-columns: 1fr minmax(0, 28rem); align-items: start; }
+    .cw-plate { justify-self: end; width: 100%; }
   }
-  @media (hover: hover) {
-    .w-row a:hover .w-title { color: var(--color-b); transform: translateX(0.15em); }
-    .w-row a:hover .w-go { transform: translate(4px, -4px); color: var(--color-b); }
+  @media (prefers-reduced-motion: no-preference) {
+    .stroke path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 700ms var(--ease-standard) 420ms forwards; }
+    .stroke path + path { animation-delay: 620ms; }
+    :global(html.booting) .stroke path { animation-play-state: paused; }
   }
-  .w-float { position: fixed; left: 0; top: 0; width: 320px; height: 220px; object-fit: cover; pointer-events: none; z-index: 40; background: #fff; padding: 8px; box-shadow: 0 24px 48px rgba(14, 14, 16, 0.22); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
 
-  /* ---------- services: tilted cards ---------- */
-  .services { background: var(--color-surface-2); }
-  .svc { list-style: none; padding: 0; margin: var(--space-12) 0 0; display: grid; gap: var(--space-6); grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 64rem) { .svc { grid-template-columns: repeat(4, 1fr); gap: 0; } }
-  .svc-card { padding: 12px 12px 22px; transform: rotate(var(--tilt)); transition: transform var(--dur-slow) var(--ease-standard); box-shadow: 0 16px 34px rgba(14, 14, 16, 0.14); }
-  .svc-art { aspect-ratio: 4 / 5; display: grid; place-items: center; background: var(--color-bg); }
-  .svc-art svg { width: 58%; height: 58%; }
-  .svc-card h3 { font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem); font-weight: 850; letter-spacing: -0.06em; text-transform: uppercase; text-align: center; margin: var(--space-3) 0 0; line-height: 0.9; }
-  .svc-card p { font-family: var(--font-serif); font-size: 1.05rem; text-align: center; margin: var(--space-2) auto 0; line-height: 1.2; }
-  .svc-b { background: var(--color-b); color: #fff; }
-  .svc-b .svc-art { color: var(--color-b); }
-  .svc-a { background: var(--color-a-fill); color: var(--color-text); }
-  .svc-a .svc-art { color: var(--color-text); }
-  .svc-ink { background: var(--color-text); color: #fff; }
-  .svc-ink .svc-art { color: var(--color-text); }
-  .svc-w { background: #fff; color: var(--color-text); outline: 1.5px solid var(--color-text); }
-  .svc-w .svc-art { color: var(--color-b); background: var(--color-b-soft); }
-  @media (hover: hover) { .svc-card:hover { transform: rotate(0deg) translateY(-8px); z-index: 2; } }
+  /* ---------- blocks ---------- */
+  .block { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
+  .b-head { display: grid; gap: var(--space-3); margin-bottom: var(--space-8); }
+  .b-head .label { margin: 0; }
+  .n { color: var(--color-b); margin-right: 0.4em; }
+  .row-title { font-size: var(--t-row); font-weight: 750; letter-spacing: -0.035em; line-height: 1.05; margin: 0; }
+  .b-note { margin: 0; color: var(--color-text-muted); max-width: 48ch; }
+  @media (min-width: 64rem) {
+    .block { display: grid; grid-template-columns: 15rem minmax(0, 1fr); column-gap: var(--space-8); }
+    .b-head { grid-column: 1 / -1; grid-template-columns: 15rem minmax(0, 1fr); column-gap: var(--space-8); align-items: baseline; }
+    .b-head > :not(.label) { grid-column: 2; }
+    .block > :not(.b-head):not(.w-float) { grid-column: 2; }
+  }
+  .more { margin: var(--space-8) 0 0; }
 
-  /* ---------- process: solid cobalt cards ---------- */
-  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-  @media (min-width: 48rem) { .steps { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 72rem) { .steps { grid-template-columns: repeat(4, 1fr); } }
-  .step { background: var(--color-b); color: #fff; padding: var(--space-6); min-height: 15rem; display: flex; flex-direction: column; }
-  .step-n { font-family: ui-monospace, Menlo, monospace; font-size: var(--text-xs); opacity: 0.85; }
-  .step h3 { font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); font-weight: 650; letter-spacing: -0.03em; margin: auto 0 var(--space-3); line-height: 1; }
-  .step h3 em { display: block; font-family: var(--font-serif); font-weight: 400; font-style: italic; color: var(--color-a-fill); }
-  .step p { margin: 0; font-size: var(--text-sm); }
+  /* ---------- the numbered index (used for free, work and tools) ---------- */
+  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
+  .index li { border-bottom: 1px solid var(--color-line-strong); }
+  .ix {
+    position: relative; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; column-gap: var(--space-3); row-gap: var(--space-1);
+    align-items: baseline; padding: var(--space-4) 0; text-decoration: none; isolation: isolate;
+  }
+  .ix-n { color: var(--color-text-muted); grid-row: 1 / span 2; }
+  .ix-t { font-weight: 650; font-size: var(--t-body); letter-spacing: -0.01em; }
+  .ix-m { grid-column: 2; color: var(--color-text-muted); }
+  .ix-w { grid-column: 3; grid-row: 1; color: var(--color-text-muted); }
+  .ix-a { display: none; }
+  @media (min-width: 48rem) {
+    .ix { grid-template-columns: 3rem minmax(0, 1fr) 14rem 7rem 1.5rem; padding: var(--space-6) 0; }
+    .ix-n, .ix-m, .ix-w, .ix-a { grid-row: 1; }
+    .ix-m { grid-column: 3; }
+    .ix-w { grid-column: 4; }
+    .ix-a { display: block; grid-column: 5; text-align: right; color: var(--color-b); }
+    .ix-t { font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.03em; }
+  }
+  /* The highlighter: lime slides in under the row, the way a marker would. */
+  .ix::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
+  @media (hover: hover) { .ix:hover::before { transform: scaleX(1); } .ix:hover .ix-n, .ix:hover .ix-m, .ix:hover .ix-w { color: var(--color-text); } }
+  .ix:focus-visible::before { transform: scaleX(1); }
 
-  /* ---------- built: window cards ---------- */
-  .built { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-4); }
-  @media (min-width: 56rem) { .built { grid-template-columns: 1.3fr 1fr; } .win-big { grid-row: span 3; } }
-  .win { background: var(--color-surface); border: 1.5px solid var(--color-text); box-shadow: 6px 6px 0 var(--color-text); display: flex; flex-direction: column; transition: transform var(--dur-base) var(--ease-standard), box-shadow var(--dur-base) var(--ease-standard); }
-  @media (hover: hover) { .win:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--color-b); } }
-  .win-bar { display: flex; justify-content: space-between; align-items: center; margin: 0; max-width: none; padding: var(--space-2) var(--space-4); border-bottom: 1.5px solid var(--color-text); font-family: ui-monospace, Menlo, monospace; font-size: var(--text-xs); }
-  .chip { background: var(--color-a-fill); border: 1px solid var(--color-text); padding: 0 0.5em; text-transform: uppercase; letter-spacing: 0.06em; }
-  .chip-b { background: var(--color-b); color: #fff; border-color: var(--color-b); }
-  .win img { width: 100%; height: 28rem; object-fit: cover; object-position: top; border-bottom: 1.5px solid var(--color-text); }
-  .win-body { padding: var(--space-6); display: grid; gap: var(--space-2); }
-  .win-body h3 { font-size: var(--text-xl); margin: 0; letter-spacing: -0.04em; }
-  .win-body p { margin: 0; color: var(--color-text-muted); }
-  .link { color: var(--color-b); font-weight: 700; text-decoration: none; }
-  .link:hover { text-decoration: underline; }
+  .w-float { position: fixed; left: 0; top: 0; z-index: 60; width: 300px; height: auto; pointer-events: none; border: 1px solid var(--color-text); box-shadow: 6px 6px 0 var(--color-text); }
 
-  /* ---------- free strip ---------- */
-  .free-strip { display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); flex-wrap: wrap; padding: var(--space-8); background: var(--color-a-fill); border: 1.5px solid var(--color-text); margin-block: var(--space-8); }
-  .free-strip .display-sm .lt { color: var(--color-text); }
-  .free-strip p { margin: var(--space-3) 0 0; }
+  /* ---------- studio ---------- */
+  .pillars { display: grid; gap: var(--space-8); }
+  @media (min-width: 48rem) { .pillars { grid-template-columns: 1fr 1fr; gap: 0; } .pillar + .pillar { border-left: 1px solid var(--color-line-strong); padding-left: var(--space-8); } .pillar:first-child { padding-right: var(--space-8); } }
+  .pillar .label { display: flex; align-items: center; gap: var(--space-2); }
+  .sw { width: 12px; height: 12px; display: inline-block; border: 1px solid var(--color-text); }
+  .sw-a { background: var(--color-a-fill); }
+  .sw-b { background: var(--color-b); }
+  .p-lede { font-size: var(--t-lede); line-height: 1.4; letter-spacing: -0.015em; max-width: 34ch; }
+  .plain { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+  .plain li { display: grid; gap: var(--space-1); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-line); }
+  .plain span { color: var(--color-text-muted); font-size: var(--text-sm); }
+  .steps { list-style: none; margin: var(--space-12) 0 0; padding: 0; display: grid; gap: var(--space-6); counter-reset: s; }
+  .steps li { display: grid; gap: var(--space-1); padding-top: var(--space-3); border-top: 2px solid var(--color-b); }
+  .steps li:nth-child(2) { border-top-color: var(--color-a-fill); }
+  .steps b { font-size: var(--t-body); }
+  .steps span:last-child { color: var(--color-text-muted); font-size: var(--text-sm); }
+  @media (min-width: 48rem) { .steps { grid-template-columns: repeat(4, 1fr); } }
 
-  /* ---------- ticket ---------- */
-  .ticket { display: grid; background: var(--color-surface); border: 1.5px solid var(--color-text); }
-  @media (min-width: 56rem) { .ticket { grid-template-columns: 1fr 18rem; } }
-  .t-main { padding: var(--space-8); display: grid; gap: var(--space-4); }
-  .t-main p { margin: 0; }
-  .t-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .t-stub { padding: var(--space-8); border-top: 2px dashed var(--color-b); display: grid; gap: var(--space-2); align-content: center; justify-items: start; background: var(--color-bg); }
-  @media (min-width: 56rem) { .t-stub { border-top: 0; border-left: 2px dashed var(--color-b); } }
-  .t-stub p { margin: 0; }
-  .mono { font-family: ui-monospace, Menlo, monospace; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; }
-  .t-big { font-size: 2rem; color: var(--color-b); }
-  .small { color: var(--color-text-muted); }
+  /* ---------- built ---------- */
+  .built { display: grid; gap: var(--space-8); }
+  .plate { margin: 0; border: 1px solid var(--color-text); background: var(--color-surface); max-width: 22rem; }
+  .plate img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; }
+  .plate figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
+  @media (min-width: 64rem) { .built { grid-template-columns: minmax(0, 1fr) 15rem; align-items: start; } .built .ix { grid-template-columns: 3rem minmax(0, 1fr) 9rem 6.5rem 1.5rem; } }
+  @media (max-width: 63.99rem) { .plate { display: none; } }
 
-  /* ---------- reveal ---------- */
-  :global(html.js-reveal) .reveal { opacity: 0; translate: 0 24px; transition: opacity 600ms var(--ease-standard), translate 600ms var(--ease-standard); }
-  :global(html.js-reveal) .reveal:global(.in) { opacity: 1; translate: 0 0; }
+  /* ---------- about ---------- */
+  .about { display: grid; gap: var(--space-8); }
+  @media (min-width: 48rem) { .about { grid-template-columns: 12rem minmax(0, 1fr); } }
+  .me { margin: 0; border: 1px solid var(--color-text); background: var(--color-surface); max-width: 12rem; }
+  .me img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(0.15); }
+  .me figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin: var(--space-8) 0 0; border-top: 1px solid var(--color-line-strong); }
+  .stats div { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; gap: var(--space-1); }
+  .stats dd { margin: 0; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+  .stats div:nth-child(2) dd { background: linear-gradient(transparent 55%, var(--color-a-fill) 55%, var(--color-a-fill) 90%, transparent 90%); justify-self: start; align-self: flex-start; }
+  @media (min-width: 64rem) { .stats { grid-template-columns: repeat(5, 1fr); } }
 </style>

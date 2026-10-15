@@ -85,12 +85,14 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
 .section { padding-block: var(--space-16); }
 .section + .section { border-top: 1px solid var(--color-line); }
 .eyebrow, .kicker {
-  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: var(--t-label); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--color-text-muted); margin: 0 0 var(--space-4);
   display: flex; gap: var(--space-3); align-items: center;
 }
 .kicker .idx { color: var(--color-b); font-variant-numeric: tabular-nums; }
-.kicker::after { content: ''; flex: 1; height: 1px; background: var(--color-line); }
+.kicker::after { content: ''; flex: 1; height: 1px; background: var(--color-text); }
+.kicker .idx::before { content: '( '; }
+.kicker .idx::after { content: ' )'; }
 .lede { font-size: var(--text-lg); line-height: 1.45; color: var(--color-text-muted); max-width: 44ch; letter-spacing: -0.01em; }
 .muted { color: var(--color-text-muted); }
 .a { color: var(--color-a); }
@@ -99,11 +101,18 @@ em.s { color: var(--color-b); }
 .hl { background: linear-gradient(transparent 58%, var(--color-a-fill) 58%, var(--color-a-fill) 92%, transparent 92%); padding-inline: 0.06em; }
 .b { color: var(--color-b); }
 
+/* Label: the mono metadata voice. */
+.label {
+  font-family: var(--font-mono); font-size: var(--t-label); font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; line-height: 1.5; color: var(--color-text);
+}
+p.label { max-width: none; }
+
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
-  min-height: 48px; padding: 0 var(--space-6); border-radius: 999px;
-  border: 1px solid var(--color-line-strong); background: transparent; color: var(--color-text);
+  min-height: 48px; padding: 0 var(--space-6); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: var(--t-label) !important; border-radius: 0;
+  border: 1px solid var(--color-text); background: transparent; color: var(--color-text);
   font: inherit; font-weight: 650; font-size: var(--text-sm); letter-spacing: -0.005em;
   text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: transform var(--dur-fast) var(--ease-standard), background-color var(--dur-base) var(--ease-standard),
@@ -120,7 +129,7 @@ em.s { color: var(--color-b); }
 
 .tag {
   display: inline-flex; align-items: center; gap: 0.4em; padding: 0.15em 0.6em;
-  border-radius: 999px; border: 1px solid var(--color-line-strong);
+  border-radius: 0; border: 1px solid var(--color-line-strong);
   font-size: var(--text-xs); font-weight: 650; white-space: nowrap; line-height: 1.5;
 }
 .tag-a { color: var(--color-a); border-color: currentColor; }
