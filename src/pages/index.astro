@@ -242,7 +242,8 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .display { font-size: var(--t-display); font-weight: 800; letter-spacing: -0.055em; line-height: 0.92; margin: 0; max-width: none; }
   .display .l1, .display .l2 { display: block; }
   .hand { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; padding-inline: 0.04em; background: linear-gradient(transparent 62%, var(--color-a-fill) 62%, var(--color-a-fill) 88%, transparent 88%); }
-  .stop-a { color: var(--color-a); }
+  /* the hand stop is the lime itself, outlined in ink so it holds on paper (decorative glyph, aria-hidden by context) */
+  .stop-a { color: var(--color-a-fill); -webkit-text-stroke: 0.035em var(--color-text); paint-order: stroke fill; }
   .stop-b { color: var(--color-b); }
 
   .fig1 { position: relative; margin: var(--space-12) 0 0; }
@@ -385,7 +386,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .room-lime { --bandc: var(--color-a-fill); color: var(--color-a-ink); }
   .room-blue { --bandc: var(--color-b); color: var(--color-b-ink); }
   .room-lime::before, .room-lime::after, .room-blue::before, .room-blue::after { display: none; }
-  .room-lime .room-h .n, .room-lime .stop-a { color: var(--color-a-ink); }
+  .room-lime .room-h .n, .room-lime .stop-a { color: var(--color-a-ink); -webkit-text-stroke: 0; }
   .room-blue .room-h .n, .room-blue .stop-b { color: var(--color-b-ink); }
   .room-lime .index, .room-lime .index li { border-color: rgba(20, 20, 20, 0.35); }
   .room-blue .index, .room-blue .index li { border-color: rgba(255, 255, 255, 0.4); }
