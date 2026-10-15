@@ -31,14 +31,14 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 90;
-  opacity: 0.06;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 main { flex: 1; }
 [lang='hi'] { font-family: var(--font-deva); }
 img, svg, video { max-width: 100%; height: auto; }
-::selection { background: var(--color-a); color: var(--color-a-ink); }
+::selection { background: var(--color-a-fill); color: var(--color-a-ink); }
 
 h1, h2, h3 {
   line-height: var(--leading-tight);
@@ -58,7 +58,7 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
 
 .skip-link {
   position: absolute; left: var(--space-2); top: var(--space-2); z-index: 100;
-  padding: var(--space-2) var(--space-4); background: var(--color-a); color: var(--color-a-ink); font-weight: 700;
+  padding: var(--space-2) var(--space-4); background: var(--color-a-fill); color: var(--color-a-ink); font-weight: 700;
   transform: translateY(-200%);
 }
 .skip-link:focus-visible { transform: none; }
@@ -89,13 +89,14 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
   color: var(--color-text-muted); margin: 0 0 var(--space-4);
   display: flex; gap: var(--space-3); align-items: center;
 }
-.kicker .idx { color: var(--color-a); font-variant-numeric: tabular-nums; }
+.kicker .idx { color: var(--color-b); font-variant-numeric: tabular-nums; }
 .kicker::after { content: ''; flex: 1; height: 1px; background: var(--color-line); }
 .lede { font-size: var(--text-lg); line-height: 1.45; color: var(--color-text-muted); max-width: 44ch; letter-spacing: -0.01em; }
 .muted { color: var(--color-text-muted); }
 .a { color: var(--color-a); }
 .serif, em.s { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
-em.s { color: var(--color-a); }
+em.s { color: var(--color-b); }
+.hl { background: linear-gradient(transparent 58%, var(--color-a-fill) 58%, var(--color-a-fill) 92%, transparent 92%); padding-inline: 0.06em; }
 .b { color: var(--color-b); }
 
 /* ---------- buttons ---------- */
@@ -109,11 +110,11 @@ em.s { color: var(--color-a); }
     border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard);
 }
 .btn:active { transform: scale(0.98); }
-.btn-primary { background: var(--color-a); border-color: var(--color-a); color: var(--color-a-ink); }
+.btn-primary { background: var(--color-a-fill); border-color: var(--color-text); color: var(--color-a-ink); }
 .btn .arrow { transition: transform var(--dur-base) var(--ease-standard); }
 @media (hover: hover) {
   .btn:hover { border-color: var(--color-text); }
-  .btn-primary:hover { background: var(--color-text); border-color: var(--color-text); }
+  .btn-primary:hover { background: var(--color-text); border-color: var(--color-text); color: var(--color-bg); }
   .btn:hover .arrow { transform: translateX(3px); }
 }
 
@@ -131,7 +132,7 @@ em.s { color: var(--color-a); }
 /* ---------- prose ---------- */
 .prose { max-width: var(--measure); }
 .prose h2 { font-size: var(--text-lg); margin-top: var(--space-12); letter-spacing: -0.02em; }
-.prose a { color: var(--color-a); }
+.prose a { color: var(--color-b); }
 .prose code { font-size: 0.88em; background: var(--color-surface-2); padding: 0.1em 0.35em; border-radius: 4px; }
 .prose pre { overflow-x: auto; background: var(--color-surface); padding: var(--space-4); border-radius: var(--radius); font-size: var(--text-sm); }
 .prose ul, .prose ol { padding-left: 1.2em; }
@@ -171,6 +172,7 @@ em.s { color: var(--color-a); }
 .rise { animation: rise var(--dur-slow) var(--ease-standard) both; }
 .rise-2 { animation: rise var(--dur-slow) var(--ease-standard) 80ms both; }
 .rise-3 { animation: rise var(--dur-slow) var(--ease-standard) 160ms both; }
+html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-state: paused; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 [hidden] { display: none !important; }

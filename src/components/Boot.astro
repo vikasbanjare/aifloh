@@ -1,0 +1,124 @@
+---
+// Home intro, after anfalova.art's pixel-boot idea, made original: a grid of lime / cobalt / grey tiles,
+// a status line, a percent counter and a pixel "V" that assemble, then the tiles fly off to reveal the page.
+// Rules kept: about 1.5 s, skippable (click, tap, Esc), off for prefers-reduced-motion, never shown without
+// JavaScript (the overlay only exists while <html> has the boot class), removed from the DOM when done,
+// no storage. The page underneath is fully rendered the whole time.
+const COLS = 12;
+const ROWS = 7;
+let seed = 11;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const tiles = Array.from({ length: COLS * ROWS }, (_, i) => {
+  const r = rnd();
+  const tone = r < 0.1 ? 'bt-a' : r < 0.17 ? 'bt-b' : r < 0.45 ? 'bt-2' : r < 0.75 ? 'bt-1' : 'bt-0';
+  return { tone, order: Math.floor(rnd() * 24), blink: (2 + rnd() * 3).toFixed(2), delay: (-rnd() * 4).toFixed(2), i };
+});
+// 7 x 7 pixel "V"
+const V = [
+  '1.....1',
+  '1.....1',
+  '.1...1.',
+  '.1...1.',
+  '..1.1..',
+  '..1.1..',
+  '...1...',
+];
+---
+<div class="boot" aria-hidden="true" data-boot>
+  <div class="boot-grid" style={`--cols:${COLS}`}>
+    {tiles.map((t) => <i class={`bt ${t.tone}`} style={`--o:${t.order};--blink:${t.blink}s;--delay:${t.delay}s`} />)}
+  </div>
+  <div class="boot-center">
+    <div class="boot-v">
+      {V.flatMap((row, y) => row.split('').map((ch, x) => <i class={ch === '1' ? 'v-on' : 'v-off'} style={`--d:${(x + y) * 28}ms`} />))}
+    </div>
+    <div class="boot-head">
+      <p class="boot-labels"><span class="boot-status">Sketching by hand…</span><span class="boot-pct">0%</span></p>
+      <p class="boot-bar"><i class="boot-fill" /></p>
+    </div>
+    <p class="boot-skip">Tap to skip</p>
+  </div>
+</div>
+
+<script is:inline>
+  // Decide before first paint whether the intro runs, so it never flashes for people who opted out.
+  (function () {
+    try {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.documentElement.classList.add('booting');
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  const root = document.documentElement;
+  const el = document.querySelector<HTMLElement>('[data-boot]');
+  if (el && root.classList.contains('booting')) {
+    const pct = el.querySelector<HTMLElement>('.boot-pct')!;
+    const fill = el.querySelector<HTMLElement>('.boot-fill')!;
+    const status = el.querySelector<HTMLElement>('.boot-status')!;
+    const lines = ['Sketching by hand…', 'Laying out the comp…', 'Rendering with AI…', 'Grading the colour…', 'Mixing the sound…', 'Ready.'];
+    const DURATION = 1400;
+    const start = performance.now();
+    let done = false;
+    let raf = 0;
+
+    const finish = () => {
+      if (done) return;
+      done = true;
+      cancelAnimationFrame(raf);
+      el.classList.add('boot-out');
+      root.classList.remove('booting');
+      setTimeout(() => el.remove(), 750);
+    };
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / DURATION);
+      const eased = 1 - Math.pow(1 - t, 2.2);
+      const p = Math.round(eased * 100);
+      pct.textContent = `${p}%`;
+      fill.style.transform = `scaleX(${eased})`;
+      status.textContent = lines[Math.min(lines.length - 1, Math.floor(eased * (lines.length - 1) + 0.0001))];
+      if (t < 1) raf = requestAnimationFrame(step);
+      else setTimeout(finish, 180);
+    };
+    raf = requestAnimationFrame(step);
+    el.addEventListener('pointerdown', finish, { once: true });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish(); }, { once: true });
+    setTimeout(finish, 3000); // hard cap, whatever happens
+  }
+</script>
+
+<style>
+  .boot { display: none; }
+  :global(html.booting) { overflow: hidden; }
+  :global(html.booting) .boot,
+  .boot.boot-out {
+    display: grid; position: fixed; inset: 0; z-index: 200; place-items: center; background: var(--color-bg); cursor: pointer;
+  }
+  .boot-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--cols), 1fr); grid-auto-rows: 1fr; }
+  .bt { display: block; animation: blink var(--blink) steps(1) var(--delay) infinite; transition: transform 520ms var(--ease-exit), opacity 520ms var(--ease-exit); transition-delay: calc(var(--o) * 14ms); }
+  .bt-0 { background: transparent; }
+  .bt-1 { background: #e9e9e3; }
+  .bt-2 { background: #dcdcd5; }
+  .bt-a { background: var(--color-a-fill); }
+  .bt-b { background: var(--color-b); }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+  .boot-center { position: relative; display: grid; justify-items: center; gap: var(--space-6); background: var(--color-bg); padding: var(--space-8) var(--space-12); border: 1.5px solid var(--color-text); box-shadow: 8px 8px 0 var(--color-text); transition: transform 420ms var(--ease-exit), opacity 420ms var(--ease-exit); }
+  .boot-v { display: grid; grid-template-columns: repeat(7, 14px); grid-auto-rows: 14px; gap: 3px; }
+  .boot-v i { display: block; }
+  .v-on { background: var(--color-b); animation: pop 260ms var(--ease-standard) both; animation-delay: var(--d); }
+  .v-on:nth-child(odd) { background: var(--color-text); }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .boot-head { width: min(280px, 70vw); }
+  .boot-labels { display: flex; justify-content: space-between; gap: var(--space-4); margin: 0 0 var(--space-2); max-width: none; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; }
+  .boot-pct { font-variant-numeric: tabular-nums; color: var(--color-b); }
+  .boot-bar { height: 8px; margin: 0; max-width: none; border: 1.5px solid var(--color-text); background: var(--color-surface); overflow: hidden; }
+  .boot-fill { display: block; height: 100%; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; }
+  .boot-skip { margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); }
+
+  /* Exit: tiles fly off in a scattered order, the card drops away. */
+  .boot.boot-out { pointer-events: none; background: transparent; }
+  .boot.boot-out .bt { transform: translateY(-110%) scale(0.6); opacity: 0; animation: none; }
+  .boot.boot-out .boot-center { transform: translateY(24px) scale(0.96); opacity: 0; }
+</style>

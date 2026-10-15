@@ -6,33 +6,36 @@
  * Motion tokens are final (SITE-BUILD.md Section 6).
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --color-bg: #111112;
-  --color-panel: #050505;
-  --color-surface: #19191b;
-  --color-surface-2: #222225;
-  --color-text: #f2f3f5;
-  --color-text-muted: #a3a5ac;
-  --color-line: #222228;
-  --color-line-strong: #3a3a43;
-  --color-focus: #b8f000;
+  /* Light theme (2026-10-15). Studio Night colours kept as the brand pair: lime + cobalt. */
+  --color-bg: #f4f4f1;
+  --color-panel: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-2: #ebebe6;
+  --color-text: #0e0e10;
+  --color-text-muted: #5a5a62;
+  --color-line: #dcdcd6;
+  --color-line-strong: #b9b9b2;
+  --color-focus: #2b4bff;
 
-  /* Colour A = made by hand. Colour B = AI or automated. Fixed meaning on every page. */
-  --color-a: #b8f000;          /* lime: text-safe (14.6:1) */
-  --color-a-ink: #0a0a0c;      /* text on an A fill */
-  --color-a-soft: rgba(184, 240, 0, 0.12);
-  --color-b: #9aa8ff;          /* cobalt, lightened for text (8.9:1) */
-  --color-b-strong: #2b4bff;   /* cobalt for fills, rules and dots only (3.4:1) */
-  --color-b-ink: #0a0a0c;
-  --color-b-soft: rgba(43, 75, 255, 0.18);
+  /* Colour A = made by hand. Lime is a fill/highlight only on light (1.2:1 as text). */
+  --color-a: #3d5c00;          /* text-safe "by hand" green, 7:1 */
+  --color-a-fill: #b8f000;     /* lime: fills, highlights, buttons with ink text (14:1) */
+  --color-a-ink: #0e0e10;
+  --color-a-soft: rgba(184, 240, 0, 0.35);
+  /* Colour B = AI or automated. */
+  --color-b: #2b4bff;          /* cobalt text, 5.4:1 on bg */
+  --color-b-strong: #2b4bff;
+  --color-b-ink: #ffffff;
+  --color-b-soft: rgba(43, 75, 255, 0.12);
 
   --color-highlight: #b8f000;
-  --color-on-highlight: #0a0a0c;
+  --color-on-highlight: #0e0e10;
 
   --color-standin-bg: #ffe36e;
   --color-standin-text: #2b2300;
-  --color-warn: #ffb547;
+  --color-warn: #a34f00;
 
   --font-text: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   --font-serif: 'Instrument Serif', 'Times New Roman', serif;

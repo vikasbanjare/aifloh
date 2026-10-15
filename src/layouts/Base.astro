@@ -11,8 +11,9 @@ interface Props {
   description: string;
   noindex?: boolean;
   ogImage?: string; // site-absolute path, e.g. /og/my-slug.png
+  bare?: boolean; // page draws its own header (home)
 }
-const { title, description, noindex = false, ogImage } = Astro.props;
+const { title, description, noindex = false, ogImage, bare = false } = Astro.props;
 
 const pageTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -53,7 +54,7 @@ const analyticsOn = ANALYTICS_TOOL !== 'none' && !!ANALYTICS_SRC && !!ANALYTICS_
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={og} />
-    <meta name="theme-color" content="#0a0a0c" />
+    <meta name="theme-color" content="#f4f4f1" />
     <link rel="preload" href={href('/fonts/inter-latin-opsz.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -82,7 +83,7 @@ const analyticsOn = ANALYTICS_TOOL !== 'none' && !!ANALYTICS_SRC && !!ANALYTICS_
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Nav current={current === '/' ? '/' : current} />
+    {!bare && <Nav current={current === '/' ? '/' : current} />}
     <main id="main" tabindex="-1">
       <slot />
     </main>

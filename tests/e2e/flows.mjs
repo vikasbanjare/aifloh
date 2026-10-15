@@ -72,6 +72,6 @@ await p.goto(`${B}/free/`);
 const rows = await p.$$eval('.ledger > .row', (r) => r.filter((x) => !x.hidden).length);
 ok(`free works without JS (${rows} rows visible)`, rows === 17);
 await p.goto(`${B}/`);
-ok('home works without JS', (await p.textContent('h1')).includes('We keep the craft'));
+ok('home works without JS', (await p.textContent('h1')).replace(/\s+/g, ' ').toLowerCase().includes('keep the craft'));
 await b.close();
 if (failed) process.exit(1);

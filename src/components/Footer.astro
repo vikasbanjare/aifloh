@@ -57,7 +57,7 @@ const company = [
   .site-footer { margin-top: var(--space-16); border-top: 1px solid var(--color-line); padding-top: var(--space-16); overflow: hidden; font-size: var(--text-sm); }
   .big-cta { display: grid; gap: var(--space-2); text-decoration: none; padding-bottom: var(--space-12); border-bottom: 1px solid var(--color-line); }
   .big-cta-line { font-size: var(--text-hero); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
-  .big-cta .arrow { display: inline-block; color: var(--color-a); transition: transform var(--dur-base) var(--ease-standard); }
+  .big-cta .arrow { display: inline-block; color: var(--color-b); transition: transform var(--dur-base) var(--ease-standard); }
   @media (hover: hover) { .big-cta:hover .arrow { transform: translateX(0.15em); } }
   .cols { display: grid; gap: var(--space-8); padding-block: var(--space-12); grid-template-columns: repeat(2, 1fr); }
   @media (min-width: 56rem) { .cols { grid-template-columns: repeat(4, 1fr); } }
@@ -65,7 +65,7 @@ const company = [
   ul { list-style: none; margin: 0; padding: 0; }
   li { min-height: 36px; display: flex; align-items: center; gap: var(--space-2); }
   li a { text-decoration: none; min-height: 36px; display: inline-flex; align-items: center; }
-  @media (hover: hover) { li a:hover { color: var(--color-a); } }
+  @media (hover: hover) { li a:hover { color: var(--color-b); } }
   .off { color: var(--color-text-muted); }
   .small { font-size: var(--text-sm); }
   .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); padding-block: var(--space-6); border-top: 1px solid var(--color-line); }
@@ -73,7 +73,7 @@ const company = [
   .wordmark {
     margin: 0; max-width: none; padding-inline: var(--gutter);
     font-size: var(--text-giant); font-weight: 850; letter-spacing: -0.065em; line-height: 0.78;
-    color: var(--color-surface-2); white-space: nowrap; user-select: none; transform: translateY(0.12em);
+    color: var(--color-text); white-space: nowrap; user-select: none; transform: translateY(0.12em);
   }
-  .ws { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.03em; color: rgba(184, 240, 0, 0.22); }
+  .ws { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.03em; color: var(--color-b); }
 </style>
