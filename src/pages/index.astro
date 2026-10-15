@@ -159,6 +159,42 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 </Base>
 
 <script>
+  import { track } from '../scripts/track';
+
+  // Fig. 1: try the 3D version once the hero is on screen. The SVG is the poster and the fallback.
+  const fig = document.querySelector<HTMLElement>('.fig1');
+  const svg = fig?.querySelector<SVGSVGElement>('svg');
+  const report = (mode: string) => track('Hero Mode', { mode });
+  if (fig && svg) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
+    if (reduce) report('static-reduced-motion');
+    else if (!gl) report('static-no-webgl');
+    else {
+      // Upgrade to 3D on the first sign of a person (move, scroll, touch, key) or after a quiet spell,
+      // so the heavy script never competes with the first paint.
+      let started = false;
+      const go = async () => {
+        if (started) return;
+        started = true;
+        EVENTS.forEach((ev) => removeEventListener(ev, go));
+        const { mountFig3d } = await import('../scripts/fig3d');
+        const m = mountFig3d(fig, svg, () => fig.classList.add('is-3d'), { instant: performance.now() > 2600 });
+        // Probe: after 30 frames, a median above 28 ms means this device should keep the drawing.
+        setTimeout(() => {
+          const f = [...m.frameTimes].sort((a, b) => a - b);
+          const median = f.length ? f[Math.floor(f.length / 2)] : 0;
+          if (f.length >= 30 && median > 28) { m.dispose(); fig.classList.remove('is-3d'); report('static-low-power'); }
+          else report('3d');
+        }, 1800);
+      };
+      const EVENTS = ['pointermove', 'scroll', 'touchstart', 'keydown'] as const;
+      EVENTS.forEach((ev) => addEventListener(ev, go, { passive: true, once: true }));
+      const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1));
+      setTimeout(() => idle(go, { timeout: 2000 }), 6000);
+    }
+  }
+
   const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
   const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', hour12: false });
   const tick = () => clocks.forEach((el) => (el.textContent = `${fmt.format(new Date())} in India`));
@@ -191,7 +227,9 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .stop-a { color: var(--color-a); }
   .stop-b { color: var(--color-b); }
 
-  .fig1 { margin: var(--space-12) 0 0; }
+  .fig1 { position: relative; margin: var(--space-12) 0 0; }
+  .fig1 :global(.fig3d-canvas) { position: absolute; left: 0; top: 0; display: block; touch-action: pan-y; }
+  .fig1.is-3d svg { visibility: hidden; }
   .fig1 svg { display: block; width: 100%; height: auto; overflow: visible; }
   .grid circle { fill: var(--color-line-strong); }
   .ink circle { fill: var(--color-a-fill); }

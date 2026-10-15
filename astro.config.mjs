@@ -11,6 +11,7 @@ export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
   output: 'static',
+  markdown: { syntaxHighlight: false }, // no Shiki: its inline styles would break the CSP
   trailingSlash: 'ignore',
   build: { format: 'directory', inlineStylesheets: 'auto' },
   devToolbar: { enabled: false },
