@@ -15,7 +15,7 @@ howItWorks:
   - Paste a script, a title or ad copy, or upload a thumbnail.
   - ContentIntel grades it and shows what is holding it back.
   - Fix it, check again, then post.
-requirements: [A modern browser, your own Anthropic API key (it stays in your browser)]
+requirements: [A modern browser, "A free account (Google or email)", "Runs free inside Claude, or on your own Anthropic key when self-hosted"]
 screenshots:
   - { src: /media/portfolio/contentintel-site.webp, alt: "The ContentIntel website: a dark landing page reading Know it'll work before you hit publish", w: 900, h: 1347 }
 repo: vikasbanjare/Contentintel
