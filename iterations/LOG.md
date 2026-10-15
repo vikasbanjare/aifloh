@@ -144,3 +144,8 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 The four chips became a four-step sequence with big numerals and the Studio page's own descriptions. The rule above the steps is the brand line itself: ink for Brief, a hand-drawn lime wobble for Sketch, straight cobalt for Make and Ship, ending in a machine node. 2x2 on phones, one row from 48rem. Copy reused verbatim from studio.astro. Perf dipped one point (98 to 97, LCP 2.3 to 2.4 s) from slightly more inlined CSS, within run-to-run noise. Step-back review (iter-15): the last five iterations were functional fixes plus one ornament (tape). The page reads calmer than iter-05; the risk now is the brand line appearing in too many places (margin thread, Fig. 1, steps, favicon). Next iterations should simplify rather than decorate: candidate is trimming the Tools room or the footer.
 - Scores: H9 T8 C8 S8 D9 M8 I8 K9 A10 P9 = 86.
 - Decision: KEPT.
+
+## iter-16 · About me fills the empty sixth stats cell
+Five stats left a hole in the 3-column grid (row 2, col 3) and the About me button floated alone below, with dead space under it. The link now closes the grid as an ink tile (label 'The person behind it' is a new UI label, not a fact; hover turns cobalt). dl uses display: contents so dt/dd and the link share one grid; axe clean. Phones: 2x3 grid, no full-width orphan. Lens: spacing and rhythm.
+- Scores: H9 T8 C8 S9 D9 M8 I8 K9 A10 P9 = 87.
+- Decision: KEPT.

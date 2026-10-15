@@ -151,11 +151,13 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
         <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
         <figcaption class="label">Fig. 3 · {P.profile.nickname}</figcaption>
       </figure>
-      <dl class="stats">
-        {P.stats.map((s: any) => <div><dt class="label">{s.label}</dt><dd>{s.value}</dd></div>)}
-      </dl>
+      <div class="stats">
+        <dl>
+          {P.stats.map((s: any) => <div><dt class="label">{s.label}</dt><dd>{s.value}</dd></div>)}
+        </dl>
+        <a class="stat-more" href={href('/about/')}><span class="label">The person behind it</span><span class="sm-t">About me <span class="arrow" aria-hidden="true">→</span></span></a>
+      </div>
     </div>
-    <p class="more"><a class="btn" href={href('/about/')}>About me <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 </Base>
 
@@ -443,10 +445,17 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .me { margin: 0; border: 1px solid var(--color-text); background: var(--color-surface); max-width: 16rem; transform: rotate(-2deg); box-shadow: 6px 6px 0 var(--color-text); }
   .me img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
   .me figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
-  .stats { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-top: 1px solid var(--color-line-strong); }
-  .stats div { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; gap: var(--space-1); }
+  /* the stats and the way in share one grid: five numbers, then "About me" fills the sixth cell */
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--color-line-strong); }
+  .stats dl { display: contents; }
+  .stats dl div, .stat-more { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; gap: var(--space-1); }
   .stats dt { color: var(--color-text-muted); }
   .stats dd { margin: 0; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
-  .stats div:last-child:nth-child(odd) { grid-column: 1 / -1; }
-  @media (min-width: 64rem) { .stats { grid-template-columns: repeat(3, 1fr); } .stats div { padding-block: var(--space-6); } .stats dd { font-size: clamp(2.5rem, 1rem + 3vw, 4rem); } .stats div:last-child:nth-child(odd) { grid-column: auto; } }
+  .stat-more { justify-content: flex-end; padding-left: var(--space-4); background: var(--color-text); color: var(--color-bg); text-decoration: none; transition: background 200ms var(--ease-standard); }
+  .stat-more .label { color: inherit; opacity: 0.75; }
+  .sm-t { font-size: var(--t-lede); font-weight: 800; letter-spacing: -0.03em; }
+  .stat-more .arrow { display: inline-block; transition: transform 200ms var(--ease-standard); }
+  @media (hover: hover) { .stat-more:hover { background: var(--color-b); } .stat-more:hover .arrow { transform: translateX(4px); } }
+  .stat-more:focus-visible { outline-offset: 3px; }
+  @media (min-width: 64rem) { .stats { grid-template-columns: repeat(3, 1fr); } .stats dl div, .stat-more { padding-block: var(--space-6); } .stats dd { font-size: clamp(2.5rem, 1rem + 3vw, 4rem); } }
 </style>
