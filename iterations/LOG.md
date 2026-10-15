@@ -184,3 +184,8 @@ Lens: colour and contrast. The full stops after 'craft', 'Studio.' and 'About.' 
 Lens: copy and CTA. The Free band listed five Claude skills in a row (newest first), so the range (image and video prompts, templates, cheat sheets) never showed. Tested: the newest of each type first, then fill by date. Result: Claude skill, Image prompt, Video prompt, Template, Cheat sheet. Reads better, but no category moves from 9 to 10, so it ties and the rule reverts it. Note: most categories now sit at 9, so single small fixes can no longer win alone; future iterations should bundle a backlog fix into a larger hypothesis or aim at a 10 (e.g. Distinctiveness, Performance). Patch kept in git stash and in BACKLOG #6.
 - Scores: H9 T9 C9 S9 D9 M9 I9 K9 A10 P9 = 91.
 - Decision: REJECTED.
+
+## iter-24 · Intro plays only on arrival from outside the site
+Lens: performance (aiming at P). Lighthouse LCP is the hero intro paragraph with 2.0 s render delay: the intro holds the hero rise animations until it ends. Removing the intro would undo a feature Vikas asked for, and making the text skip the fade only games the metric, so neither was done. Real fix found instead: the intro replayed on every return to home (Free -> logo -> intro again). The pre-paint script now skips it when document.referrer is this site's own origin. No storage, no cookie; reduced-motion still skips it; the CSP hash updates automatically (no console errors). Cold arrival unchanged. Scored on Interaction (9 -> 10: intro once, scroll motion now runs, draw tool, 3D on demand); Performance stays 9 because the cold LCP did not move.
+- Scores: H9 T9 C9 S9 D9 M9 I10 K9 A10 P9 = 92.
+- Decision: KEPT.

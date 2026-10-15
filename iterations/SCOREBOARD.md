@@ -28,5 +28,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 21 | 9 | 9 | 8 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | **90** | KEPT | 90 |
 | 22 | 9 | 9 | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | **91** | KEPT | 91; axe clean, LH 97 |
 | 23 | 9 | 9 | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | **91** | REJECTED | 91 = best; good change, but ties at the rubric ceiling |
+| 24 | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | 10 | 9 | **92** | KEPT | 92; cold Lighthouse unchanged (97), internal return to home skips ~1.6 s |
 
-**CURRENT BEST: iter-22** (tag `best`)
+**CURRENT BEST: iter-24** (tag `best`)
