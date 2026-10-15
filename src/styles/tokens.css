@@ -77,6 +77,16 @@
   --radius-xl: 0px;
   --target-min: 24px;
 
+  /* Glass: the machine's control layer floating over the paper (nav, menu, dock).
+     Rounded with continuous curves; content on paper stays square. */
+  --glass-bg: rgba(250, 249, 244, 0.58);
+  --glass-bg-solid: #f8f7f1;
+  --glass-edge: rgba(255, 255, 255, 0.7);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 0 rgba(20, 20, 20, 0.05), 0 1px 2px rgba(20, 20, 20, 0.06), 0 12px 32px -14px rgba(20, 20, 20, 0.28);
+  --glass-blur: blur(22px) saturate(1.8);
+  --radius-glass: 22px;
+  --radius-glass-inner: 14px;
+
   --dur-fast: 120ms;
   --dur-base: 200ms;
   --dur-slow: 360ms;

@@ -14,7 +14,7 @@ const isHome = current === '/';
 const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
 ---
 <header class="site-header">
-  <nav class="wrap nav" aria-label="Main">
+  <nav class="nav glass" aria-label="Main">
     <a class:list={['brand', { 'brand-home': isHome }]} href={href('/')}>
       <span>vikas</span><em class="brand-s">banjare</em><span class="visually-hidden"> home</span>
     </a>
@@ -39,8 +39,10 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
   </nav>
 </header>
 <style>
-  .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--color-bg) 94%, transparent); border-bottom: 1px solid var(--color-text); }
-  .nav { display: flex; align-items: center; gap: var(--space-4); min-height: 64px; }
+  .site-header { position: sticky; top: 0; z-index: 50; padding: 10px var(--gutter) 0; pointer-events: none; }
+  .nav { pointer-events: auto; display: flex; align-items: center; gap: var(--space-3); min-height: 56px; max-width: calc(var(--page-max) - 2 * var(--gutter)); margin-inline: auto; padding: 0 6px 0 18px; border-radius: var(--radius-glass); }
+  .glass { background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .glass { background: var(--glass-bg-solid); } }
   .brand-s { font-family: var(--font-serif); font-weight: 400; color: var(--color-b); font-size: 1.1em; letter-spacing: -0.01em; }
   .brand { display: inline-flex; align-items: baseline; gap: 2px; font-weight: 800; letter-spacing: -0.03em; font-size: 1.125rem; text-decoration: none; margin-right: auto; min-height: 44px; }
   .bdot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-top: 6px; }
@@ -48,16 +50,20 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
   .b-dot { background: var(--color-b-strong); box-shadow: 0 0 0 1px var(--color-b); }
   .nav-free {
     order: 0; display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--space-4);
-    border-radius: 0; background: var(--color-a-fill); color: var(--color-a-ink); font-weight: 750; border: 1px solid var(--color-text); font-size: var(--text-sm); text-decoration: none;
+    border-radius: var(--radius-glass-inner); background: var(--color-a-fill); color: var(--color-a-ink); font-weight: 750; border: 1px solid var(--color-text); font-size: var(--text-sm); text-decoration: none;
   }
   .nav-links { display: none; list-style: none; margin: 0; padding: 0; gap: var(--space-6); font-size: var(--text-sm); }
   .nav-links a, .nav-talk { text-decoration: none; color: var(--color-text-muted); min-height: 44px; display: inline-flex; align-items: center; transition: color var(--dur-base) var(--ease-standard); }
   .nav-links a[aria-current='page'] { color: var(--color-text); }
-  .nav-talk { display: none; color: var(--color-text); font-weight: 650; font-size: var(--text-sm); }
+  .nav-talk { display: none; font-weight: 650; font-size: var(--text-sm); }
+  .nav .nav-talk { min-height: 40px; padding: 0 var(--space-4); border-radius: var(--radius-glass-inner); background: var(--color-text); color: var(--color-bg); transition: transform 160ms var(--ease-standard), background-color 200ms var(--ease-standard); }
+  @media (hover: hover) { .nav .nav-talk:hover { color: var(--color-bg); background: var(--color-b); } }
+  .nav .nav-talk:active, .nav-free:active { transform: scale(0.96); }
   .nav-search { display: none; color: var(--color-text-muted); min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
   @media (hover: hover) { .nav-links a:hover, .nav-search:hover, .nav-talk:hover { color: var(--color-text); } }
 
-  .menu { position: relative; }
+  .menu { position: static; }
+  .nav { position: relative; }
   .menu summary { list-style: none; cursor: pointer; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 650; }
   .menu summary::-webkit-details-marker { display: none; }
   .bars { display: grid; gap: 5px; width: 18px; }
@@ -65,7 +71,10 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
   .menu[open] .bars i:first-child { transform: translateY(3.25px) rotate(45deg); }
   .menu[open] .bars i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
   .menu-label { display: none; }
-  .menu-panel { position: fixed; left: 0; right: 0; top: 64px; background: var(--color-bg); border-bottom: 1px solid var(--color-line); padding: var(--space-4) var(--gutter) var(--space-8); }
+  /* Nested backdrop-filter can't blur through its glass parent, so the sheet is near-opaque paper-glass. */
+  .menu-panel { position: absolute; left: -1px; right: -1px; top: calc(100% + 8px); padding: var(--space-2) var(--space-6) var(--space-4); border-radius: var(--radius-glass); background: rgba(250, 249, 244, 0.97); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow); transform-origin: top right; animation: sheet 260ms cubic-bezier(0.2, 0.9, 0.2, 1.05) both; }
+  @keyframes sheet { from { opacity: 0; transform: scale(0.96) translateY(-6px); } }
+  .menu-panel li:last-child a { border-bottom: 0; }
   .menu-panel ul { list-style: none; margin: 0; padding: 0; }
   .menu-panel a { display: flex; min-height: 56px; align-items: center; font-size: 1.75rem; font-weight: 750; letter-spacing: -0.03em; text-decoration: none; border-bottom: 1px solid var(--color-line); }
 
