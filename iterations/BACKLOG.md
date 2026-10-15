@@ -11,7 +11,7 @@
 9. [ ] M — Phone page ≈7,000 px; trim (e.g. Free shows 4 rows on phones).
 10. [x] T — Section titles ("Free.", "Work.") are small next to full-bleed bands; scale up.
 11. [x] H — Hero CTA below the 1440 fold (solved in iter-07 by the side column): tighter spacing + narrower Fig. 1 rejected in iter-02 (misalignment, still below fold). Next try: move intro + CTA beside the headline instead of under the figure.
-12. [ ] S — About stats: second row has an empty third cell; consider spanning or a 'Let's talk' cell.
+12. [x] S — About stats: second row has an empty third cell; consider spanning or a 'Let's talk' cell.
 13. [x] M — Studio cards on phones carry ~120 px of empty space above the title (min-height 15rem); tighten on phones.
 
 - [tablet] Steps 2x2 until 64rem (tested in iter-18, ties best; bundle with the next tablet change).
