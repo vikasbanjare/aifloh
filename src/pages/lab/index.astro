@@ -12,7 +12,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: '
   <PageHead kicker="Lab" title="Experiments, failures included." count={experiments.length} />
   <BuiltTabs />
   <section class="wrap section">
-    <ol class="cat cat-big" role="list">
+    <ol class="cat" role="list">
       {experiments.map((e, i) => (
         <li>
           <a class="cat-row" href={href(`/lab/${e.slug}/`)}>

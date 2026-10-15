@@ -13,7 +13,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <PageHead kicker="Tools" title="Software that does the grind." count={tools.length} />
   <BuiltTabs />
   <section class="wrap section">
-    <ol class="cat cat-big" role="list">
+    <ol class="cat" role="list">
       {tools.map((t, i) => (
         <li>
           <a class="cat-row" href={href(`/tools/${t.slug}/`)}>

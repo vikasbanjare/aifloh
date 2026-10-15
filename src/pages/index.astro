@@ -53,7 +53,8 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
       </svg>
       <figcaption id="fig1-cap" class="label">
         <span>Fig. 1</span>
-        <span>One line. <i class="k k-a" aria-hidden="true"></i>Drawn by hand, <i class="k k-b" aria-hidden="true"></i>finished by machine.</span>
+        <span class="key"><i class="k k-a" aria-hidden="true"></i>Hand</span><span aria-hidden="true">→</span><span class="key"><i class="k k-b" aria-hidden="true"></i>Machine</span>
+        <span class="visually-hidden">One line, drawn by hand and finished by machine.</span>
       </figcaption>
     </figure>
 
@@ -236,10 +237,11 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .by-hand { fill: none; stroke: var(--color-a-fill); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
   .by-machine { fill: none; stroke: var(--color-b); stroke-width: 3; stroke-linejoin: miter; }
   .nd { fill: var(--color-bg); stroke: var(--color-b); stroke-width: 2.5; }
-  .fig1 figcaption { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-text); color: var(--color-text-muted); }
+  .fig1 figcaption { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-text); color: var(--color-text-muted); }
   .k { display: inline-block; width: 0.9em; height: 0.9em; margin-right: 0.45em; vertical-align: -0.1em; border: 1px solid var(--color-text); }
   .k-a { background: var(--color-a-fill); }
-  .k-b { background: var(--color-b); margin-left: 0.2em; }
+  .k-b { background: var(--color-b); }
+  .key { white-space: nowrap; }
 
   @media (prefers-reduced-motion: no-preference) {
     .by-hand, .by-machine { stroke-dasharray: 1; stroke-dashoffset: 1; }
@@ -276,12 +278,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .room { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
   .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; margin: 0 0 var(--space-8); }
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
-  @media (min-width: 64rem) {
-    .room { display: grid; grid-template-columns: 15rem minmax(0, 1fr); column-gap: var(--space-8); }
-    .room > * { grid-column: 2; }
-    .room > .room-h { grid-column: 1 / -1; display: grid; grid-template-columns: 15rem minmax(0, 1fr); column-gap: var(--space-8); }
-    .room > .w-float { grid-column: auto; }
-  }
+
   .more { margin: var(--space-8) 0 0; }
 
   /* ---------- index rows: wall labels ---------- */
@@ -344,5 +341,6 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .stats div { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; gap: var(--space-1); }
   .stats dt { color: var(--color-text-muted); }
   .stats dd { margin: 0; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
-  @media (min-width: 64rem) { .stats { grid-template-columns: repeat(3, 1fr); } }
+  .stats div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  @media (min-width: 64rem) { .stats { grid-template-columns: repeat(5, 1fr); } .stats div:last-child:nth-child(odd) { grid-column: auto; } }
 </style>

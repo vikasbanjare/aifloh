@@ -14,9 +14,7 @@ const stale = tested ? days > STALE_DAYS : false;
       <span class="stamp-fresh">Tested {fmt(tested.on)} · {tested.tool}{tested.version && tested.version !== 'STAND-IN' ? ` · ${tested.version}` : ''}</span>
       <span class="stamp-stale">Last tested <span data-days>{days}</span> days ago, may need tweaks</span>
     </span>
-  ) : (
-    <span class="stamp stamp-none">Test date not recorded yet</span>
-  )
+  ) : null
 }
 <script>
   const DAY = 86400000;
