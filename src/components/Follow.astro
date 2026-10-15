@@ -1,0 +1,15 @@
+---
+import { SOCIALS, GITHUB_URL } from '../lib/config';
+---
+<ul class="follow" role="list" aria-label="Follow">
+  {SOCIALS.map((s) => s.url ? (
+    <li><a class="btn" href={s.url} rel="me noopener" data-track="Follow Click" data-track-platform={s.platform}>{s.label}</a></li>
+  ) : (
+    <li><span class="btn follow-off" aria-disabled="true">{s.label} <span class="stand-in">Stand-in</span></span></li>
+  ))}
+  <li><a class="btn" href={GITHUB_URL} rel="me noopener">GitHub</a></li>
+</ul>
+<style>
+  .follow { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: var(--space-4) 0; list-style: none; }
+  .follow-off { opacity: 0.85; cursor: default; }
+</style>

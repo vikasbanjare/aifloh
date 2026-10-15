@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import StandIn from '../../components/StandIn.astro';
+import { loadContent } from '../../lib/content';
+import { renderLocal } from '../../lib/markdown';
+import { href } from '../../lib/href';
+import type { Experiment } from '../../lib/schema';
+export function getStaticPaths() {
+  return loadContent().experiments.map((e) => ({ params: { slug: e.slug }, props: { e } }));
+}
+const { e } = Astro.props as { e: Experiment };
+const repo = e.repo ? loadContent().repos.find((r) => r.repo.toLowerCase() === e.repo!.toLowerCase()) : undefined;
+---
+<Base title={e.title} description={e.summary}>
+  <article class="wrap section">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/lab/')}>Lab</a></nav>
+    <p class="row"><span class={`result r-${e.result}`}>{e.result}</span>{e.standIn && <StandIn />}</p>
+    <h1>{e.title}</h1>
+    <p class="lede">{e.summary}</p>
+    {e.cover && <img class="cover" src={href(e.cover.src)} alt={e.cover.alt} width={e.cover.w} height={e.cover.h} />}
+    <div class="prose" set:html={renderLocal(e.body)} />
+    {e.receipt && (
+      <dl class="dl"><dt>Tool</dt><dd>{e.receipt.tool}</dd><dt>Attempts</dt><dd>{e.receipt.attempts ?? '—'}</dd><dt>Time</dt><dd>{e.receipt.time ?? '—'}</dd><dt>What failed</dt><dd>{e.receipt.failed ?? '—'}</dd><dt>What worked</dt><dd>{e.receipt.worked ?? '—'}</dd></dl>
+    )}
+    {repo && <p><a class="btn" href={repo.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={repo.slug}>Open the repo</a></p>}
+  </article>
+</Base>
+<style>
+  .row { display: flex; gap: var(--space-2); align-items: center; }
+  .cover { width: 100%; max-width: 60rem; height: auto; border-radius: var(--radius); border: 1px solid var(--color-line); margin: var(--space-6) 0; }
+  .result { font-size: var(--text-xs); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.1em 0.5em; border-radius: 4px; border: 1px solid currentColor; }
+  .r-worked { color: var(--color-a); } .r-partly { color: var(--color-b); } .r-failed { color: var(--color-warn); } .r-ongoing { color: var(--color-text-muted); }
+</style>

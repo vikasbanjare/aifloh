@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import FreeHub from '../../components/FreeHub.astro';
+import { loadContent } from '../../lib/content';
+const { resources } = loadContent();
+---
+<Base title="Free" description="Free prompts, Claude skills, templates and guides from my own work. Copy what helps.">
+  <FreeHub heading="Free" promise="Prompts, skills and templates from my own work. Copy what helps, no sign-up." items={resources} />
+</Base>

@@ -1,0 +1,50 @@
+---
+// Tested stamp: "Tested 15 Oct 2026 · Claude · v1.2". Turns into "may need tweaks" after 90 days.
+// Computed at build time and recomputed in the browser from the date, with no storage.
+import { STALE_DAYS } from '../lib/rules';
+interface Props { tested?: { on: Date; tool: string; version: string } }
+const { tested } = Astro.props;
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const days = tested ? Math.floor((Date.now() - tested.on.getTime()) / 86400000) : 0;
+const stale = tested ? days > STALE_DAYS : false;
+---
+{
+  tested ? (
+    <span class="stamp" data-tested={tested.on.toISOString().slice(0, 10)} data-stale={stale ? '' : undefined}>
+      <span class="stamp-fresh">Tested {fmt(tested.on)} · {tested.tool} · {tested.version}</span>
+      <span class="stamp-stale">Last tested <span data-days>{days}</span> days ago, may need tweaks</span>
+    </span>
+  ) : (
+    <span class="stamp stamp-none">Test date not recorded yet</span>
+  )
+}
+<script>
+  const DAY = 86400000;
+  document.querySelectorAll<HTMLElement>('.stamp[data-tested]').forEach((el) => {
+    const days = Math.floor((Date.now() - Date.parse(el.dataset.tested + 'T00:00:00Z')) / DAY);
+    const d = el.querySelector('[data-days]');
+    if (d) d.textContent = String(days);
+    el.toggleAttribute('data-stale', days > 90);
+  });
+</script>
+<style>
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    border: 1px dashed var(--color-line);
+    border-radius: 4px;
+    padding: 0.1em 0.5em;
+    animation: stamp var(--dur-base) var(--ease-standard) both;
+  }
+  .stamp-stale { display: none; color: var(--color-warn); }
+  .stamp[data-stale] { border-color: var(--color-warn); }
+  .stamp[data-stale] .stamp-fresh { display: none; }
+  .stamp[data-stale] .stamp-stale { display: inline; }
+  @keyframes stamp {
+    from { transform: scale(1.06); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+</style>

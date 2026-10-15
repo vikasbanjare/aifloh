@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import CodeWordBox from '../components/CodeWordBox.astro';
+import { href } from '../lib/href';
+---
+<Base title="Not found" description="That page doesn't exist. Try a code word or head to the free list." noindex>
+  <section class="wrap section">
+    <h1>That page isn't here.</h1>
+    <p class="lede">If you typed a word from a post, it may be spelled a little differently. Try it again here.</p>
+    <div class="box"><CodeWordBox autofocus /></div>
+    <p class="suggest" role="status" aria-live="polite"></p>
+    <p><a class="btn btn-primary" href={href('/free/')}>See everything free</a></p>
+  </section>
+</Base>
+<script>
+  // Prefill from the URL: /aiflo/hookz -> "hookz", then let the box suggest close matches.
+  const base = document.querySelector<HTMLFormElement>('form.cw')?.dataset.base?.replace(/free\/$/, '') || '/';
+  const word = decodeURIComponent(location.pathname.slice(base.length).replace(/\/+$/, '').split('/').pop() || '').toLowerCase();
+  const input = document.querySelector<HTMLInputElement>('form.cw input');
+  if (word && input && /^[a-z0-9-]{1,24}$/.test(word)) {
+    input.value = word;
+    document.querySelector<HTMLFormElement>('form.cw')?.requestSubmit();
+  }
+</script>
+<style>
+  .box { margin: var(--space-8) 0; }
+</style>

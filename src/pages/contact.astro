@@ -1,0 +1,27 @@
+---
+import PageHead from '../components/PageHead.astro';
+import Base from '../layouts/Base.astro';
+import StandIn from '../components/StandIn.astro';
+---
+<Base title="Contact" description="Tell me what you're making. Email or book a call with AI-Floh.">
+  <PageHead kicker="Contact" title="Tell me what you're making." lede="A few lines is enough: what it is, who it's for, and when you need it." />
+  <section class="wrap section">
+    <div class="ways">
+      <div class="card">
+        <h2>Email</h2>
+        <p class="muted">The address goes here once it's confirmed. <StandIn /></p>
+      </div>
+      <div class="card">
+        <h2>Book a call</h2>
+        <p class="muted">A booking link goes here. <StandIn /></p>
+      </div>
+    </div>
+    <p class="muted small">No contact form yet, on purpose: nothing you type here is stored by this site.</p>
+  </section>
+</Base>
+<style>
+  .ways { display: grid; gap: var(--space-4); margin: var(--space-8) 0; }
+  @media (min-width: 48rem) { .ways { grid-template-columns: 1fr 1fr; } }
+  h2 { font-size: var(--text-lg); margin: 0; }
+  .small { font-size: var(--text-sm); }
+</style>

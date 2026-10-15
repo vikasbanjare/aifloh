@@ -1,0 +1,35 @@
+// Every analytics event name lives here (SITE-BUILD.md Section 13). Max 50 characters each.
+export const EVENTS = {
+  resourceCopy: 'Resource Copy',
+  resourceDownload: 'Resource Download',
+  openInClaude: 'Open In Claude',
+  filterUsed: 'Filter Used',
+  openInBrowserClick: 'Open In Browser Click',
+  followClick: 'Follow Click',
+  ctaClick: 'CTA Click',
+  sourceChip: 'Source Chip',
+  toolClick: 'Tool Click',
+  repoClick: 'Repo Click',
+  videoPlay: 'Video Play',
+  gameStart: 'Game Start',
+  gameShare: 'Game Share',
+  emailSignup: 'Email Signup',
+  emailLinkRequested: 'Email Link Requested',
+  codeWordSearch: 'Code Word Search',
+  siteSearch: 'Site Search',
+  heroMode: 'Hero Mode',
+  inAppBrowser: 'In-App Browser',
+  gameComplete: 'Game Complete',
+} as const;
+
+export const ALLOWED_PROPS: Record<string, RegExp | 'slug' | 'intent'> = {
+  slug: 'slug',
+  platform: /^(linkedin|instagram|threads|x|facebook|youtube)$/,
+  location: /^(home|free|resource|footer)$/,
+  id: /^(nav-talk|home-talk|home-studio|resource-studio|work-talk|tool-talk|studio-talk|about-talk)$/,
+  intent: 'intent',
+  app: /^(instagram|facebook|x|linkedin)$/,
+  result: /^(match|no-match)$/,
+  mode: /^(3d|static-reduced-motion|static-no-webgl|static-low-power)$/,
+  game: /^(keeper|attempts|hand-or-machine|prompt-fix)$/,
+};

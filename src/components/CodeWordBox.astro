@@ -1,0 +1,72 @@
+---
+// "Got a word from a post? Type it." Jumps to the resource; suggests close matches (edit distance <= 2).
+import { loadContent } from '../lib/content';
+import { href } from '../lib/href';
+interface Props { id?: string; autofocus?: boolean }
+const { id = 'codeword', autofocus = false } = Astro.props;
+const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord, { slug: r.slug, title: r.title }]));
+---
+<form class="cw" action={href('/free/')} method="get" data-base={href('/free/')} role="search" aria-label="Code word">
+  <label for={id} class="cw-label">Got a word from a post? Type it.</label>
+  <div class="cw-row">
+    <input id={id} name="w" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="24" required autofocus={autofocus} placeholder="e.g. hooks" />
+    <button class="btn btn-primary" type="submit">Go</button>
+  </div>
+  <p class="cw-msg" role="status" aria-live="polite"></p>
+  <noscript><p class="muted cw-help">You can also type the word straight after the address, like <code>/hooks</code>.</p></noscript>
+  <script type="application/json" class="cw-words" set:html={JSON.stringify(words)} />
+</form>
+<script>
+  import { editDistance } from '../lib/rules';
+  document.querySelectorAll<HTMLFormElement>('form.cw').forEach((form) => {
+    const words = JSON.parse(form.querySelector('.cw-words')?.textContent || '{}') as Record<string, { slug: string; title: string }>;
+    const base = form.dataset.base || '/free/';
+    const msg = form.querySelector<HTMLElement>('.cw-msg')!;
+    const input = form.querySelector<HTMLInputElement>('input')!;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const w = input.value.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+      const t = (window as any).aiflohTrack as ((n: string, p?: Record<string, string>) => void) | undefined;
+      if (words[w]) {
+        t?.('Code Word Search', { result: 'match', slug: words[w].slug });
+        location.href = base + words[w].slug + '/' + location.search;
+        return;
+      }
+      t?.('Code Word Search', { result: 'no-match' });
+      const close = Object.keys(words)
+        .map((k) => ({ k, d: editDistance(w, k) }))
+        .filter((x) => x.d <= 2)
+        .sort((a, b) => a.d - b.d)
+        .slice(0, 3);
+      msg.replaceChildren();
+      if (close.length) {
+        msg.append('No resource uses that word. Did you mean ');
+        close.forEach((c, i) => {
+          const a = document.createElement('a');
+          a.href = base + words[c.k].slug + '/';
+          a.textContent = c.k;
+          msg.append(a, i < close.length - 1 ? ', ' : '?');
+        });
+      } else {
+        msg.textContent = 'No resource uses that word yet. Everything free is listed below.';
+      }
+    });
+  });
+</script>
+<style>
+  .cw { max-width: 34rem; }
+  .cw-label { display: block; font-weight: 700; margin-bottom: var(--space-2); }
+  .cw-row { display: flex; gap: var(--space-2); }
+  .cw .btn { min-height: 52px; }
+  .cw input {
+    flex: 1; min-width: 0; min-height: 52px; border-radius: 999px; padding-left: var(--space-6); padding: 0 var(--space-4);
+    background: var(--color-surface); color: var(--color-text);
+    border: 1px solid var(--color-line); border-radius: var(--radius);
+    font: inherit; font-size: var(--text-md);
+  }
+  .cw input:focus-visible { border-color: var(--color-a); }
+  .cw-msg { margin: var(--space-2) 0 0; font-size: var(--text-sm); }
+  .cw-msg:empty { margin: 0; }
+  .cw-msg a { color: var(--color-a); font-weight: 700; }
+  .cw-help { font-size: var(--text-sm); }
+</style>

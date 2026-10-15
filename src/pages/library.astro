@@ -1,0 +1,75 @@
+---
+import PageHead from '../components/PageHead.astro';
+import Base from '../layouts/Base.astro';
+import { libraryItems } from '../lib/library';
+import { href } from '../lib/href';
+const items = libraryItems();
+const kinds = [...new Set(items.map((i) => i.kind))].sort();
+const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kind === k).length]));
+---
+<Base title="Library" description="Everything on the site in one searchable list: free resources, skills, tools, experiments, work and code.">
+  <PageHead kicker="Library" title="Everything, in one list." lede="Search across free resources, skills, tools, experiments, work and code." count={items.length} />
+  <section class="wrap section">
+    <form class="lib-search" role="search" data-index={href('/search-index.json')} data-base={href('/')}>
+      <label for="q">Search</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Type to search" />
+      <label for="kind" class="visually-hidden">Kind</label>
+      <select id="kind"><option value="">All kinds ({items.length})</option>{kinds.map((k) => <option value={k}>{k} ({counts[k]})</option>)}</select>
+      <p class="lib-count muted" role="status" aria-live="polite"></p>
+    </form>
+    <ol class="lib" role="list">
+      {items.map((i) => (
+        <li data-kind={i.kind}><a href={href(i.url)}><span class="tag">{i.kind}</span><span class="t">{i.title}</span><span class="s muted">{i.summary}</span></a></li>
+      ))}
+    </ol>
+  </section>
+</Base>
+<script>
+  type Item = { k: string; t: string; s: string; u: string; y: number; o: string[] };
+  const form = document.querySelector<HTMLFormElement>('.lib-search')!;
+  const q = form.querySelector<HTMLInputElement>('#q')!;
+  const kind = form.querySelector<HTMLSelectElement>('#kind')!;
+  const list = document.querySelector<HTMLOListElement>('.lib')!;
+  const count = form.querySelector<HTMLElement>('.lib-count')!;
+  const base = form.dataset.base || '/';
+  form.addEventListener('submit', (e) => e.preventDefault());
+  let index: Item[] | null = null;
+  let reported = '';
+  async function load() {
+    if (index) return index;
+    try { index = (await (await fetch(form.dataset.index!)).json()) as Item[]; } catch { index = []; }
+    return index;
+  }
+  q.addEventListener('focus', load, { once: true });
+  async function run() {
+    const items = await load();
+    const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    const hits = items.filter((i) => (!kind.value || i.k === kind.value) && terms.every((t) => `${i.t} ${i.s} ${i.k} ${i.o.join(' ')}`.toLowerCase().includes(t)));
+    list.replaceChildren(...hits.map((i) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = base + i.u.replace(/^\//, '');
+      a.innerHTML = '<span class="tag"></span><span class="t"></span><span class="s muted"></span>';
+      a.children[0].textContent = i.k; a.children[1].textContent = i.t; a.children[2].textContent = i.s;
+      li.append(a);
+      return li;
+    }));
+    count.textContent = `${hits.length} result${hits.length === 1 ? '' : 's'}`;
+    const result = hits.length ? 'match' : 'no-match';
+    if (terms.length && result !== reported) { reported = result; (window as any).aiflohTrack?.('Site Search', { result }); }
+  }
+  let timer = 0;
+  q.addEventListener('input', () => { clearTimeout(timer); timer = window.setTimeout(run, 150); });
+  kind.addEventListener('change', run);
+</script>
+<style>
+  .lib-search { display: grid; gap: var(--space-2); max-width: 36rem; margin: var(--space-8) 0; }
+  .lib-search label[for=q] { font-weight: 700; }
+  .lib-search input, .lib-search select { min-height: 48px; padding: 0 var(--space-3); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius); font: inherit; }
+  .lib-count { font-size: var(--text-sm); margin: 0; min-height: 1.4em; }
+  .lib { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-line); }
+  .lib :global(li) { border-bottom: 1px solid var(--color-line); }
+  .lib :global(a) { display: grid; gap: var(--space-1); padding: var(--space-4) 0; text-decoration: none; justify-items: start; }
+  .lib :global(.t) { font-weight: 700; }
+  .lib :global(.s) { font-size: var(--text-sm); }
+</style>

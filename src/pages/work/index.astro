@@ -1,0 +1,50 @@
+---
+import PageHead from '../../components/PageHead.astro';
+import Base from '../../layouts/Base.astro';
+import StandIn from '../../components/StandIn.astro';
+import { loadContent } from '../../lib/content';
+import { href } from '../../lib/href';
+const { work } = loadContent();
+const types = [...new Set(work.map((w) => w.type))];
+---
+<Base title="Work" description="Pieces from the studio, each with how it was made: what was done by hand and what was automated.">
+  <PageHead kicker="Work" title="Every piece shows its receipt." lede="What was done by hand, what was automated, and what it took." count={work.length} />
+  <section class="wrap section">
+    <div class="type-filter" hidden role="group" aria-label="Filter by type">
+      <button type="button" class="btn" aria-pressed="true" data-type="">All</button>
+      {types.map((t) => <button type="button" class="btn" aria-pressed="false" data-type={t}>{t}</button>)}
+    </div>
+    <ul class="tiles" role="list">
+      {work.map((w) => (
+        <li data-type={w.type}>
+          <a href={href(`/work/${w.slug}/`)}>
+            {w.cover ? <img src={href(w.cover.src)} alt={w.cover.alt} width={w.cover.w} height={w.cover.h} loading="lazy" /> : <span class="ph" aria-hidden="true" />}
+            <span class="t">{w.title}</span>
+            <span class="m muted">{w.type}{w.vertical ? ` · ${w.vertical}` : ''} {w.standIn && <StandIn />}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+<script>
+  const bar = document.querySelector<HTMLElement>('.type-filter');
+  if (bar) {
+    bar.hidden = false;
+    bar.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-type]');
+      if (!b) return;
+      bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      document.querySelectorAll<HTMLElement>('.tiles li').forEach((li) => (li.hidden = !!b.dataset.type && li.dataset.type !== b.dataset.type));
+    });
+  }
+</script>
+<style>
+  .type-filter { display: flex; gap: var(--space-2); flex-wrap: wrap; margin: var(--space-6) 0; }
+  .type-filter [aria-pressed=true] { border-color: var(--color-a); color: var(--color-a); }
+  .tiles { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+  .tiles a { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; }
+  .tiles img, .ph { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius); background: var(--color-surface); border: 1px solid var(--color-line); }
+  .t { font-weight: 700; }
+  .m { font-size: var(--text-sm); display: flex; gap: var(--space-2); align-items: center; }
+</style>

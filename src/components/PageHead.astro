@@ -1,0 +1,10 @@
+---
+interface Props { kicker: string; title: string; lede?: string; count?: number }
+const { kicker, title, lede, count } = Astro.props;
+---
+<header class="page-head wrap">
+  <p class="kicker rise"><span class="idx">{kicker}</span>{count !== undefined && <span>{count} {count === 1 ? 'item' : 'items'}</span>}</p>
+  <h1 class="rise-2">{title}</h1>
+  {lede && <p class="lede rise-3">{lede}</p>}
+  <slot />
+</header>

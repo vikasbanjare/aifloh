@@ -1,0 +1,177 @@
+---
+import Base from '../../layouts/Base.astro';
+import Stamp from '../../components/Stamp.astro';
+import StandIn from '../../components/StandIn.astro';
+import CopyButton from '../../components/CopyButton.astro';
+import AfterCopy from '../../components/AfterCopy.astro';
+import InAppBanner from '../../components/InAppBanner.astro';
+import Follow from '../../components/Follow.astro';
+import { loadContent, TYPE_LABEL, copyText } from '../../lib/content';
+import { renderLocal } from '../../lib/markdown';
+import { href } from '../../lib/href';
+import type { Resource } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return loadContent().resources.map((r) => ({ params: { slug: r.slug }, props: { r } }));
+}
+const { r } = Astro.props as { r: Resource };
+const all = loadContent().resources;
+const related = [
+  ...r.related.map((s) => all.find((x) => x.slug === s)).filter(Boolean),
+  ...all.filter((x) => x.slug !== r.slug && x.type === r.type),
+  ...all.filter((x) => x.slug !== r.slug && x.intent === r.intent),
+  ...all.filter((x) => x.slug !== r.slug),
+].filter((x, i, a) => x && a.findIndex((y) => y!.slug === x.slug) === i && !r.related.includes(r.slug)).slice(0, 3) as Resource[];
+const text = copyText(r);
+const claudeUrl = r.openInClaude && text.length < 2000 ? `https://claude.ai/new?q=${encodeURIComponent(text)}` : null;
+const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
+---
+<Base title={r.title} description={r.summary} ogImage={`/og/${r.slug}.png`}>
+  <article class="wrap section res">
+    <InAppBanner />
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/free/')}>Free</a> / {TYPE_LABEL[r.type]}</nav>
+    <h1>{r.title}</h1>
+    {r.titleHi && <p class="title-hi" lang="hi">{r.titleHi}</p>}
+    <p class="lede">{r.summary}</p>
+    <p class="meta">
+      <span class="tag">{TYPE_LABEL[r.type]}</span>
+      <Stamp tested={r.tested} />
+      {r.version && <span class="muted">v{r.version}</span>}
+      {r.standIn && <StandIn />}
+      <span class="muted">Code word: <strong class="a">{r.codeWord}</strong></span>
+    </p>
+
+    {r.type === 'skill' && r.skill && (
+      <dl class="dl skill-facts">
+        <dt>Use it when</dt><dd>{r.skill.useWhen}</dd>
+        <dt>Files</dt><dd>{r.skill.fileCount} file{r.skill.fileCount === 1 ? '' : 's'}, {kb(r.skill.bytes)}</dd>
+        <dt>Install</dt><dd>{r.skill.installNote} <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview" rel="noopener noreferrer">Anthropic's skills documentation</a></dd>
+        {r.links.repo && <dt>Source</dt>}
+        {r.links.repo && <dd><a href={r.links.repo} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={r.slug}>The folder on GitHub</a></dd>}
+      </dl>
+    )}
+
+    <h2 class="h2">The thing itself</h2>
+    {r.video?.prompt.zh ? (
+      <div class="tabs" data-tabs>
+        <div role="tablist" aria-label="Prompt language">
+          <button role="tab" id="tab-en" aria-controls="panel-en" aria-selected="true" class="btn">English</button>
+          <button role="tab" id="tab-zh" aria-controls="panel-zh" aria-selected="false" tabindex="-1" class="btn">中文</button>
+        </div>
+        <div role="tabpanel" id="panel-en" aria-labelledby="tab-en">
+          <pre class="copy-box" id="copy-main">{r.video.prompt.en}</pre>
+          <div class="actions"><CopyButton target="copy-main" slug={r.slug} /></div>
+        </div>
+        <div role="tabpanel" id="panel-zh" aria-labelledby="tab-zh" lang="zh" data-hide-js>
+          <pre class="copy-box" id="copy-zh">{r.video.prompt.zh}</pre>
+          <div class="actions"><CopyButton target="copy-zh" slug={r.slug} label="Copy Chinese" /></div>
+        </div>
+      </div>
+    ) : (
+      <>
+        <pre class="copy-box" id="copy-main">{text}</pre>
+        <div class="actions">
+          <CopyButton target="copy-main" slug={r.slug} />
+          {claudeUrl && <a class="btn" href={claudeUrl} rel="noopener noreferrer" data-track="Open In Claude" data-track-slug={r.slug}>Open in Claude with this prompt</a>}
+          {r.skill?.zip && <a class="btn dl-btn" href={href(r.skill.zip)} download data-track="Resource Download" data-track-slug={r.slug}>Download .zip</a>}
+        </div>
+        {claudeUrl && <p class="muted small">“Open in Claude” sends exactly the text above to a new Claude chat.</p>}
+      </>
+    )}
+    {r.image?.negative && <p class="small"><span class="muted">Avoid words:</span> {r.image.negative}</p>}
+    {(r.image || r.video) && (
+      <dl class="dl spec">
+        <dt>Model</dt><dd>{r.image?.model ?? r.video?.model}</dd>
+        <dt>Aspect</dt><dd>{r.image?.aspect ?? r.video?.aspect}</dd>
+        {r.video && <dt>Length</dt>}{r.video && <dd>{r.video.seconds} s</dd>}
+      </dl>
+    )}
+    {r.video && r.video.shots.length > 0 && (
+      <div class="table-wrap">
+        <table>
+          <caption class="visually-hidden">Shot list</caption>
+          <thead><tr><th scope="col">Shot</th><th scope="col">Seconds</th><th scope="col">Camera</th><th scope="col">Action</th><th scope="col">Audio</th></tr></thead>
+          <tbody>{r.video.shots.map((s) => <tr><td>{s.n}</td><td>{s.seconds}</td><td>{s.camera}</td><td>{s.action}</td><td>{s.audio ?? '—'}</td></tr>)}</tbody>
+        </table>
+      </div>
+    )}
+    <AfterCopy />
+
+    {r.howTo && <div class="prose how" set:html={renderLocal(r.howTo)} />}
+
+    <h2 class="h2">How it was made</h2>
+    {r.receipt ? (
+      <dl class="dl receipt">
+        <dt>Tool</dt><dd>{r.receipt.tool}</dd>
+        <dt>Attempts</dt><dd>{r.receipt.attempts ?? '—'}</dd>
+        <dt>Time</dt><dd>{r.receipt.time ?? '—'}</dd>
+        <dt>What failed</dt><dd>{r.receipt.failed ?? '—'}</dd>
+        <dt>What worked</dt><dd>{r.receipt.worked ?? '—'}</dd>
+      </dl>
+    ) : (
+      <p class="muted">The receipt (attempts, time, what failed, what worked) gets added here.</p>
+    )}
+    {r.changelog && <p class="small muted">Changelog: {r.changelog}</p>}
+
+    <h2 class="h2">From the post</h2>
+    {r.sourcePost ? <p><a href={r.sourcePost} rel="noopener noreferrer">See the post this came from</a></p> : <p class="muted">The link to the original post gets added when it goes up.</p>}
+    <Follow />
+
+    {related.length > 0 && (
+      <>
+        <h2 class="h2">Next</h2>
+        <ul class="next" role="list">
+          {related.map((x) => <li><a href={href(`/free/${x.slug}/`)}>{x.title}</a> <span class="muted">· {TYPE_LABEL[x.type]}</span></li>)}
+        </ul>
+      </>
+    )}
+    <p class="soft">Want this done for you? <a href={href('/contact/')} data-track="CTA Click" data-track-id="resource-studio">Let's talk</a>.</p>
+    <InAppBanner quiet />
+  </article>
+</Base>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role=tab]'));
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')!)!);
+    const select = (i: number) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+        panels[j].hidden = i !== j;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          const n = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+          select(n);
+          tabs[n].focus();
+        }
+      });
+    });
+    select(0);
+  });
+</script>
+<style>
+  .res h1 { font-size: clamp(2.25rem, 1.2rem + 4vw, 4.5rem); max-width: 18ch; }
+  .title-hi { color: var(--color-text-muted); }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; max-width: none; }
+  .h2 { font-size: var(--text-lg); margin-top: var(--space-12); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+  .small { font-size: var(--text-sm); }
+  .skill-facts { margin: var(--space-6) 0; }
+  .spec { margin-top: var(--space-4); }
+  [role=tablist] { display: flex; gap: var(--space-2); margin-bottom: var(--space-3); }
+  [role=tab][aria-selected=true] { border-color: var(--color-a); color: var(--color-a); }
+  .table-wrap { overflow-x: auto; margin-top: var(--space-4); }
+  table { border-collapse: collapse; font-size: var(--text-sm); min-width: 32rem; }
+  th, td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-line); }
+  .next { padding: 0; list-style: none; }
+  .next li { min-height: 44px; display: flex; align-items: center; gap: var(--space-2); }
+  .next a { color: var(--color-a); }
+  .soft { margin-top: var(--space-8); }
+  .soft a { color: var(--color-a); font-weight: 700; }
+  :global(html.in-app) .dl-btn { display: none; }
+  .how { margin-top: var(--space-6); }
+</style>

@@ -1,0 +1,22 @@
+---
+import Ledger from './Ledger.astro';
+import CodeWordBox from './CodeWordBox.astro';
+import AfterCopy from './AfterCopy.astro';
+import InAppBanner from './InAppBanner.astro';
+import PageHead from './PageHead.astro';
+import type { Resource } from '../lib/schema';
+interface Props { heading: string; promise: string; items: Resource[]; codeword?: boolean; kicker?: string }
+const { heading, promise, items, codeword = true, kicker = 'Free' } = Astro.props;
+---
+<div class="wrap"><InAppBanner /></div>
+<PageHead kicker={kicker} title={heading} lede={promise} count={items.length}>
+  {codeword && <div class="cw-wrap rise-3"><CodeWordBox /></div>}
+</PageHead>
+<section class="wrap hub">
+  <Ledger items={items} />
+  <AfterCopy />
+</section>
+<style>
+  .cw-wrap { margin-top: var(--space-12); padding: var(--space-6); border: 1px solid var(--color-line); border-radius: var(--radius); background: var(--color-surface); max-width: 40rem; }
+  .hub { padding-block: var(--space-12); }
+</style>

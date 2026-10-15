@@ -1,0 +1,88 @@
+name: Build and deploy
+
+# SITE-BUILD.md Section 15. Builds on every push and pull request, rebuilds daily so GitHub
+# content stays fresh, and deploys to GitHub Pages from the default branch.
+on:
+  push:
+    # main is production. The working branch is listed while it is still the repo's default branch.
+    branches: [main, claude/new-session-skts1d]
+  pull_request:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Public settings live in repository variables (Settings → Secrets and variables → Actions → Variables).
+      # Defaults give the project-site preview: https://<owner>.github.io/<repo>/
+      SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+      BASE_PATH: ${{ vars.BASE_PATH || format('/{0}/', github.event.repository.name) }}
+      DEPLOY_TARGET: github-pages
+      ANALYTICS_TOOL: ${{ vars.ANALYTICS_TOOL || 'none' }}
+      ANALYTICS_SRC: ${{ vars.ANALYTICS_SRC }}
+      ANALYTICS_DOMAIN: ${{ vars.ANALYTICS_DOMAIN }}
+      ASTRO_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      # Last good GitHub snapshot, so a vanished item or a >20% drop fails the build.
+      - uses: actions/cache@v6
+        with:
+          path: .generated/github.json
+          key: github-snapshot-${{ github.run_id }}
+          restore-keys: github-snapshot-
+
+      - run: npm ci
+
+      - name: Fetch GitHub content
+        run: npm run fetch:github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_READ_TOKEN: ${{ secrets.GH_READ_TOKEN }}
+
+      - name: Content check and typecheck
+        run: npm run check
+        env:
+          BLOCKLIST: ${{ secrets.BLOCKLIST }}
+
+      - run: npm test
+
+      - name: Build
+        run: npm run build
+        env:
+          BLOCKLIST: ${{ secrets.BLOCKLIST }}
+
+      - uses: actions/configure-pages@v6
+        if: github.event_name != 'pull_request'
+
+      - uses: actions/upload-pages-artifact@v5
+        if: github.event_name != 'pull_request'
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

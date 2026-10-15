@@ -1,0 +1,63 @@
+---
+import PageHead from '../components/PageHead.astro';
+import Base from '../layouts/Base.astro';
+import StandIn from '../components/StandIn.astro';
+import { href } from '../lib/href';
+---
+<Base title="Studio" description="AI-Floh has two sides: Studio, done-for-you AI video, motion and design, and Automate, workflows and tools built for your team.">
+  <PageHead kicker="Studio" title="Craft where it counts. Automation for the rest." lede="We make AI video, motion and design for brands, and we build the workflows that take the repetitive parts off a team's plate." />
+
+  <section class="wrap section">
+    <div class="two">
+      <div class="panel panel-a">
+        <span class="tag tag-a">Studio · done for you</span>
+        <h2>We make it</h2>
+        <p>AI video, motion graphics and design. The ideas, the taste and the final calls stay with people. AI does the heavy lifting in between.</p>
+      </div>
+      <div class="panel panel-b">
+        <span class="tag tag-b">Automate · built for you</span>
+        <h2>We build it</h2>
+        <p>Workflows and tools for your team: plugins, small apps and pipelines that turn the grind into a button.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2>Who we work with</h2>
+    <ul class="verticals" role="list">
+      <li>Finance and fintech</li>
+      <li>Edtech</li>
+      <li>Medical and health</li>
+    </ul>
+  </section>
+
+  <section class="wrap section">
+    <h2>How we work <StandIn /></h2>
+    <ol class="steps">
+      <li><strong>Brief.</strong> One call about what you need, who it's for and where it will run.</li>
+      <li><strong>Plan by hand.</strong> Sketches, a storyboard or a flow before anything is generated.</li>
+      <li><strong>Make.</strong> AI and automation for the repetitive parts, people for the decisions.</li>
+      <li><strong>Hand over.</strong> Files, sources and how it was made, so nothing is a black box.</li>
+    </ol>
+  </section>
+
+  <section class="wrap section">
+    <h2>Tools we built</h2>
+    <p>CutPilot and Pulse for Premiere Pro, and ContentIntel for checking a post before it goes out. <a class="a" href={href('/tools/')}>See all tools</a>.</p>
+    <p class="cta"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="studio-talk">Talk to us about a project</a></p>
+  </section>
+</Base>
+<style>
+  h2 { font-size: var(--text-xl); letter-spacing: -0.02em; }
+  .two { display: grid; gap: var(--space-4); }
+  @media (min-width: 48rem) { .two { grid-template-columns: 1fr 1fr; } }
+  .panel { padding: var(--space-8); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); }
+  .panel-a { border-top: 3px solid var(--color-a); }
+  .panel-b { border-top: 3px solid var(--color-b-strong); }
+  .panel h2 { margin-top: var(--space-4); }
+  .verticals { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .verticals li { font-size: var(--text-lg); font-weight: 700; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius); }
+  .steps { padding-left: 1.2em; max-width: var(--measure); }
+  .steps li { margin-bottom: var(--space-3); }
+  .cta { margin-top: var(--space-6); }
+</style>

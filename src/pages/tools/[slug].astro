@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import StandIn from '../../components/StandIn.astro';
+import { loadContent } from '../../lib/content';
+import { renderLocal } from '../../lib/markdown';
+import { href } from '../../lib/href';
+import type { Tool } from '../../lib/schema';
+export function getStaticPaths() {
+  return loadContent().tools.map((t) => ({ params: { slug: t.slug }, props: { t } }));
+}
+const { t } = Astro.props as { t: Tool };
+const repo = t.repo ? loadContent().repos.find((r) => r.repo.toLowerCase() === t.repo!.toLowerCase()) : undefined;
+const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
+const out = t.url ? t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifloh&utm_medium=tools&utm_campaign=${t.slug}` : null;
+---
+<Base title={t.title} description={t.summary}>
+  <article class="wrap section">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/tools/')}>Tools</a> / {t.category}</nav>
+    <h1>{t.title}</h1>
+    <p class="lede">{t.summary}</p>
+    <p class="row"><span class="chip-status">{STATUS[t.status]}</span>{t.version && <span class="muted">v{t.version}</span>}{t.standIn && <StandIn />}</p>
+    <div class="cta">
+      {t.cta === 'open' && out && <a class="btn btn-primary" href={out} rel="noopener" data-track="Tool Click" data-track-slug={t.slug}>Open {t.title}</a>}
+      {repo && <a class="btn" href={repo.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={repo.slug}>The code on GitHub</a>}
+      {t.cta === 'none' && <span class="muted">Not public yet</span>}
+    </div>
+    <div class="shot" aria-hidden="true"><span class="stand-in">Real screenshot coming</span></div>
+
+    <h2>How it works</h2>
+    <ol class="steps">{t.howItWorks.map((s) => <li>{s}</li>)}</ol>
+    {t.whoFor && (<><h2>Who it's for</h2><p>{t.whoFor}</p></>)}
+    <dl class="dl facts">
+      <dt>Runs on</dt><dd>{t.platforms.join(', ') || '—'}</dd>
+      {t.requirements.length > 0 && <dt>Needs</dt>}{t.requirements.length > 0 && <dd>{t.requirements.join(', ')}</dd>}
+      {t.tools.length > 0 && <dt>Built with</dt>}{t.tools.length > 0 && <dd>{t.tools.join(', ')}</dd>}
+    </dl>
+    {t.body && <div class="prose" set:html={renderLocal(t.body)} />}
+    {t.changelog && <p class="muted">Changelog: {t.changelog}</p>}
+    {t.faq.length > 0 && (<><h2>Questions</h2>{t.faq.map((f) => <details class="faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}</>)}
+    <p class="soft">Want something like this built for your team? <a href={href('/contact/')} data-track="CTA Click" data-track-id="tool-talk">Let's talk</a>.</p>
+  </article>
+</Base>
+<style>
+  .row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
+  .cta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0; align-items: center; }
+  .shot { aspect-ratio: 16 / 9; max-width: 48rem; border: 1px dashed var(--color-line); border-radius: var(--radius); display: grid; place-items: center; margin-bottom: var(--space-8); }
+  h2 { font-size: var(--text-lg); margin-top: var(--space-8); }
+  .steps { padding-left: 1.2em; max-width: var(--measure); }
+  .steps li { margin-bottom: var(--space-2); }
+  .facts { margin: var(--space-6) 0; }
+  .faq { border-bottom: 1px solid var(--color-line); max-width: var(--measure); }
+  .faq summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+  .soft { margin-top: var(--space-12); }
+  .soft a { color: var(--color-a); font-weight: 700; }
+</style>

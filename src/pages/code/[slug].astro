@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import { loadContent, type RepoItem } from '../../lib/content';
+import { href } from '../../lib/href';
+export function getStaticPaths() {
+  return loadContent().repos.filter((r) => r.readmeHtml).map((r) => ({ params: { slug: r.slug }, props: { r } }));
+}
+const { r } = Astro.props as { r: RepoItem };
+---
+<Base title={`${r.title} README`} description={r.summary || `README for ${r.name}`}>
+  <article class="wrap section">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/code/')}>Code</a> / {r.name}</nav>
+    <p class="muted small">Copied from GitHub at build time. Images are left out. <a class="a" href={r.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={r.slug}>Open the repo</a></p>
+    <div class="prose readme" set:html={r.readmeHtml} />
+  </article>
+</Base>
+<style>
+  .small { font-size: var(--text-sm); }
+  .readme :global(table) { border-collapse: collapse; font-size: var(--text-sm); display: block; overflow-x: auto; }
+  .readme :global(th), .readme :global(td) { border: 1px solid var(--color-line); padding: var(--space-1) var(--space-2); text-align: left; }
+</style>

@@ -1,0 +1,83 @@
+---
+import PageHead from '../../components/PageHead.astro';
+import Base from '../../layouts/Base.astro';
+import { loadContent } from '../../lib/content';
+import { href } from '../../lib/href';
+const { repos } = loadContent();
+const groups: { key: string; label: string }[] = [
+  { key: 'tool', label: 'Tools' },
+  { key: 'experiment', label: 'Experiments' },
+  { key: 'skills', label: 'Skills' },
+  { key: 'site', label: 'This site' },
+];
+const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const PALETTE = ['#b8f000', '#9aa8ff', '#f2f3f5', '#ffb547', '#6b6e78'];
+function bar(langs: Record<string, number>) {
+  const total = Object.values(langs).reduce((a, b) => a + b, 0);
+  if (!total) return [];
+  let x = 0;
+  return Object.entries(langs).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, n], i) => {
+    const w = (n / total) * 100;
+    const seg = { name, x, w, pct: Math.round(w), color: PALETTE[i] };
+    x += w;
+    return seg;
+  });
+}
+---
+<Base title="Code" description="The GitHub repos behind the tools, experiments and skills on this site. Read at build time; your browser never calls GitHub.">
+  <PageHead kicker="Code" title="The repos behind it all." lede="The code behind the tools, experiments and skills here. Each repo is listed on purpose." count={repos.length} />
+  <section class="wrap section">
+    {groups.map((g) => {
+      const items = repos.filter((r) => r.group === g.key);
+      return items.length > 0 && (
+        <section class="group" aria-labelledby={`g-${g.key}`}>
+          <h2 id={`g-${g.key}`}>{g.label}</h2>
+          <ul class="grid-cards" role="list">
+            {items.map((r) => {
+              const segs = bar(r.languages);
+              return (
+                <li class="card">
+                  <h3>{r.title}</h3>
+                  <p class="muted">{r.summary || '—'}</p>
+                  {r.private ? <p class="muted">Private. Available on request.</p> : (
+                    <>
+                      {segs.length > 0 && (
+                        <figure class="langs">
+                          <svg viewBox="0 0 100 4" preserveAspectRatio="none" role="img" aria-label={segs.map((s) => `${s.name} ${s.pct}%`).join(', ')}>
+                            {segs.map((s) => <rect x={s.x} y="0" width={s.w} height="4" fill={s.color} />)}
+                          </svg>
+                          <figcaption>{segs.map((s) => <span><i style={`background:${s.color}`} />{s.name} {s.pct}%</span>)}</figcaption>
+                        </figure>
+                      )}
+                      <p class="small muted">Last push {fmt(r.pushedAt)}{r.license ? ` · ${r.license}` : ''}</p>
+                      {r.topics.length > 0 && <p class="topics">{r.topics.slice(0, 6).map((t) => <span class="tag">{t}</span>)}</p>}
+                      {r.builtWith.length > 0 && <p class="small">Built with {r.builtWith.join(', ')}</p>}
+                      {r.readmeExcerpt && <p class="excerpt small">{r.readmeExcerpt}</p>}
+                    </>
+                  )}
+                  <div class="actions">
+                    {r.readmeHtml && <a class="btn" href={href(`/code/${r.slug}/`)}>Read the README</a>}
+                    <a class="btn" href={r.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={r.slug}>Open the repo</a>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      );
+    })}
+    {repos.length === 0 && <p class="muted">The repo list builds from GitHub during deployment.</p>}
+  </section>
+</Base>
+<style>
+  .group { margin-top: var(--space-12); }
+  .grid-cards { list-style: none; padding: 0; margin: 0; }
+  h2 { font-size: var(--text-lg); }
+  .langs { margin: 0; }
+  .langs svg { width: 100%; height: 6px; display: block; border-radius: 3px; overflow: hidden; }
+  .langs figcaption { display: flex; flex-wrap: wrap; gap: var(--space-3); font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+  .langs i { display: inline-block; width: 0.6em; height: 0.6em; border-radius: 50%; margin-right: 0.3em; }
+  .small { font-size: var(--text-sm); }
+  .topics { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+  .excerpt { color: var(--color-text-muted); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

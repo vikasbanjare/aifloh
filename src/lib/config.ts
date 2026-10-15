@@ -11,7 +11,7 @@ export const BEHANCE_URL = 'https://www.behance.net/vikas-banjare';
 // Handles are not supplied yet ([CONFIRM] in SITE-BUILD.md Section 16).
 // url stays null until a real handle exists; the footer then shows a STAND-IN label.
 export const SOCIALS: { platform: string; label: string; url: string | null }[] = [
-  { platform: 'linkedin', label: 'LinkedIn', url: null },
+  { platform: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/vikasbanjare/' },
   { platform: 'instagram', label: 'Instagram', url: null },
   { platform: 'threads', label: 'Threads', url: null },
   { platform: 'x', label: 'X', url: null },

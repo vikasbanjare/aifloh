@@ -1,0 +1,39 @@
+{
+  "_note": "Edit this file to change the personal brand home page. Covers are shown only when 'cover' is set; employer or client work keeps its cover off unless you approve it.",
+  "profile": {
+    "name": "Vikas Banjare",
+    "nickname": "Bubu",
+    "roles": "designer, editor and storyteller · founder of AI-Floh",
+    "photo": "/media/portfolio/vikas.webp",
+    "email": "vikas.banjare@gmail.com",
+    "behance": "https://www.behance.net/vikas-banjare",
+    "linkedin": "https://www.linkedin.com/in/vikasbanjare/",
+    "github": "https://github.com/vikasbanjare",
+    "availability": "Open to projects"
+  },
+  "stats": [
+    { "value": "8+", "label": "years in video and design" },
+    { "value": "1000+", "label": "projects shipped" },
+    { "value": "2000+", "label": "videos produced" },
+    { "value": "1M+", "label": "subscribers gained" },
+    { "value": "100+", "label": "channels managed" }
+  ],
+  "projects": [
+    { "title": "Website Design", "tags": ["UI/UX design", "Web"], "year": "2026", "summary": "Conversion-focused website design: user flows, wireframes and visual design.", "link": "https://www.behance.net/gallery/250550681/Website-Design", "cover": "/media/portfolio/contentintel-site.webp", "coverAlt": "The ContentIntel website: a dark landing page reading Know it'll work before you hit publish" },
+    { "title": "AI Website", "tags": ["AI", "Web"], "year": "2026", "summary": "A website designed and built with AI-assisted workflows, from idea to interface.", "link": "https://www.behance.net/gallery/250495271/AI-Website" },
+    { "title": "Creative Designs", "tags": ["Graphic design", "Campaigns"], "year": "2026", "summary": "Key visuals, campaign creatives and design experiments.", "link": "https://www.behance.net/gallery/250526649/Creative-Designs" },
+    { "title": "Emailer Design", "tags": ["Email", "Graphic design"], "year": "2026", "summary": "Newsletters with strong visual hierarchy, built to be opened, read and clicked.", "link": "https://www.behance.net/gallery/250525969/Emailer-Design" },
+    { "title": "AI YT Thumbnails", "tags": ["YouTube", "AI"], "year": "2025", "summary": "Click-worthy YouTube thumbnails made with AI tools.", "link": "https://www.behance.net/gallery/232938571/AI-YT-Thumbnails-design" },
+    { "title": "AI Videos", "tags": ["AI video"], "year": "2025", "summary": "Video generation and editing experiments with Runway, HeyGen and others.", "link": "https://www.behance.net/gallery/232940741/AI-Videos" },
+    { "title": "Social Media Designs", "tags": ["Social", "Graphic design"], "year": "2024", "summary": "Daily and campaign creatives across Instagram, LinkedIn and more.", "link": "https://www.behance.net/gallery/218001529/Social-Media-Designs", "cover": "/media/portfolio/social-hiring-ai.webp", "coverAlt": "Rows of white desks with blue monitors; one screen asks Hiring AI only?" },
+    { "title": "Podcast Videos", "tags": ["Video production", "Podcasts"], "year": "2024", "summary": "Podcast production from concept to short-form clips.", "link": "https://www.behance.net/gallery/218001379/Podcast-Videos" },
+    { "title": "Trailer Video", "tags": ["Video", "Edit"], "year": "2024", "summary": "A high-energy trailer edit: pacing, sound design and story in seconds.", "link": "https://www.behance.net/gallery/217989345/Trailer-Video" },
+    { "title": "Motion Graphic", "tags": ["Motion design"], "year": "2024", "summary": "Motion graphics that bring static brands to life.", "link": "https://www.behance.net/gallery/218106207/Motion-Graphic" }
+  ],
+  "services": [
+    { "title": "Video production", "summary": "Shoots, brand films, podcasts, trailers and edits. Cameras, light, sound and story.", "tags": ["Shoots", "Editing", "Podcasts", "Brand films"] },
+    { "title": "Graphic design", "summary": "Social creatives, thumbnails, emailers and campaign visuals with strong hierarchy and stronger hooks.", "tags": ["Social", "Thumbnails", "Emailers", "Campaigns"] },
+    { "title": "UI/UX and web", "summary": "User flows, wireframes and conversion-focused landing pages, plus design systems.", "tags": ["User flows", "Landing pages", "Design systems"] },
+    { "title": "AI workflows", "summary": "Faster edits and variants, scripts and captions, plus plugins and pipelines that remove the grind.", "tags": ["AI video", "Claude skills", "Premiere plugins"] }
+  ]
+}

@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import FreeHub from '../../components/FreeHub.astro';
+import { loadContent } from '../../lib/content';
+const items = loadContent().resources.filter((r) => r.type === 'prompt-video');
+---
+<Base title="Video prompts" description="Free video prompts with shot lists, models and timings.">
+  <FreeHub heading="Video prompts" promise="Video prompts with the shot list, the model and the timing for each one." items={items} codeword={false} kicker="Free · Prompts" />
+</Base>

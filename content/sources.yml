@@ -8,6 +8,7 @@ items:
   - repo: vikasbanjare/Contentintel
     group: tool
     publish: true
+    readme: false
     note: ContentIntel. Outbound link to contentintel.in. Add aifloh.yml; turn on Enforce HTTPS for the custom domain.
   - repo: vikasbanjare/caption-and-video-editor
     group: tool
@@ -63,15 +64,15 @@ items:
     note: This site. Flip once it has an aifloh.yml.
 
   # SKILLS (repo vikasbanjare/aifloh-skills, one folder per skill)
-  - { repo: vikasbanjare/aifloh-skills, path: deck-director, group: skills, publish: false, note: Design set. }
-  - { repo: vikasbanjare/aifloh-skills, path: logo-director, group: skills, publish: false, note: Design set. }
-  - { repo: vikasbanjare/aifloh-skills, path: logo-identity-strategist, group: skills, publish: false, note: Design set. }
-  - { repo: vikasbanjare/aifloh-skills, path: brand-design-studio, group: skills, publish: false, note: Design set. Generic brand template. }
-  - { repo: vikasbanjare/aifloh-skills, path: carousel-post-design, group: skills, publish: false, note: Design set. New skill. }
-  - { repo: vikasbanjare/aifloh-skills, path: motion-designer, group: skills, publish: false, note: Design set. }
-  - { repo: vikasbanjare/aifloh-skills, path: thumbnail-prompt-generator, group: skills, publish: false, note: Prompt set. }
-  - { repo: vikasbanjare/aifloh-skills, path: seedance-director, group: skills, publish: false, note: Prompt set. }
-  - { repo: vikasbanjare/aifloh-skills, path: anti-ai-writing, group: skills, publish: false, note: Writing set. }
-  - { repo: vikasbanjare/aifloh-skills, path: dumbify, group: skills, publish: false, note: Writing set. }
-  - { repo: vikasbanjare/aifloh-skills, path: viral-hooks, group: skills, publish: false, note: Writing set. }
-  - { repo: vikasbanjare/aifloh-skills, path: storytelling, group: skills, publish: false, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: deck-director, group: skills, publish: true, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: logo-director, group: skills, publish: true, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: logo-identity-strategist, group: skills, publish: false, note: Waiting on a quick check. Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: brand-design-studio, group: skills, publish: true, note: Design set. Generic brand template. }
+  - { repo: vikasbanjare/aifloh-skills, path: carousel-post-design, group: skills, publish: true, note: Design set. New skill. }
+  - { repo: vikasbanjare/aifloh-skills, path: motion-designer, group: skills, publish: true, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: thumbnail-prompt-generator, group: skills, publish: true, note: Prompt set. }
+  - { repo: vikasbanjare/aifloh-skills, path: seedance-director, group: skills, publish: true, note: Prompt set. }
+  - { repo: vikasbanjare/aifloh-skills, path: anti-ai-writing, group: skills, publish: true, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: dumbify, group: skills, publish: true, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: viral-hooks, group: skills, publish: true, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: storytelling, group: skills, publish: false, note: Waiting on a quick check. Writing set. }

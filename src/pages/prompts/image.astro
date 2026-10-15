@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import FreeHub from '../../components/FreeHub.astro';
+import { loadContent } from '../../lib/content';
+const items = loadContent().resources.filter((r) => r.type === 'prompt-image');
+---
+<Base title="Image prompts" description="Free image prompts with the model, aspect ratio and what it took to get them right.">
+  <FreeHub heading="Image prompts" promise="Image prompts with the model, the aspect ratio and what it took to get them right." items={items} codeword={false} kicker="Free · Prompts" />
+</Base>

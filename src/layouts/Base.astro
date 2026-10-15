@@ -3,18 +3,34 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { href } from '../lib/href';
-import { SITE_NAME } from '../lib/config';
+import { SITE_NAME, ANALYTICS_TOOL, ANALYTICS_SRC, ANALYTICS_DOMAIN } from '../lib/config';
+import { loadContent } from '../lib/content';
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  ogImage?: string; // site-absolute path, e.g. /og/my-slug.png
 }
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, ogImage } = Astro.props;
 
 const pageTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const current = '/' + Astro.url.pathname.slice(import.meta.env.BASE_URL.length).replace(/\/$/, '');
+const og = new URL(href(ogImage ?? '/og/site.png'), Astro.site).toString();
+
+const c = loadContent();
+const slugs = [...c.resources, ...c.tools, ...c.experiments, ...c.work, ...c.repos].map((i) => i.slug);
+const intents = [...new Set(c.resources.map((r) => r.intent))];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString(), founder: { '@type': 'Person', name: 'Vikas Banjare' } },
+    { '@type': 'WebSite', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString() },
+  ],
+};
+const analyticsOn = ANALYTICS_TOOL !== 'none' && !!ANALYTICS_SRC && !!ANALYTICS_DOMAIN;
 ---
 
 <!doctype html>
@@ -27,8 +43,42 @@ const current = '/' + Astro.url.pathname.slice(import.meta.env.BASE_URL.length).
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="preload" href={href('/fonts/inter-latin-wght.woff2')} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+    <meta name="theme-color" content="#0a0a0c" />
+    <link rel="preload" href={href('/fonts/inter-latin-opsz.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      // Strip every query parameter except the four utm_* ones before analytics loads (Section 13).
+      (function () {
+        try {
+          var u = new URL(location.href), keep = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'], changed = false;
+          Array.from(u.searchParams.keys()).forEach(function (k) { if (keep.indexOf(k) < 0) { u.searchParams.delete(k); changed = true; } });
+          if (changed) history.replaceState(history.state, '', u.pathname + (u.searchParams.toString() ? '?' + u.searchParams : '') + u.hash);
+        } catch (e) {}
+      })();
+    </script>
+    {
+      analyticsOn && ANALYTICS_TOOL === 'plausible' && (
+        <script is:inline defer data-domain={ANALYTICS_DOMAIN} src={ANALYTICS_SRC} />
+      )
+    }
+    {
+      analyticsOn && ANALYTICS_TOOL === 'umami' && (
+        <script is:inline defer data-website-id={ANALYTICS_DOMAIN} data-exclude-hash="true" data-exclude-search="false" src={ANALYTICS_SRC} />
+      )
+    }
+    <script type="application/json" id="track-slugs" set:html={JSON.stringify(slugs)} />
+    <script type="application/json" id="track-intents" set:html={JSON.stringify(intents)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -37,5 +87,8 @@ const current = '/' + Astro.url.pathname.slice(import.meta.env.BASE_URL.length).
       <slot />
     </main>
     <Footer />
+    <script>
+      import '../scripts/track.ts';
+    </script>
   </body>
 </html>

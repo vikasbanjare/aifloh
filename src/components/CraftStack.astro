@@ -1,0 +1,156 @@
+---
+// The Craft Stack (SITE-BUILD.md Section 7). One finished frame built from six thin layers. On desktop the
+// layers separate in depth as you scroll the hero, each called out with who made it (colour A by hand,
+// colour B AI or automated), then merge back into the finished frame. CSS 3D on flat planes: no WebGL,
+// no library. Phones, reduced motion and no-JS get the same stack as a still, already separated.
+// Layer art is STAND-IN (inline SVG) until real images are listed in content/hero/layers.json.
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { href } from '../lib/href';
+
+interface Layer { id: string; label: string; madeBy: 'A' | 'B'; tag: string; src?: string; alt: string; standIn?: boolean; z: number }
+const layers: Layer[] = JSON.parse(readFileSync(join(process.cwd(), 'content/hero/layers.json'), 'utf8'));
+const byZ = [...layers].sort((a, b) => a.z - b.z);
+const anyStandIn = layers.some((l) => l.standIn);
+
+const stars = Array.from({ length: 28 }, (_, i) => `<circle cx="${(i * 97) % 400}" cy="${(i * 53) % 120}" r="${i % 3 ? 0.8 : 1.4}" fill="#f2f3f5" opacity="${0.35 + (i % 4) * 0.15}"/>`).join('');
+const wave = Array.from({ length: 64 }, (_, i) => {
+  const h = 4 + Math.round(Math.abs(Math.sin(i * 0.55) * Math.cos(i * 0.17)) * 26);
+  return `<rect x="${12 + i * 6}" y="${232 - h / 2}" width="3" height="${h}" rx="1.5" fill="currentColor"/>`;
+}).join('');
+const art: Record<string, string> = {
+  render: `<rect width="400" height="250" fill="#0d1030"/>${stars}<circle cx="292" cy="92" r="38" fill="#ffd98a"/><circle cx="292" cy="92" r="52" fill="#ffd98a" opacity=".08"/><path d="M0 178 L62 120 L118 158 L188 86 L262 162 L322 118 L400 168 V250 H0Z" fill="#2b4bff"/><path d="M0 210 L84 160 L160 196 L236 146 L330 204 L400 182 V250 H0Z" fill="#141c6b"/><path d="M188 250 L203 204 L209 204 L236 250Z" fill="#ff8a5b" opacity=".9"/>`,
+  grade: `<rect width="400" height="250" fill="#2b4bff" opacity=".12"/><g transform="translate(300 18)"><rect width="82" height="58" rx="4" fill="#0a0a0c" opacity=".7" stroke="currentColor" stroke-width=".8"/><path d="M6 52 C 30 46, 46 22, 76 8" stroke="#ff6b6b" fill="none" stroke-width="1.4"/><path d="M6 52 C 34 44, 48 26, 76 6" stroke="#7dff9a" fill="none" stroke-width="1.4"/><path d="M6 50 C 26 40, 52 30, 76 12" stroke="currentColor" fill="none" stroke-width="1.6"/></g>`,
+  comp: `<g stroke="currentColor" stroke-width="1" fill="none"><rect x="16" y="14" width="368" height="222" rx="2" stroke-dasharray="4 4" opacity=".7"/><path d="M133 14 V236 M266 14 V236 M16 88 H384 M16 162 H384" opacity=".35"/></g><rect x="30" y="30" width="120" height="12" rx="2" fill="currentColor" opacity=".9"/><rect x="30" y="48" width="78" height="6" rx="2" fill="currentColor" opacity=".55"/>`,
+  sketch: `<g stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 180 L60 123 L116 160 L186 88 L260 163 L320 120 L398 170"/><path d="M4 176 L63 119 L119 157 L189 84 L262 160 L324 117 L396 166" opacity=".45"/><circle cx="292" cy="92" r="39"/><path d="M190 248 L203 206 M234 248 L209 206" opacity=".8"/></g>`,
+  motion: `<g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M40 200 C 110 40, 210 30, 292 92" stroke-dasharray="5 6"/></g><g fill="currentColor"><path d="M40 194 l6 6 -6 6 -6 -6Z"/><path d="M150 72 l6 6 -6 6 -6 -6Z"/><path d="M292 86 l6 6 -6 6 -6 -6Z"/></g><rect x="16" y="214" width="368" height="2" fill="currentColor" opacity=".4"/><g fill="currentColor"><path d="M40 209 l5 6 -5 6 -5 -6Z"/><path d="M150 209 l5 6 -5 6 -5 -6Z"/><path d="M292 209 l5 6 -5 6 -5 -6Z"/></g>`,
+  sound: `<rect x="0" y="212" width="400" height="38" fill="#0a0a0c" opacity=".55"/>${wave}`,
+};
+---
+<div class="cs" data-craft-stack style="--sep:1;--active:-1">
+  <div class="cs-stage">
+    <ol class="cs-stack" role="list" aria-label="Six layers of one finished frame">
+      {byZ.map((l) => (
+        <li class:list={['cs-plane', `is-${l.id}`, l.madeBy === 'A' ? 'by-a' : 'by-b']} style={`--z:${l.z}`} data-z={l.z}>
+          {l.src ? (
+            <img src={href(l.src)} alt={l.alt} width="400" height="250" loading={l.z === 0 ? 'eager' : 'lazy'} />
+          ) : (
+            <svg viewBox="0 0 400 250" role="img" aria-label={l.alt} set:html={art[l.id] ?? ''} />
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+  <ol class="cs-legend" role="list" aria-label="Who made each layer">
+    {byZ.slice().reverse().map((l) => (
+      <li class:list={['cs-item', l.madeBy === 'A' ? 'tag-a' : 'tag-b']} data-z={l.z}>
+        <span class="cs-n">{String(l.z + 1).padStart(2, '0')}</span>
+        <span class="dot" aria-hidden="true" />
+        <span class="cs-t">{l.tag}</span>
+      </li>
+    ))}
+  </ol>
+  <p class="cs-key">
+    <span class="tag tag-a"><span class="dot" aria-hidden="true" />by hand</span>
+    <span class="tag tag-b"><span class="dot" aria-hidden="true" />AI or automated</span>
+    {anyStandIn && <span class="stand-in">Stand-in layers</span>}
+  </p>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-craft-stack]');
+  const hero = root?.closest<HTMLElement>('[data-hero]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const wide = matchMedia('(min-width: 64rem)');
+  const track = (window as any).aiflohTrack as ((n: string, p?: Record<string, string>) => void) | undefined;
+  let reported = false;
+  const report = (mode: string) => {
+    if (reported) return;
+    reported = true;
+    // aiflohTrack loads with the shim; give it a tick if it isn't there yet.
+    setTimeout(() => ((window as any).aiflohTrack ?? track)?.('Hero Mode', { mode }), 0);
+  };
+
+  if (root && hero) {
+    let raf = 0;
+    let visible = true;
+    let tiltX = 0;
+    let tiltY = 0;
+    const N = root.querySelectorAll('.cs-plane').length;
+    const ease = (t: number) => t * t * (3 - 2 * t);
+    const render = () => {
+      raf = 0;
+      if (!root.classList.contains('live')) return;
+      const r = hero.getBoundingClientRect();
+      const total = r.height - innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+      // 0-0.12 assembled · 0.12-0.3 separate · 0.3-0.82 call out each layer · 0.82-1 merge back
+      const sep = p < 0.12 ? 0 : p < 0.3 ? ease((p - 0.12) / 0.18) : p < 0.82 ? 1 : 1 - ease((p - 0.82) / 0.18);
+      const active = p >= 0.3 && p < 0.82 ? N - 1 - Math.min(N - 1, Math.floor(((p - 0.3) / 0.52) * N)) : -1;
+      root.style.setProperty('--sep', sep.toFixed(3));
+      root.style.setProperty('--active', String(active));
+      root.style.setProperty('--tx', tiltX.toFixed(2));
+      root.style.setProperty('--ty', tiltY.toFixed(2));
+      root.querySelectorAll<HTMLElement>('[data-z]').forEach((el) => el.classList.toggle('on', Number(el.dataset.z) === active));
+      root.classList.toggle('merged', p >= 0.97);
+    };
+    const queue = () => { if (visible && !raf) raf = requestAnimationFrame(render); };
+    const enable = () => {
+      const on = wide.matches && !reduce.matches;
+      hero.classList.toggle('hero-3d', on);
+      root.classList.toggle('live', on);
+      if (on) report('3d');
+      else if (reduce.matches) report('static-reduced-motion');
+      if (!on) { root.style.setProperty('--sep', '1'); root.style.setProperty('--active', '-1'); }
+      queue();
+    };
+    addEventListener('scroll', () => root.classList.contains('live') && queue(), { passive: true });
+    addEventListener('resize', queue, { passive: true });
+    hero.addEventListener('pointermove', (e) => {
+      if (!root.classList.contains('live') || e.pointerType !== 'mouse') return;
+      tiltX = (e.clientX / innerWidth - 0.5) * 2;
+      tiltY = (e.clientY / innerHeight - 0.5) * 2;
+      queue();
+    }, { passive: true });
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; queue(); }).observe(hero);
+    document.addEventListener('visibilitychange', () => { visible = !document.hidden; queue(); });
+    reduce.addEventListener('change', enable);
+    wide.addEventListener('change', enable);
+    enable();
+  }
+</script>
+
+<style>
+  .cs { --tx: 0; --ty: 0; display: grid; gap: var(--space-6); }
+  .cs-stage { perspective: 1800px; perspective-origin: 50% 30%; padding: 4% 6% 10%; }
+  .cs-stack {
+    list-style: none; margin: 0; padding: 0; position: relative; aspect-ratio: 8 / 5; transform-style: preserve-3d;
+    transform: rotateX(calc(18deg + var(--sep) * 36deg + var(--ty) * -4deg)) rotateZ(calc(-8deg - var(--sep) * 22deg + var(--tx) * 4deg));
+  }
+  .cs-plane {
+    position: absolute; inset: 0; border-radius: 6px; overflow: hidden;
+    transform: translateZ(calc(var(--z) * var(--sep) * 46px));
+    border: 1px solid rgba(242, 243, 245, 0.14);
+    transition: opacity var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard);
+  }
+  .cs-plane svg, .cs-plane img { width: 100%; height: 100%; display: block; }
+  .cs-plane.is-render { box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(242, 243, 245, 0.08); }
+  .cs-plane:not(.is-render) { background: rgba(10, 10, 12, calc(var(--sep) * 0.28)); }
+  .by-a { color: var(--color-a); }
+  .by-b { color: var(--color-b); }
+  .live .cs-plane.on { border-color: currentColor; transform: translateZ(calc(var(--z) * var(--sep) * 46px + 36px)); }
+  .live .cs-plane.on.by-b { border-color: var(--color-b); }
+
+  .cs-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); grid-template-columns: repeat(2, 1fr); font-size: var(--text-sm); }
+  .cs-item { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; border-top: 1px solid var(--color-line); transition: opacity var(--dur-base) var(--ease-standard); }
+  .cs-n { font-variant-numeric: tabular-nums; color: var(--color-text-muted); font-size: var(--text-xs); width: 1.6rem; }
+  .cs-t { color: var(--color-text); }
+  .cs-key { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin: 0; }
+
+  @media (min-width: 64rem) {
+    .cs-legend { grid-template-columns: 1fr; max-width: 18rem; }
+    .live .cs-item { opacity: 0.4; }
+    .live .cs-item.on { opacity: 1; }
+    .live.merged .cs-item { opacity: 1; }
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+// The /free ledger: one column, never a card grid. Rows expand in place (details/summary works without JS).
+import type { Resource } from '../lib/schema';
+import { TYPE_LABEL, copyText } from '../lib/content';
+import { href } from '../lib/href';
+import Stamp from './Stamp.astro';
+import StandIn from './StandIn.astro';
+import CopyButton from './CopyButton.astro';
+
+interface Props { items: Resource[]; filter?: boolean; pageSize?: number }
+const { items, filter = true, pageSize = 24 } = Astro.props;
+const intents = [...new Set(items.map((r) => r.intent))].sort();
+const tools = [...new Set(items.flatMap((r) => r.tools))].sort();
+const isDownload = (r: Resource) => r.type === 'skill' && r.skill?.zip;
+---
+{
+  filter && items.length > 1 && (
+    <form class="filter" hidden aria-label="Filter the list">
+      <p class="filter-sentence">
+        I want to{' '}
+        <label class="visually-hidden" for="f-intent">Task</label>
+        <select id="f-intent" name="intent">
+          <option value="">do anything</option>
+          {intents.map((i) => <option value={i}>{i}</option>)}
+        </select>{' '}
+        with{' '}
+        <label class="visually-hidden" for="f-tool">Tool</label>
+        <select id="f-tool" name="tool">
+          <option value="">any tool</option>
+          {tools.map((t) => <option value={t}>{t}</option>)}
+        </select>
+      </p>
+      <p class="filter-count muted" role="status" aria-live="polite"></p>
+    </form>
+  )
+}
+<ol class="ledger" role="list">
+  {
+    items.map((r, i) => (
+      <li class="row" data-intent={r.intent} data-tools={r.tools.join('|')} data-index={i}>
+        <details>
+          <summary>
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="main">
+              <span class="title">{r.title}</span>
+              {r.titleHi && <span class="title-hi" lang="hi">{r.titleHi}</span>}
+              <span class="what">{r.summary}</span>
+              <span class="meta">
+                <span class="tag">{TYPE_LABEL[r.type]}</span>
+                <Stamp tested={r.tested} />
+                {r.standIn && <StandIn />}
+              </span>
+            </span>
+            <span class="chev" aria-hidden="true" />
+          </summary>
+          <div class="body">
+            <pre class="copy-box" id={`copy-${r.slug}`}>{copyText(r).slice(0, 1200)}{copyText(r).length > 1200 ? '\n…' : ''}</pre>
+            <div class="row-actions">
+              {copyText(r).length <= 1200 ? <CopyButton target={`copy-${r.slug}`} slug={r.slug} /> : <a class="btn btn-primary" href={href(`/free/${r.slug}/`)}>Open to copy all</a>}
+              {isDownload(r) && (
+                <a class="btn dl-btn" href={href(r.skill!.zip!)} download data-track="Resource Download" data-track-slug={r.slug}>
+                  Download .zip
+                </a>
+              )}
+              <a class="btn" href={href(`/free/${r.slug}/`)}>Open</a>
+            </div>
+          </div>
+        </details>
+      </li>
+    ))
+  }
+</ol>
+{items.length > pageSize && <button type="button" class="btn more" hidden>Show {pageSize} more</button>}
+{items.length === 0 && <p class="muted">Nothing here yet.</p>}
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ledger').forEach((ledger) => {
+    const form = ledger.previousElementSibling?.matches?.('form.filter') ? (ledger.previousElementSibling as HTMLFormElement) : null;
+    const more = ledger.nextElementSibling?.matches?.('button.more') ? (ledger.nextElementSibling as HTMLButtonElement) : null;
+    const rows = Array.from(ledger.querySelectorAll<HTMLElement>(':scope > .row'));
+    const PAGE = 24;
+    let limit = PAGE;
+    function apply() {
+      const intent = form?.querySelector<HTMLSelectElement>('#f-intent')?.value || '';
+      const tool = form?.querySelector<HTMLSelectElement>('#f-tool')?.value || '';
+      const match = rows.filter((r) => (!intent || r.dataset.intent === intent) && (!tool || (r.dataset.tools || '').split('|').includes(tool)));
+      rows.forEach((r) => (r.hidden = true));
+      match.slice(0, limit).forEach((r) => (r.hidden = false));
+      if (more) more.hidden = match.length <= limit;
+      const count = form?.querySelector('.filter-count');
+      if (count) count.textContent = `${match.length} of ${rows.length}`;
+      ledger.classList.remove('fade');
+      void ledger.offsetWidth;
+      ledger.classList.add('fade');
+    }
+    if (form) {
+      form.hidden = false;
+      form.addEventListener('change', (e) => {
+        limit = PAGE;
+        apply();
+        if ((e.target as HTMLElement).id === 'f-intent') {
+          const v = (e.target as HTMLSelectElement).value;
+          if (v) (window as any).aiflohTrack?.('Filter Used', { intent: v });
+        }
+      });
+    }
+    more?.addEventListener('click', () => {
+      limit += PAGE;
+      apply();
+    });
+    if (more) more.hidden = false;
+    apply();
+  });
+</script>
+
+<style>
+  .filter { margin-bottom: var(--space-8); }
+  .filter-sentence { font-size: clamp(1.4rem, 1rem + 1.6vw, 2.25rem); font-weight: 750; letter-spacing: -0.035em; max-width: none; line-height: 1.6; margin: 0; }
+  .filter select {
+    font: inherit; font-size: 0.9em; color: var(--color-a); background: transparent; letter-spacing: -0.03em;
+    border: 0; border-bottom: 2px solid var(--color-a); border-radius: 0; min-height: 44px; padding: 0 0.2em; max-width: 100%; cursor: pointer;
+  }
+  .filter select option { background: var(--color-surface); color: var(--color-text); font-size: 1rem; }
+  .filter-count { font-size: var(--text-sm); margin: var(--space-2) 0 0; }
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
+  .ledger.fade { animation: fade var(--dur-base) var(--ease-standard); }
+  @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+  .row { border-bottom: 1px solid var(--color-line); position: relative; }
+  .row::before { content: ''; position: absolute; left: 0; top: -1px; height: 1px; width: 0; background: var(--color-a); transition: width var(--dur-slow) var(--ease-standard); }
+  summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 2.5rem 1fr 2rem; gap: var(--space-4);
+    padding: var(--space-6) 0; align-items: start;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .num { font-variant-numeric: tabular-nums; color: var(--color-text-muted); font-size: var(--text-sm); font-weight: 600; padding-top: 0.45em; }
+  .main { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+  .title { font-weight: 750; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); letter-spacing: -0.03em; line-height: 1.15; transition: color var(--dur-base) var(--ease-standard); }
+  .title-hi { font-size: var(--text-sm); color: var(--color-text-muted); }
+  .what { color: var(--color-text-muted); font-size: var(--text-md); max-width: 62ch; }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-1); align-items: center; }
+  .chev { width: 2rem; height: 2rem; border-radius: 50%; border: 1px solid var(--color-line-strong); position: relative; margin-top: 0.15em; transition: transform var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); }
+  .chev::before, .chev::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+  .chev::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform var(--dur-base) var(--ease-standard); }
+  details[open] .chev { border-color: var(--color-a); color: var(--color-a); }
+  details[open] .chev::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .body { padding: 0 0 var(--space-8) calc(2.5rem + var(--space-4)); animation: fade var(--dur-slow) var(--ease-standard); }
+  .row-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+  .more { margin-top: var(--space-8); }
+  :global(html.in-app) .dl-btn { display: none; }
+  @media (hover: hover) {
+    summary:hover .title { color: var(--color-a); }
+    .row:hover::before { width: 100%; }
+    summary:hover .chev { border-color: var(--color-text); }
+  }
+  @media (max-width: 30rem) { .body { padding-left: 0; } summary { grid-template-columns: 1.75rem 1fr 2rem; gap: var(--space-3); } }
+</style>

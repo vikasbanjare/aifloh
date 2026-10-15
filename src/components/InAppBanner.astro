@@ -1,0 +1,45 @@
+---
+// Shown inside Instagram, Facebook, X and LinkedIn in-app browsers. Detection can fail,
+// so resource pages also carry the quiet "Having trouble?" link (quiet prop).
+interface Props { quiet?: boolean }
+const { quiet = false } = Astro.props;
+---
+{
+  quiet ? (
+    <details class="trouble">
+      <summary>Having trouble? Open in your browser</summary>
+      <p class="muted">Tap the ⋯ or share menu at the top of this screen and choose “Open in browser”. Or copy this page's link and paste it into your browser.</p>
+      <button type="button" class="btn copy-link" data-track="Open In Browser Click">Copy page link</button>
+    </details>
+  ) : (
+    <div class="inapp" role="note">
+      <p><strong>Open in your browser</strong> for downloads and the full page. Tap ⋯ at the top, then “Open in browser”.</p>
+      <button type="button" class="btn btn-primary copy-link" data-track="Open In Browser Click">Copy page link</button>
+    </div>
+  )
+}
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy-link').forEach((b) => {
+    const app = document.documentElement.dataset.app;
+    if (app) b.dataset.trackApp = app;
+    b.addEventListener('click', async () => {
+      const url = location.href.split('#')[0];
+      try {
+        await navigator.clipboard.writeText(url);
+        b.textContent = 'Link copied';
+      } catch {
+        b.insertAdjacentHTML('afterend', '<input class="copy-box" readonly style="width:100%;margin-top:.5rem" aria-label="Page link">');
+        const inp = b.nextElementSibling as HTMLInputElement;
+        inp.value = url;
+        inp.select();
+      }
+    });
+  });
+</script>
+<style>
+  .inapp { display: none; gap: var(--space-3); align-items: center; flex-wrap: wrap; padding: var(--space-4); margin-bottom: var(--space-6); border: 1px solid var(--color-a); border-radius: var(--radius); }
+  .inapp p { margin: 0; }
+  :global(html.in-app) .inapp { display: flex; }
+  .trouble { margin-top: var(--space-8); font-size: var(--text-sm); }
+  .trouble summary { cursor: pointer; color: var(--color-text-muted); min-height: 44px; display: flex; align-items: center; }
+</style>

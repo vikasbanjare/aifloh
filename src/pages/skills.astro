@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import FreeHub from '../components/FreeHub.astro';
+import { loadContent } from '../lib/content';
+const items = loadContent().resources.filter((r) => r.type === 'skill');
+---
+<Base title="Claude skills" description="Free Claude skills I use for design, prompts and writing. Copy the text or download the folder.">
+  <FreeHub heading="Claude skills" promise="The Claude skills I use for design, prompts and writing. Copy the text or download the folder." items={items} codeword={false} kicker="Free · Skills" />
+</Base>

@@ -1,0 +1,27 @@
+---
+import PageHead from '../components/PageHead.astro';
+import Base from '../layouts/Base.astro';
+import Follow from '../components/Follow.astro';
+import { href } from '../lib/href';
+import { BEHANCE_URL } from '../lib/config';
+---
+<Base title="About" description="I'm Vikas Banjare, the founder of AI-Floh. Eight years and 1000+ projects in video, motion, design, UI/UX and content.">
+  <PageHead kicker="About" title="I'm Vikas Banjare, or Bubu." lede="I started AI-Floh to keep the craft and automate the grind." />
+  <section class="wrap section prose">
+    <p>I've spent 8 years on more than 1000 projects across video production, motion graphics, brand design, UI/UX and content strategy.</p>
+    <p>I post the prompts, Claude skills and tools I use, plus the experiments that didn't work. Every post ends with a word you can type on this site to get the thing itself.</p>
+    <h2>Two colours, one rule</h2>
+    <p>
+      Everywhere on this site, <span class="a"><strong>lime means made by hand</strong></span> and <span class="b"><strong>blue means AI or automated</strong></span>.
+      Every piece of work shows both, honestly, because the interesting part is knowing which is which.
+    </p>
+    <h2>Elsewhere</h2>
+    <p><a class="a" href={BEHANCE_URL} rel="me noopener">Behance</a> for the design portfolio, and the links below for everything else.</p>
+    <Follow />
+    <p class="cta"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="about-talk">Say hello</a></p>
+  </section>
+</Base>
+<style>
+  .prose h2 { font-size: var(--text-lg); }
+  .cta { margin-top: var(--space-8); }
+</style>

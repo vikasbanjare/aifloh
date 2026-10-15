@@ -1,45 +1,53 @@
 /*
  * Design tokens.
- * STAND-IN: /design (the Claude Design export) is not in the repo yet. Every
- * color, type and spacing value below is a placeholder chosen for contrast
- * and will be replaced by a straight port of the /design tokens. Motion tokens
- * are final: they come from SITE-BUILD.md Section 6.
+ * STAND-IN: the Claude Design export (/design) is not in the repo yet. Colours follow the AI-Floh
+ * "Studio Night" house direction (lime and cobalt on near-black) from the owner's deck-director skill,
+ * so the stand-in is at least on-brand. Replace with a straight port of /design when it lands.
+ * Motion tokens are final (SITE-BUILD.md Section 6).
  */
 :root {
-  /* Color: surfaces and text (STAND-IN) */
-  --color-bg: #faf8f4;
-  --color-surface: #ffffff;
-  --color-text: #16161a;
-  --color-text-muted: #4a4a52;
-  --color-line: #d9d5cc;
-  --color-focus: #16161a;
+  color-scheme: dark;
 
-  /* Color A = made by hand. Color B = AI or automated. Meaning is fixed site-wide. (STAND-IN values) */
-  --color-a: #a63a12;
-  --color-a-soft: #f6e3da;
-  --color-b: #2238c2;
-  --color-b-soft: #dfe4fa;
+  --color-bg: #111112;
+  --color-panel: #050505;
+  --color-surface: #19191b;
+  --color-surface-2: #222225;
+  --color-text: #f2f3f5;
+  --color-text-muted: #a3a5ac;
+  --color-line: #222228;
+  --color-line-strong: #3a3a43;
+  --color-focus: #b8f000;
 
-  /* Free gets the highlight in navigation (STAND-IN) */
-  --color-highlight: #16161a;
-  --color-on-highlight: #faf8f4;
+  /* Colour A = made by hand. Colour B = AI or automated. Fixed meaning on every page. */
+  --color-a: #b8f000;          /* lime: text-safe (14.6:1) */
+  --color-a-ink: #0a0a0c;      /* text on an A fill */
+  --color-a-soft: rgba(184, 240, 0, 0.12);
+  --color-b: #9aa8ff;          /* cobalt, lightened for text (8.9:1) */
+  --color-b-strong: #2b4bff;   /* cobalt for fills, rules and dots only (3.4:1) */
+  --color-b-ink: #0a0a0c;
+  --color-b-soft: rgba(43, 75, 255, 0.18);
 
-  /* Notices (STAND-IN label, NEEDS BACKEND label) */
-  --color-standin-bg: #fff3b0;
-  --color-standin-text: #3d3200;
+  --color-highlight: #b8f000;
+  --color-on-highlight: #0a0a0c;
 
-  /* Type (STAND-IN families until /design arrives) */
+  --color-standin-bg: #ffe36e;
+  --color-standin-text: #2b2300;
+  --color-warn: #ffb547;
+
   --font-text: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Times New Roman', serif;
   --font-deva: 'Noto Sans Devanagari', 'Inter', 'Inter Fallback', system-ui, sans-serif;
   --text-xs: 0.8125rem;
   --text-sm: 0.9375rem;
   --text-md: 1.0625rem;
   --text-lg: 1.375rem;
-  --text-xl: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
-  --leading-tight: 1.15;
+  --text-xl: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+  --text-hero: clamp(2.6rem, 1.2rem + 6vw, 6.5rem);
+  --text-display: clamp(2.75rem, 1rem + 7.5vw, 8.5rem);
+  --text-giant: clamp(4.5rem, 0.5rem + 18vw, 22rem);
+  --leading-tight: 1.02;
   --leading-body: 1.55;
 
-  /* Space and layout (STAND-IN) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -47,13 +55,15 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
   --gutter: 1rem;
-  --measure: 68ch;
-  --page-max: 72rem;
-  --radius: 4px;
-  --target-min: 24px; /* WCAG 2.2 target size minimum */
+  --measure: 66ch;
+  --page-max: 84rem;
+  --radius: 14px;
+  --radius-xl: 32px;
+  --target-min: 24px;
 
-  /* Motion (final, SITE-BUILD.md Section 6) */
   --dur-fast: 120ms;
   --dur-base: 200ms;
   --dur-slow: 360ms;
@@ -63,6 +73,7 @@
 
 @media (min-width: 48rem) {
   :root {
-    --gutter: 2rem;
+    --gutter: 2.5rem;
+    --space-16: 6rem;
   }
 }

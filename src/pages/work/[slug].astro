@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import StandIn from '../../components/StandIn.astro';
+import { loadContent } from '../../lib/content';
+import { renderLocal } from '../../lib/markdown';
+import { href } from '../../lib/href';
+import type { Work } from '../../lib/schema';
+export function getStaticPaths() {
+  return loadContent().work.map((w) => ({ params: { slug: w.slug }, props: { w } }));
+}
+const { w } = Astro.props as { w: Work };
+const yt = w.media && 'youtube' in w.media ? w.media : null;
+const img = w.media && 'src' in w.media ? w.media : null;
+---
+<Base title={w.title} description={w.summary}>
+  <article class="wrap section">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/work/')}>Work</a> / {w.type}</nav>
+    <h1>{w.title} {w.standIn && <StandIn />}</h1>
+    <p class="lede">{w.summary}</p>
+
+    <h2>Watch</h2>
+    {yt ? (
+      <div class="embed" data-yt={yt.youtube} data-slug={w.slug}>
+        <img src={href(yt.poster.src)} alt={yt.poster.alt} width={yt.poster.w} height={yt.poster.h} />
+        <button type="button" class="btn btn-primary play" data-track="Video Play" data-track-slug={w.slug}>Play video (loads YouTube)</button>
+      </div>
+    ) : img ? (
+      <img class="media" src={href(img.src)} alt={img.alt} width={img.w} height={img.h} />
+    ) : (
+      <div class="ph" aria-hidden="true"><span class="stand-in">Media coming</span></div>
+    )}
+
+    {w.layers.length > 0 && (
+      <section aria-labelledby="peel">
+        <h2 id="peel">Peel</h2>
+        <p class="muted">Switch layers on and off to see what each one adds.</p>
+        <div class="peel">
+          <div class="peel-stage">{w.layers.map((l, i) => <img class="peel-layer" data-layer={i} src={href(l.image.src)} alt={l.image.alt} width={l.image.w} height={l.image.h} />)}</div>
+          <div class="peel-toggles">{w.layers.map((l, i) => (
+            <label class:list={['tag', l.madeBy === 'A' ? 'tag-a' : 'tag-b']}><input type="checkbox" checked data-toggle={i} /> {l.name} · {l.madeBy === 'A' ? 'by hand' : 'automated'}</label>
+          ))}</div>
+        </div>
+      </section>
+    )}
+
+    <h2>Record</h2>
+    {w.receipt ? (
+      <dl class="dl"><dt>Tool</dt><dd>{w.receipt.tool}</dd><dt>Attempts</dt><dd>{w.receipt.attempts ?? '—'}</dd><dt>Time</dt><dd>{w.receipt.time ?? '—'}</dd><dt>What failed</dt><dd>{w.receipt.failed ?? '—'}</dd><dt>What worked</dt><dd>{w.receipt.worked ?? '—'}</dd></dl>
+    ) : <p class="muted">The production receipt gets added here.</p>}
+    {w.shots.length > 0 && (
+      <ol class="shots" role="list">{w.shots.map((s) => (
+        <li><span class="tc">{s.at}</span><span class:list={['tag', s.madeBy === 'A' ? 'tag-a' : 'tag-b']}>{s.madeBy === 'A' ? 'by hand' : 'automated'}</span><span>{s.note}</span></li>
+      ))}</ol>
+    )}
+    {w.body && <div class="prose" set:html={renderLocal(w.body)} />}
+    <p class="soft">Want this done for you? <a href={href('/contact/')} data-track="CTA Click" data-track-id="work-talk">Let's talk</a>.</p>
+  </article>
+</Base>
+<script>
+  document.querySelectorAll<HTMLElement>('.embed[data-yt]').forEach((box) => {
+    box.querySelector('button')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&playsinline=1`;
+      f.title = 'Video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture';
+      f.allowFullscreen = true;
+      f.style.cssText = 'width:100%;aspect-ratio:16/9;border:0';
+      box.replaceChildren(f);
+    });
+  });
+  document.querySelectorAll<HTMLInputElement>('[data-toggle]').forEach((cb) => {
+    cb.addEventListener('change', () => {
+      const layer = document.querySelector<HTMLElement>(`.peel-layer[data-layer="${cb.dataset.toggle}"]`);
+      if (layer) layer.style.opacity = cb.checked ? '1' : '0';
+    });
+  });
+</script>
+<style>
+  h2 { font-size: var(--text-lg); margin-top: var(--space-8); }
+  .ph, .media { aspect-ratio: 16 / 9; width: 100%; max-width: 56rem; border-radius: var(--radius); border: 1px dashed var(--color-line); display: grid; place-items: center; }
+  .embed { position: relative; max-width: 56rem; }
+  .embed img { width: 100%; height: auto; border-radius: var(--radius); }
+  .play { position: absolute; left: var(--space-4); bottom: var(--space-4); }
+  .peel-stage { position: relative; max-width: 56rem; aspect-ratio: 16 / 9; }
+  .peel-layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity var(--dur-base) var(--ease-standard); }
+  .peel-toggles { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+  .peel-toggles label { min-height: 44px; }
+  .shots { list-style: none; padding: 0; max-width: 48rem; }
+  .shots li { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-line); flex-wrap: wrap; }
+  .tc { font-variant-numeric: tabular-nums; color: var(--color-text-muted); font-weight: 700; }
+  .soft { margin-top: var(--space-12); }
+  .soft a { color: var(--color-a); font-weight: 700; }
+</style>

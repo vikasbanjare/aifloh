@@ -13,3 +13,8 @@ lighthouse-*/
 *inventory*private*
 *private*inventory*
 Publish_inventory*
+
+# Generated at build time
+public/og/
+public/story/
+public/files/skills/

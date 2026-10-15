@@ -1,0 +1,32 @@
+---
+// Code-word page: domain/word -> /free/[slug]/, keeping the query string (SITE-BUILD.md Section 8).
+// Adds vanity UTMs only when the visitor arrived without any. Not in the sitemap; noindex.
+import { loadContent } from '../lib/content';
+import { href } from '../lib/href';
+export function getStaticPaths() {
+  return loadContent().resources.map((r) => ({ params: { word: r.codeWord }, props: { slug: r.slug, word: r.codeWord, title: r.title } }));
+}
+const { slug, word, title } = Astro.props;
+const target = href(`/free/${slug}/`);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title} · AI-Floh</title>
+    <script is:inline define:vars={{ target, word }}>
+      var q = new URLSearchParams(location.search);
+      if (!q.has('utm_source') && !q.has('utm_medium') && !q.has('utm_campaign')) {
+        q.set('utm_source', 'vanity'); q.set('utm_medium', 'code-word'); q.set('utm_campaign', word);
+      }
+      location.replace(target + '?' + q.toString() + location.hash);
+    </script>
+    <noscript><meta http-equiv="refresh" content={`0; url=${target}`} /></noscript>
+    <style>body{background:#0a0a0c;color:#f2f3f5;font-family:system-ui,sans-serif;padding:2rem}a{color:#b8f000}</style>
+  </head>
+  <body>
+    <p>Taking you to <a href={target}>{title}</a>…</p>
+  </body>
+</html>

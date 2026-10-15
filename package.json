@@ -8,21 +8,40 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/make-cards.ts && astro build && node scripts/postbuild.ts",
     "preview": "astro preview",
-    "check": "astro check && node scripts/check-content.mjs",
-    "test": "node --test tests/*.test.ts",
-    "new:resource": "node scripts/new-item.mjs resource",
-    "new:tool": "node scripts/new-item.mjs tool",
-    "new:experiment": "node scripts/new-item.mjs experiment",
-    "new:work": "node scripts/new-item.mjs work"
+    "check": "astro check && node scripts/check-content.ts",
+    "test": "node --test \"tests/**/*.test.ts\"",
+    "new:resource": "node scripts/new-item.ts resource",
+    "new:tool": "node scripts/new-item.ts tool",
+    "new:experiment": "node scripts/new-item.ts experiment",
+    "new:work": "node scripts/new-item.ts work",
+    "fetch:github": "node scripts/fetch-github.ts",
+    "cards": "node scripts/make-cards.ts",
+    "e2e": "node tests/e2e/flows.mjs"
   },
   "dependencies": {
-    "astro": "7.3.5"
+    "@fontsource/inter": "5.3.0",
+    "@resvg/resvg-js": "2.6.2",
+    "astro": "7.3.5",
+    "fflate": "0.8.3",
+    "markdown-it": "15.0.2",
+    "sanitize-html": "2.18.0",
+    "satori": "0.33.5",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@types/markdown-it": "14.2.0",
     "@types/node": "22.19.1",
+    "@types/sanitize-html": "2.16.2",
+    "playwright-core": "1.56.1",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "satori": {
+      "fflate": "$fflate"
+    }
   }
 }

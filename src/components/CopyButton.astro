@@ -1,0 +1,50 @@
+---
+// Copy first. Falls back to a select-all text area when the Clipboard API is blocked.
+interface Props { target: string; slug: string; label?: string; primary?: boolean }
+const { target, slug, label = 'Copy', primary = true } = Astro.props;
+---
+<button type="button" class:list={['btn', 'copy-btn', { 'btn-primary': primary }]} data-copy-target={target} data-track="Resource Copy" data-track-slug={slug}>
+  <span class="copy-label">{label}</span><span class="copy-done" hidden>Copied</span>
+</button>
+<script>
+  function fallback(text: string, btn: HTMLElement) {
+    let ta = btn.parentElement?.querySelector<HTMLTextAreaElement>('textarea.copy-fallback');
+    if (!ta) {
+      ta = document.createElement('textarea');
+      ta.className = 'copy-fallback copy-box';
+      ta.setAttribute('aria-label', 'Text to copy. It is selected; use your device’s copy command.');
+      ta.readOnly = true;
+      ta.rows = 6;
+      ta.style.width = '100%';
+      ta.style.marginTop = '0.5rem';
+      btn.insertAdjacentElement('afterend', ta);
+    }
+    ta.value = text;
+    ta.focus();
+    ta.select();
+  }
+  document.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const src = document.getElementById(btn.dataset.copyTarget || '');
+      const text = src ? (src as HTMLElement).innerText : '';
+      try {
+        await navigator.clipboard.writeText(text);
+        const l = btn.querySelector<HTMLElement>('.copy-label');
+        const d = btn.querySelector<HTMLElement>('.copy-done');
+        if (l && d) {
+          l.hidden = true;
+          d.hidden = false;
+          d.classList.add('pressed');
+          setTimeout(() => { l.hidden = false; d.hidden = true; d.classList.remove('pressed'); }, 1600);
+        }
+        document.dispatchEvent(new CustomEvent('aifloh:copied', { detail: { slug: btn.dataset.trackSlug } }));
+      } catch {
+        fallback(text, btn);
+      }
+    });
+  });
+</script>
+<style>
+  .pressed { animation: press var(--dur-base) var(--ease-standard); display: inline-block; }
+  @keyframes press { from { transform: scale(1.06); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+</style>

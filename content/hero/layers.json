@@ -1,0 +1,8 @@
+[
+  { "id": "sketch", "label": "Sketch", "madeBy": "A", "tag": "Sketch, by hand", "standIn": true, "z": 3, "alt": "Pencil lines tracing the hills and the moon" },
+  { "id": "comp", "label": "Comp", "madeBy": "A", "tag": "Layout comp, by hand", "standIn": true, "z": 2, "alt": "Thirds guides, a safe area and a title block" },
+  { "id": "render", "label": "AI render", "madeBy": "B", "tag": "AI render", "standIn": true, "z": 0, "alt": "Night hills under a large moon" },
+  { "id": "motion", "label": "Motion", "madeBy": "A", "tag": "Motion, keyframed by hand", "standIn": true, "z": 4, "alt": "A motion path with keyframes across the frame" },
+  { "id": "grade", "label": "Grade", "madeBy": "B", "tag": "Grade, automated", "standIn": true, "z": 1, "alt": "A cool colour grade with its curves" },
+  { "id": "sound", "label": "Sound", "madeBy": "B", "tag": "Sound, automated", "standIn": true, "z": 5, "alt": "A waveform along the bottom of the frame" }
+]
