@@ -15,5 +15,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 08 | 8 | 8 | 8 | 7 | 7 | 7 | 7 | 8 | 9 | 9 | **78** | REJECTED | saves only 163 px |
 | 09 | 8 | 8 | 8 | 7 | 7 | 8 | 7 | 8 | 9 | 9 | **79** | KEPT | home on phones 7,331→5,685 px |
 | 10 | 8 | 8 | 8 | 8 | 7 | 8 | 7 | 8 | 9 | 9 | **80** | KEPT | no dead space in phone cards |
+| 11 | 8 | 8 | 8 | 8 | 8 | 8 | 7 | 8 | 9 | 9 | **81** | KEPT | prints taped to the wall |
 
-**CURRENT BEST: iter-10** (tag `best`)
+**CURRENT BEST: iter-11** (tag `best`)

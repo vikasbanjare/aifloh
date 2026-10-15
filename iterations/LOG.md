@@ -107,3 +107,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Best 80 vs iter-00 72. Kept: hero CTA (01), paper Studio cards (03), About balance (04), poster titles (05), side-column hero on wide screens (07), swipe gallery on phones (09), compact phone cards (10). Rejected: tighter hero rhythm (02), removing the thread (06), fewer free rows (08).
 - Drift check: palette, logo and copy unchanged; one new line of UI copy ("Swipe the wall →", "Start a project", "or see the work") — all functional labels. No new dependencies. The page got calmer, not busier.
 - Lowest scores now: D 7 (distinctiveness), I 7 (motion), A 9, P 9. Next iterations should target distinctiveness and interaction quality, without adding ornament.
+
+## iter-11 · Tape on each gallery print
+- Hypothesis: a lime-tinted strip of tape on each print makes the gallery 'hung by hand' (brand: lime = hand), a physical detail a template would not have.
+- Change: Wall.astro .print a::before tape (clip-path torn ends, per-print angle and offset).
+- Verify: all checks pass; LH 96/100/100/100; axe 0 (decorative pseudo-element only).
+- Critique: D 7→8; subtle, consistent with the paper/prints idea; no clutter added to type or layout.
+- Scores: H8 T8 C8 S8 D8 M8 I7 K8 A9 P9 = 81.
+- Decision: KEPT.
