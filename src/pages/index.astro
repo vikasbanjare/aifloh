@@ -51,6 +51,11 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
         <path class="by-machine" pathLength="1" d={machinePath} />
         <g class="nodes">{MACHINE.slice(1).map(([x, y], i) => <rect class={`nd nd${i}`} x={x - 5} y={y - 5} width="10" height="10" />)}</g>
       </svg>
+      <div class="fig-tools" hidden>
+        <button type="button" class="gbtn" data-draw aria-pressed="false"><span aria-hidden="true">✎</span> <span data-draw-label>Draw your own</span></button>
+        <button type="button" class="gbtn gbtn-quiet" data-auto hidden>Draw for me</button>
+        <p class="fig-status label" role="status" aria-live="polite"></p>
+      </div>
       <figcaption id="fig1-cap" class="label">
         <span>Fig. 1</span>
         <span class="key"><i class="k k-a" aria-hidden="true"></i>Hand</span><span aria-hidden="true">→</span><span class="key"><i class="k k-b" aria-hidden="true"></i>Machine</span>
@@ -196,6 +201,25 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     }
   }
 
+  // "Finish my line": an invitation to draw the hand half; the machine answers. Loaded on first click.
+  const tools = document.querySelector<HTMLElement>('.fig-tools');
+  if (fig && svg && tools) {
+    tools.hidden = false;
+    const btn = tools.querySelector<HTMLButtonElement>('[data-draw]')!;
+    const label = tools.querySelector<HTMLElement>('[data-draw-label]')!;
+    const auto = tools.querySelector<HTMLButtonElement>('[data-auto]')!;
+    const status = tools.querySelector<HTMLElement>('.fig-status')!;
+    let stop: (() => void) | null = null;
+    btn.addEventListener('click', async () => {
+      if (stop) { stop(); stop = null; btn.setAttribute('aria-pressed', 'false'); label.textContent = 'Draw your own'; auto.hidden = true; return; }
+      const { startDrawing } = await import('../scripts/draw');
+      stop = startDrawing(fig, svg, { status, auto });
+      btn.setAttribute('aria-pressed', 'true');
+      label.textContent = 'Back to Fig. 1';
+      auto.hidden = false;
+    });
+  }
+
   const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
   const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', hour12: false });
   const tick = () => clocks.forEach((el) => (el.textContent = `${fmt.format(new Date())} in India`));
@@ -230,7 +254,27 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 
   .fig1 { position: relative; margin: var(--space-12) 0 0; }
   .fig1 :global(.fig3d-canvas) { position: absolute; left: 0; top: 0; display: block; touch-action: pan-y; }
-  .fig1.is-3d svg { visibility: hidden; }
+  .fig1.is-3d:not(.is-drawing) svg { visibility: hidden; }
+  .fig1.is-drawing :global(.fig3d-canvas) { visibility: hidden; }
+  .fig1.is-drawing .by-hand, .fig1.is-drawing .by-machine, .fig1.is-drawing .nodes, .fig1.is-drawing .ink { display: none; }
+  .fig1.is-drawing svg { touch-action: none; }
+  .fig1 :global(.draw-hit) { fill: transparent; }
+  .fig1 :global(.draw-hand) { fill: none; stroke: var(--color-a-fill); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+  .fig1 :global(.draw-machine) { fill: none; stroke: var(--color-b); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 900ms linear forwards; pointer-events: none; }
+  .fig1 :global(.draw-hand-auto) { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 650ms cubic-bezier(0.45, 0, 0.2, 1) forwards; }
+  .fig1 :global(.draw-node) { fill: var(--color-bg); stroke: var(--color-b); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; animation: pop 220ms var(--ease-standard) forwards; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .fig1 :global(.draw-machine), .fig1 :global(.draw-hand-auto) { stroke-dashoffset: 0; } .fig1 :global(.draw-node) { opacity: 1; } }
+  .fig-tools { position: absolute; left: 0; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+  .gbtn {
+    display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4); border-radius: 999px;
+    background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow);
+    font: inherit; font-size: var(--text-sm); font-weight: 650; color: var(--color-text); cursor: pointer; transition: transform 160ms var(--ease-standard);
+  }
+  .gbtn[aria-pressed='true'] { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+  .gbtn:active { transform: scale(0.96); }
+  .gbtn-quiet { font-weight: 500; }
+  .fig-status { margin: 0; color: var(--color-text-muted); max-width: 30ch; }
+  @media (max-width: 47.99rem) { .fig-tools { position: static; margin-bottom: var(--space-4); } }
   .fig1 svg { display: block; width: 100%; height: auto; overflow: visible; }
   .grid circle { fill: var(--color-line-strong); }
   .ink circle { fill: var(--color-a-fill); }
