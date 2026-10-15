@@ -195,14 +195,21 @@ const pad = (n: number) => String(n).padStart(2, '0');
           started = true;
           EVENTS.forEach((ev) => removeEventListener(ev, go));
           const { mountRoom } = await import('../scripts/room3d');
-          const m = mountRoom(stage, () => progress, () => stage.classList.add('is-3d'), import.meta.env.BASE_URL.replace(/\/?$/, '/'));
-          // Probe: after about 30 frames, a median above 34 ms means this device should keep the poster.
-          setTimeout(() => {
+          let probe = 0;
+          const m = mountRoom(stage, () => progress, () => { stage.classList.add('is-3d'); probe = window.setTimeout(check, 2500); }, import.meta.env.BASE_URL.replace(/\/?$/, '/'));
+          // Probe: 2.5 s after the first frame, fewer than 30 frames or a median above 34 ms means this device keeps the poster.
+          // automated screenshot runs (software GPU) skip the probe so they can record the 3D
+          const keep = navigator.webdriver === true;
+          const check = () => {
+            if (keep) return;
             const f = [...m.frameTimes].sort((a, b) => a - b);
             const median = f.length ? f[Math.floor(f.length / 2)] : 0;
-            if (f.length >= 30 && median > 34) { m.dispose(); stage.classList.remove('is-3d'); report('static-low-power'); }
+            // too slow either way: frames too long, or too few frames at all
+            if (f.length < 30 || median > 34) { m.dispose(); stage.classList.remove('is-3d'); report('static-low-power'); }
             else report('3d');
-          }, 2500);
+          };
+          // a device that cannot even draw the first frame within 8 s keeps the poster too
+          window.setTimeout(() => { if (!probe && !keep) { m.dispose(); report('static-low-power'); } }, 8000);
         };
         const EVENTS = ['pointermove', 'scroll', 'touchstart', 'keydown'] as const;
         EVENTS.forEach((ev) => addEventListener(ev, go, { passive: true, once: true }));

@@ -7,7 +7,7 @@
 // paint, DPR <= 2, paused off-screen and in hidden tabs; the poster image is the fallback and the LCP.
 import {
   ACESFilmicToneMapping, AmbientLight, CanvasTexture, CapsuleGeometry, Color, CylinderGeometry, DirectionalLight,
-  Euler, Group, HemisphereLight, Mesh, MeshStandardMaterial, Object3D, PCFSoftShadowMap, PerspectiveCamera, PlaneGeometry,
+  Euler, Group, HemisphereLight, Mesh, MeshStandardMaterial, Object3D, PCFShadowMap, PerspectiveCamera, PlaneGeometry,
   PMREMGenerator, PointLight, Scene, SphereGeometry, SRGBColorSpace, TextureLoader, TorusGeometry, Vector3, WebGLRenderer,
 } from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
@@ -282,7 +282,7 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
   renderer.toneMappingExposure = 1.05;
   renderer.setPixelRatio(Math.min(small ? 1.75 : 1.5, window.devicePixelRatio || 1));
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = PCFSoftShadowMap;
+  renderer.shadowMap.type = PCFShadowMap;
   renderer.setClearColor(BG);
   const canvas = renderer.domElement;
   canvas.className = 'film-canvas';
@@ -619,7 +619,8 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     editor.draw = e2.draw;
   });
 
-  const wake = () => { if (!raf && visible) raf = requestAnimationFrame(frame); };
+  let ready = false, gone = false;
+  const wake = () => { if (ready && !raf && visible) raf = requestAnimationFrame(frame); };
   const ro = new ResizeObserver(() => { resize(); wake(); });
   ro.observe(stage);
   const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting && !document.hidden; wake(); });
@@ -627,11 +628,16 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
   const onVis = () => { visible = !document.hidden; wake(); };
   document.addEventListener('visibilitychange', onVis);
   resize();
-  wake();
+  // compile every shader off the main path first (parallel compile where the GPU supports it), then start
+  placeCamera(getProgress());
+  renderer.compileAsync(scene, camera).catch(() => {}).finally(() => { ready = true; wake(); });
 
   return {
     frameTimes,
     dispose() {
+      if (gone) return;
+      gone = true;
+      visible = false;
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
