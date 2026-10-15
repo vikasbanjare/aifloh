@@ -113,8 +113,11 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
         <span class="side-m">Workflows · Plugins · Claude skills</span>
       </a>
     </div>
-    <ol class="steps label" role="list" aria-label="How a project runs">
-      <li>Brief</li><li class="s-a">Sketch by hand</li><li class="s-b">Make with AI</li><li>Ship</li>
+    <ol class="steps" role="list" aria-label="How a project runs">
+      <li><span class="s-n" aria-hidden="true">01</span><b>Brief</b><span class="s-d">One call: what you need, who it is for, where it runs.</span></li>
+      <li class="s-a"><span class="s-n" aria-hidden="true">02</span><b>Sketch by hand</b><span class="s-d">Storyboard, layout or flow before anything is generated.</span></li>
+      <li class="s-b"><span class="s-n" aria-hidden="true">03</span><b>Make with AI</b><span class="s-d">People make the calls; AI and automation carry the repeats.</span></li>
+      <li class="s-c"><span class="s-n" aria-hidden="true">04</span><b>Ship</b><span class="s-d">Files, sources and how it was made. No black boxes.</span></li>
     </ol>
   </section>
 
@@ -413,12 +416,18 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .side .label { color: inherit; }
   .side-m { font-size: var(--text-sm); }
   @media (hover: hover) { .side:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--color-text); } }
-  .steps { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: var(--space-6) 0 0; padding: 0; counter-reset: s; }
-  .steps li { counter-increment: s; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-text); }
-  .steps li::before { content: counter(s, decimal-leading-zero); color: var(--color-text-muted); }
-  .s-a { background: var(--color-a-fill); }
-  .s-b { background: var(--color-b); color: var(--color-b-ink); }
-  .s-b::before { color: var(--color-b-ink) !important; opacity: 0.8; }
+  /* the method as one line: hand (lime, loose) for the first half, machine (cobalt, square) for the second */
+  .steps { list-style: none; margin: var(--space-12) 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-4); }
+  .steps li { position: relative; display: grid; gap: var(--space-1); padding-top: var(--space-4); border-top: 3px solid var(--color-text); }
+  .steps .s-a { border-top-color: transparent; }
+  .steps .s-a::before { content: ''; position: absolute; top: -8.5px; left: 0; right: 0; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14' viewBox='0 0 120 14'%3E%3Cpath d='M0 7 C15 1 25 13 40 7 S65 1 80 7 S105 13 120 7' fill='none' stroke='%23b8f000' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0 / 120px 14px; }
+  .steps .s-b, .steps .s-c { border-top-color: var(--color-b); }
+  .steps .s-c::after { content: ''; position: absolute; top: -7px; right: 0; width: 11px; height: 11px; background: var(--color-surface); border: 2px solid var(--color-b); }
+  .s-n { font-size: clamp(3rem, 2rem + 3vw, 5rem); font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; color: var(--color-text); }
+  .s-b .s-n, .s-c .s-n { color: var(--color-b); }
+  .steps b { font-size: var(--t-lede); letter-spacing: -0.02em; }
+  .s-d { color: var(--color-text-muted); font-size: var(--text-sm); max-width: 28ch; }
+  @media (min-width: 48rem) { .steps { grid-template-columns: repeat(4, 1fr); gap: 0; } .steps li { padding-right: var(--space-4); } }
 
   /* ---------- instruments ---------- */
   .built { display: grid; gap: var(--space-8); }
