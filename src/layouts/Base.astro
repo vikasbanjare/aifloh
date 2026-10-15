@@ -59,6 +59,7 @@ const analyticsOn = ANALYTICS_TOOL !== 'none' && !!ANALYTICS_SRC && !!ANALYTICS_
     <meta name="theme-color" content="#f3f1ea" />
     <link rel="preload" href={href('/fonts/inter-latin-opsz.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={href("/apple-touch-icon.png")} />
     <script type="application/ld+json" set:html={safeJson(jsonLd)} />
     <script is:inline>
       // Strip every query parameter except the four utm_* ones before analytics loads (Section 13).
