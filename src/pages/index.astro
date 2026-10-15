@@ -315,7 +315,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 
   /* ---------- rooms ---------- */
   .room { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
-  .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: clamp(2.75rem, 1rem + 6.4vw, 7.5rem); font-weight: 800; letter-spacing: -0.055em; line-height: 0.9; margin: 0 0 var(--space-12); }
+  .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: clamp(3.75rem, 1.5rem + 9vw, 7.5rem); font-weight: 800; letter-spacing: -0.055em; line-height: 0.9; margin: 0 0 var(--space-12); }
   .room-h .n { align-self: flex-start; margin-top: 0.6em; }
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
 
@@ -448,7 +448,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   /* the stats and the way in share one grid: five numbers, then "About me" fills the sixth cell */
   .stats { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--color-line-strong); }
   .stats dl { display: contents; }
-  .stats dl div, .stat-more { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; gap: var(--space-1); }
+  .stats dl div, .stat-more { padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: 1px solid var(--color-line-strong); display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: var(--space-1); }
   .stats dt { color: var(--color-text-muted); }
   .stats dd { margin: 0; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
   .stat-more { justify-content: flex-end; padding-left: var(--space-4); background: var(--color-text); color: var(--color-bg); text-decoration: none; transition: background 200ms var(--ease-standard); }

@@ -149,3 +149,8 @@ The four chips became a four-step sequence with big numerals and the Studio page
 Five stats left a hole in the 3-column grid (row 2, col 3) and the About me button floated alone below, with dead space under it. The link now closes the grid as an ink tile (label 'The person behind it' is a new UI label, not a fact; hover turns cobalt). dl uses display: contents so dt/dd and the link share one grid; axe clean. Phones: 2x3 grid, no full-width orphan. Lens: spacing and rhythm.
 - Scores: H9 T8 C8 S9 D9 M8 I8 K9 A10 P9 = 87.
 - Decision: KEPT.
+
+## iter-17 · Poster-size section titles and aligned stat numbers on phones
+Lens: mobile. Room titles were 44px on a 375 screen, so the poster rhythm of the desktop collapsed to ordinary headings; the clamp floor is now 3.75rem with a steeper slope (60px at 375, ~93px at 768, still 120px cap at 1440). Stat cells pack from the top so numbers sit on one line even when a label wraps to two (8+ beside 1000+). Watch item: 4-column steps at 768 are tight ('Make with AI' wraps); acceptable.
+- Scores: H9 T8 C8 S9 D9 M9 I8 K9 A10 P9 = 88.
+- Decision: KEPT.
