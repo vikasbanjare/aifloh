@@ -193,3 +193,29 @@ html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-
   }
   .btn:active { transform: none; }
 }
+
+/* ---------- catalogue rows (one style for every index: work, tools, lab, library) ---------- */
+.cat { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+.cat > li { border-bottom: 1px solid var(--color-line-strong); }
+.cat-row { position: relative; isolation: isolate; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-4) 0; text-decoration: none; align-items: baseline; }
+.cat-row .c-n { color: var(--color-text-muted); grid-row: 1 / span 3; }
+.cat-row .c-t { font-weight: 700; font-size: var(--t-body); letter-spacing: -0.01em; }
+.cat-row .c-s { grid-column: 2; color: var(--color-text-muted); max-width: 56ch; font-size: var(--text-sm); }
+.cat-row .c-m { grid-column: 2; color: var(--color-text-muted); }
+.cat-row .c-y { grid-column: 3; grid-row: 1; color: var(--color-text-muted); text-align: right; }
+@media (min-width: 48rem) {
+  .cat-row { grid-template-columns: 3rem minmax(0, 1fr) 13rem 8rem; padding: var(--space-6) 0; }
+  .cat-row .c-n, .cat-row .c-m, .cat-row .c-y { grid-row: 1; }
+  .cat-row .c-m { grid-column: 3; }
+  .cat-row .c-y { grid-column: 4; }
+  .cat-row .c-s { grid-row: 2; }
+  .cat-row .c-t { font-size: var(--t-row-sm); font-weight: 750; letter-spacing: -0.03em; line-height: 1.1; }
+  .cat-big .cat-row .c-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+}
+/* the highlighter: lime slides in under the row */
+.cat-row::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
+@media (hover: hover) { .cat-row:hover::before { transform: scaleX(1); } .cat-row:hover .c-n, .cat-row:hover .c-m, .cat-row:hover .c-y, .cat-row:hover .c-s { color: var(--color-text); } }
+.cat-row:focus-visible::before { transform: scaleX(1); }
+
+/* the printed plate: a framed box with a hard shadow (code-word box, figures) */
+.plate-box { position: relative; border: 1px solid var(--color-text); background: var(--color-surface); padding: var(--space-6); box-shadow: 6px 6px 0 var(--color-text); max-width: min(30rem, calc(100% - 6px)); }

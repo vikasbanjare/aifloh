@@ -8,18 +8,18 @@ const kinds = [...new Set(items.map((i) => i.kind))].sort();
 const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kind === k).length]));
 ---
 <Base title="Library" description="Everything on the site in one searchable list: free resources, skills, tools, experiments, work and code.">
-  <PageHead kicker="Library" title="Everything, in one list." lede="Search across free resources, skills, tools, experiments, work and code." count={items.length} />
+  <PageHead kicker="Library" title="Everything, in one list." count={items.length} />
   <section class="wrap section">
     <form class="lib-search" role="search" data-index={href('/search-index.json')} data-base={href('/')}>
-      <label for="q">Search</label>
-      <input id="q" type="search" autocomplete="off" placeholder="Type to search" />
+      <label for="q" class="label">Search everything</label>
+      <input id="q" type="search" autocomplete="off" placeholder="thumbnail, skill, video…" />
       <label for="kind" class="visually-hidden">Kind</label>
       <select id="kind"><option value="">All kinds ({items.length})</option>{kinds.map((k) => <option value={k}>{k} ({counts[k]})</option>)}</select>
-      <p class="lib-count muted" role="status" aria-live="polite"></p>
+      <p class="lib-count label" role="status" aria-live="polite"></p>
     </form>
-    <ol class="lib" role="list">
+    <ol class="cat lib" role="list">
       {items.map((i) => (
-        <li data-kind={i.kind}><a href={href(i.url)}><span class="tag">{i.kind}</span><span class="t">{i.title}</span><span class="s muted">{i.summary}</span></a></li>
+        <li data-kind={i.kind}><a class="cat-row" href={href(i.url)}><span class="c-t">{i.title}</span><span class="c-s">{i.summary}</span><span class="c-y label">{i.kind}</span></a></li>
       ))}
     </ol>
   </section>
@@ -49,8 +49,9 @@ const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kin
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = base + i.u.replace(/^\//, '');
-      a.innerHTML = '<span class="tag"></span><span class="t"></span><span class="s muted"></span>';
-      a.children[0].textContent = i.k; a.children[1].textContent = i.t; a.children[2].textContent = i.s;
+      a.className = 'cat-row';
+      a.innerHTML = '<span class="c-t"></span><span class="c-s"></span><span class="c-y label"></span>';
+      a.children[0].textContent = i.t; a.children[1].textContent = i.s; a.children[2].textContent = i.k;
       li.append(a);
       return li;
     }));
@@ -63,13 +64,13 @@ const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kin
   kind.addEventListener('change', run);
 </script>
 <style>
-  .lib-search { display: grid; gap: var(--space-2); max-width: 36rem; margin: var(--space-8) 0; }
-  .lib-search label[for=q] { font-weight: 700; }
-  .lib-search input, .lib-search select { min-height: 48px; padding: 0 var(--space-3); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius); font: inherit; }
-  .lib-count { font-size: var(--text-sm); margin: 0; min-height: 1.4em; }
-  .lib { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-line); }
-  .lib :global(li) { border-bottom: 1px solid var(--color-line); }
-  .lib :global(a) { display: grid; gap: var(--space-1); padding: var(--space-4) 0; text-decoration: none; justify-items: start; }
-  .lib :global(.t) { font-weight: 700; }
-  .lib :global(.s) { font-size: var(--text-sm); }
+  .lib-search { display: grid; gap: var(--space-3); max-width: 48rem; margin: 0 0 var(--space-8); }
+  .lib-search input { min-height: 72px; padding: 0 var(--space-4); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-text); border-radius: 0; font: inherit; font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.02em; box-shadow: 6px 6px 0 var(--color-text); }
+  .lib-search input::placeholder { color: var(--color-text-muted); font-weight: 500; }
+  .lib-search select { justify-self: start; min-height: 44px; padding: 0 var(--space-3); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line-strong); font: inherit; font-size: var(--text-sm); }
+  .lib-count { margin: 0; min-height: 1.4em; color: var(--color-text-muted); }
+  .lib :global(.cat-row) { grid-template-columns: minmax(0, 1fr) auto; }
+  .lib :global(.cat-row .c-t), .lib :global(.cat-row .c-s) { grid-column: 1; }
+  .lib :global(.cat-row .c-y) { grid-column: 2; grid-row: 1; }
+  .lib :global(.cat-row .c-s) { grid-row: 2; }
 </style>

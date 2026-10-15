@@ -9,17 +9,18 @@ const { experiments } = loadContent();
 const fmt = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 ---
 <Base title="Lab" description="Experiments, including the ones that failed. Each one says what I tried and what happened.">
-  <PageHead kicker="Lab" title="Experiments, failures included." lede="Each one says what I tried, what happened and what I'd do next." count={experiments.length} />
+  <PageHead kicker="Lab" title="Experiments, failures included." count={experiments.length} />
   <BuiltTabs />
   <section class="wrap section">
-    <ol class="lab" role="list">
-      {experiments.map((e) => (
+    <ol class="cat cat-big" role="list">
+      {experiments.map((e, i) => (
         <li>
-          <a href={href(`/lab/${e.slug}/`)}>
-            <span class={`result r-${e.result}`}>{e.result}</span>
-            <span class="t">{e.title}</span>
-            <span class="q muted">{e.question}</span>
-            <span class="m muted">{fmt(e.date)} · {e.tools.join(', ')} {e.standIn && <StandIn />}</span>
+          <a class="cat-row" href={href(`/lab/${e.slug}/`)}>
+            <span class="c-n label">{String(i + 1).padStart(2, '0')}</span>
+            <span class="c-t">{e.title} {e.standIn && <StandIn />}</span>
+            <span class="c-s">{e.question}</span>
+            <span class="c-m label">{fmt(e.date)} · {e.tools.join(', ')}</span>
+            <span class={`c-y label r r-${e.result}`}>{e.result}</span>
           </a>
         </li>
       ))}
@@ -27,15 +28,8 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: '
   </section>
 </Base>
 <style>
-  .lab { list-style: none; padding: 0; margin: var(--space-8) 0 0; border-top: 1px solid var(--color-line); }
-  .lab li { border-bottom: 1px solid var(--color-line); }
-  .lab a { display: grid; gap: var(--space-1); padding: var(--space-6) 0; text-decoration: none; }
-  .t { font-weight: 700; font-size: var(--text-lg); }
-  .q, .m { font-size: var(--text-sm); }
-  .result { justify-self: start; font-size: var(--text-xs); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.1em 0.5em; border-radius: 4px; border: 1px solid currentColor; }
-  .r-worked { color: var(--color-a); }
-  .r-partly { color: var(--color-b); }
-  .r-failed { color: var(--color-warn); }
-  .r-ongoing { color: var(--color-text-muted); }
-  @media (hover: hover) { .lab a:hover .t { text-decoration: underline; } }
+  .r { font-weight: 700; }
+  .r-worked { color: var(--color-a) !important; }
+  .r-partly { color: var(--color-b) !important; }
+  .r-failed { color: var(--color-warn) !important; }
 </style>

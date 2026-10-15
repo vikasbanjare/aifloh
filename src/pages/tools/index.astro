@@ -13,39 +13,18 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <PageHead kicker="Tools" title="Software that does the grind." count={tools.length} />
   <BuiltTabs />
   <section class="wrap section">
-    <ol class="cat" role="list">
+    <ol class="cat cat-big" role="list">
       {tools.map((t, i) => (
         <li>
-          <a href={href(`/tools/${t.slug}/`)}>
-            <span class="n label">{pad(i + 1)}</span>
-            <span class="t">{t.title} {t.standIn && <StandIn />}</span>
-            <span class="s">{t.summary}</span>
-            <span class="m label">{t.platforms[0] ?? t.category}</span>
-            <span class="st label">{STATUS[t.status]}</span>
+          <a class="cat-row" href={href(`/tools/${t.slug}/`)}>
+            <span class="c-n label">{pad(i + 1)}</span>
+            <span class="c-t">{t.title} {t.standIn && <StandIn />}</span>
+            <span class="c-s">{t.summary}</span>
+            <span class="c-m label">{t.platforms[0] ?? t.category}</span>
+            <span class="c-y label">{STATUS[t.status]}</span>
           </a>
         </li>
       ))}
     </ol>
   </section>
 </Base>
-<style>
-  .cat { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
-  .cat li { border-bottom: 1px solid var(--color-line-strong); }
-  .cat a { position: relative; isolation: isolate; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-6) 0; text-decoration: none; align-items: baseline; }
-  .n { color: var(--color-text-muted); grid-row: 1 / span 3; }
-  .t { font-size: var(--t-row-sm); font-weight: 750; letter-spacing: -0.03em; line-height: 1.1; }
-  .s { grid-column: 2; color: var(--color-text-muted); max-width: 52ch; }
-  .m { grid-column: 2; color: var(--color-text-muted); }
-  .st { grid-column: 3; grid-row: 1; }
-  @media (min-width: 48rem) {
-    .cat a { grid-template-columns: 3rem minmax(0, 1fr) 12rem 8rem; }
-    .n, .st, .m { grid-row: 1; }
-    .m { grid-column: 3; }
-    .st { grid-column: 4; text-align: right; }
-    .s { grid-row: 2; }
-    .t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; }
-  }
-  .cat a::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
-  @media (hover: hover) { .cat a:hover::before { transform: scaleX(1); } .cat a:hover .s, .cat a:hover .m, .cat a:hover .n { color: var(--color-text); } }
-  .cat a:focus-visible::before { transform: scaleX(1); }
-</style>

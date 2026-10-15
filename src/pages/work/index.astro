@@ -13,17 +13,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <Base title="Work" description="Selected video, design and web work by Vikas Banjare, 2024 to 2026.">
   <PageHead kicker="Work" title="Selected work." count={P.projects.length + local.length} />
   <section class="wrap section">
-    <ol class="cat" role="list">
+    <ol class="cat cat-big" role="list">
       {local.map((w, i) => (
-        <li><a href={href(`/work/${w.slug}/`)}><span class="n label">{pad(i + 1)}</span><span class="t">{w.title}</span><span class="m label">{w.type}</span><span class="y label">{new Date(w.date).getUTCFullYear()}</span></a></li>
+        <li><a class="cat-row" href={href(`/work/${w.slug}/`)}><span class="c-n label">{pad(i + 1)}</span><span class="c-t">{w.title}</span><span class="c-m label">{w.type}</span><span class="c-y label">{new Date(w.date).getUTCFullYear()}</span></a></li>
       ))}
       {P.projects.map((w: any, i: number) => (
         <li>
-          <a href={w.link} rel="noopener">
-            <span class="n label">{pad(local.length + i + 1)}</span>
-            <span class="t">{w.title}</span>
-            <span class="m label">{w.tags.join(', ')}</span>
-            <span class="y label">{w.year} ↗</span>
+          <a class="cat-row" href={w.link} rel="noopener">
+            <span class="c-n label">{pad(local.length + i + 1)}</span>
+            <span class="c-t">{w.title}</span>
+            <span class="c-m label">{w.tags.join(', ')}</span>
+            <span class="c-y label">{w.year} ↗</span>
           </a>
         </li>
       ))}
@@ -32,21 +32,5 @@ const pad = (n: number) => String(n).padStart(2, '0');
   </section>
 </Base>
 <style>
-  .cat { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
-  .cat li { border-bottom: 1px solid var(--color-line-strong); }
-  .cat a { position: relative; isolation: isolate; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-4) 0; text-decoration: none; align-items: baseline; }
-  .n { color: var(--color-text-muted); grid-row: 1 / span 2; }
-  .t { font-weight: 700; font-size: var(--t-body); }
-  .m { grid-column: 2; color: var(--color-text-muted); }
-  .y { grid-column: 3; grid-row: 1; color: var(--color-text-muted); }
-  @media (min-width: 48rem) {
-    .cat a { grid-template-columns: 3rem minmax(0, 1fr) 15rem 5rem; padding: var(--space-6) 0; }
-    .n, .m, .y { grid-row: 1; }
-    .m { grid-column: 3; } .y { grid-column: 4; text-align: right; }
-    .t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
-  }
-  .cat a::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
-  @media (hover: hover) { .cat a:hover::before { transform: scaleX(1); } .cat a:hover .m, .cat a:hover .y, .cat a:hover .n { color: var(--color-text); } }
-  .cat a:focus-visible::before { transform: scaleX(1); }
   .note { margin-top: var(--space-6); color: var(--color-text-muted); }
 </style>

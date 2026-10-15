@@ -20,7 +20,7 @@ const tabs = [
 ---
 <div class="wrap"><InAppBanner /></div>
 <PageHead kicker={kicker} title={heading} lede={promise} count={items.length}>
-  {codeword && <div class="cw-wrap rise-3"><CodeWordBox /></div>}
+  {codeword && <div class="cw-wrap plate-box rise-3"><CodeWordBox /></div>}
 </PageHead>
 <HubTabs label="Free, by type" tabs={tabs} />
 <section class="wrap hub">
@@ -28,6 +28,6 @@ const tabs = [
   <AfterCopy />
 </section>
 <style>
-  .cw-wrap { margin-top: var(--space-12); padding: var(--space-6); border: 1px solid var(--color-line); border-radius: var(--radius); background: var(--color-surface); max-width: 40rem; }
+  .cw-wrap { margin-top: var(--space-8); }
   .hub { padding-block: var(--space-12); }
 </style>
