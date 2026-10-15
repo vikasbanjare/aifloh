@@ -1,50 +1,52 @@
 ---
+// Work: the real projects (Behance for now). Case studies on this site come later, one at a time.
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import PageHead from '../../components/PageHead.astro';
 import Base from '../../layouts/Base.astro';
-import StandIn from '../../components/StandIn.astro';
 import { loadContent } from '../../lib/content';
 import { href } from '../../lib/href';
-const { work } = loadContent();
-const types = [...new Set(work.map((w) => w.type))];
+const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
+const local = loadContent().work;
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
-<Base title="Work" description="Pieces from the studio, each with how it was made: what was done by hand and what was automated.">
-  <PageHead kicker="Work" title="Every piece shows its receipt." lede="What was done by hand, what was automated, and what it took." count={work.length} />
+<Base title="Work" description="Selected video, design and web work by Vikas Banjare, 2024 to 2026.">
+  <PageHead kicker="Work" title="Selected work." count={P.projects.length + local.length} />
   <section class="wrap section">
-    <div class="type-filter" hidden role="group" aria-label="Filter by type">
-      <button type="button" class="btn" aria-pressed="true" data-type="">All</button>
-      {types.map((t) => <button type="button" class="btn" aria-pressed="false" data-type={t}>{t}</button>)}
-    </div>
-    <ul class="tiles" role="list">
-      {work.map((w) => (
-        <li data-type={w.type}>
-          <a href={href(`/work/${w.slug}/`)}>
-            {w.cover ? <img src={href(w.cover.src)} alt={w.cover.alt} width={w.cover.w} height={w.cover.h} loading="lazy" /> : <span class="ph" aria-hidden="true" />}
+    <ol class="cat" role="list">
+      {local.map((w, i) => (
+        <li><a href={href(`/work/${w.slug}/`)}><span class="n label">{pad(i + 1)}</span><span class="t">{w.title}</span><span class="m label">{w.type}</span><span class="y label">{new Date(w.date).getUTCFullYear()}</span></a></li>
+      ))}
+      {P.projects.map((w: any, i: number) => (
+        <li>
+          <a href={w.link} rel="noopener">
+            <span class="n label">{pad(local.length + i + 1)}</span>
             <span class="t">{w.title}</span>
-            <span class="m muted">{w.type}{w.vertical ? ` · ${w.vertical}` : ''} {w.standIn && <StandIn />}</span>
+            <span class="m label">{w.tags.join(', ')}</span>
+            <span class="y label">{w.year} ↗</span>
           </a>
         </li>
       ))}
-    </ul>
+    </ol>
+    <p class="note label">↗ opens the full project on Behance</p>
   </section>
 </Base>
-<script>
-  const bar = document.querySelector<HTMLElement>('.type-filter');
-  if (bar) {
-    bar.hidden = false;
-    bar.addEventListener('click', (e) => {
-      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-type]');
-      if (!b) return;
-      bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      document.querySelectorAll<HTMLElement>('.tiles li').forEach((li) => (li.hidden = !!b.dataset.type && li.dataset.type !== b.dataset.type));
-    });
-  }
-</script>
 <style>
-  .type-filter { display: flex; gap: var(--space-2); flex-wrap: wrap; margin: var(--space-6) 0; }
-  .type-filter [aria-pressed=true] { border-color: var(--color-a); color: var(--color-a); }
-  .tiles { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
-  .tiles a { display: flex; flex-direction: column; gap: var(--space-2); text-decoration: none; }
-  .tiles img, .ph { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius); background: var(--color-surface); border: 1px solid var(--color-line); }
-  .t { font-weight: 700; }
-  .m { font-size: var(--text-sm); display: flex; gap: var(--space-2); align-items: center; }
+  .cat { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+  .cat li { border-bottom: 1px solid var(--color-line-strong); }
+  .cat a { position: relative; isolation: isolate; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-4) 0; text-decoration: none; align-items: baseline; }
+  .n { color: var(--color-text-muted); grid-row: 1 / span 2; }
+  .t { font-weight: 700; font-size: var(--t-body); }
+  .m { grid-column: 2; color: var(--color-text-muted); }
+  .y { grid-column: 3; grid-row: 1; color: var(--color-text-muted); }
+  @media (min-width: 48rem) {
+    .cat a { grid-template-columns: 3rem minmax(0, 1fr) 15rem 5rem; padding: var(--space-6) 0; }
+    .n, .m, .y { grid-row: 1; }
+    .m { grid-column: 3; } .y { grid-column: 4; text-align: right; }
+    .t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+  }
+  .cat a::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
+  @media (hover: hover) { .cat a:hover::before { transform: scaleX(1); } .cat a:hover .m, .cat a:hover .y, .cat a:hover .n { color: var(--color-text); } }
+  .cat a:focus-visible::before { transform: scaleX(1); }
+  .note { margin-top: var(--space-6); color: var(--color-text-muted); }
 </style>

@@ -1,27 +1,22 @@
 ---
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import PageHead from '../components/PageHead.astro';
 import Base from '../layouts/Base.astro';
-import StandIn from '../components/StandIn.astro';
+const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
 ---
-<Base title="Contact" description="Tell me what you're making. Email or book a call with AI-Floh.">
-  <PageHead kicker="Contact" title="Tell me what you're making." lede="A few lines is enough: what it is, who it's for, and when you need it." />
+<Base title="Contact" description="Tell me what you're making. Email me or message me on LinkedIn.">
+  <PageHead kicker="Contact" title="Tell me what you're making." lede="A few lines is enough: what it is, who it's for, and when." />
   <section class="wrap section">
-    <div class="ways">
-      <div class="card">
-        <h2>Email</h2>
-        <p class="muted">The address goes here once it's confirmed. <StandIn /></p>
-      </div>
-      <div class="card">
-        <h2>Book a call</h2>
-        <p class="muted">A booking link goes here. <StandIn /></p>
-      </div>
-    </div>
-    <p class="muted small">No contact form yet, on purpose: nothing you type here is stored by this site.</p>
+    <a class="mail" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="contact-email">{P.profile.email}<span aria-hidden="true"> →</span></a>
+    <p class="label alt">Or <a href={P.profile.linkedin} rel="me noopener">LinkedIn</a> · <span class="muted">nothing you type here is stored by this site</span></p>
   </section>
 </Base>
 <style>
-  .ways { display: grid; gap: var(--space-4); margin: var(--space-8) 0; }
-  @media (min-width: 48rem) { .ways { grid-template-columns: 1fr 1fr; } }
-  h2 { font-size: var(--text-lg); margin: 0; }
-  .small { font-size: var(--text-sm); }
+  .mail { display: inline-block; font-size: clamp(1.5rem, 0.6rem + 4.4vw, 4.5rem); font-weight: 800; letter-spacing: -0.045em; line-height: 1.05; text-decoration: none; overflow-wrap: anywhere; background: linear-gradient(var(--color-a-fill), var(--color-a-fill)) left 88% / 0 0.28em no-repeat; transition: background-size 300ms var(--ease-standard); }
+  @media (hover: hover) { .mail:hover { background-size: 100% 0.28em; } }
+  .mail:focus-visible { background-size: 100% 0.28em; }
+  .mail span { color: var(--color-b); }
+  .alt { margin-top: var(--space-8); }
+  .alt a { color: var(--color-b); }
 </style>

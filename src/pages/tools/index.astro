@@ -6,59 +6,46 @@ import StandIn from '../../components/StandIn.astro';
 import { loadContent } from '../../lib/content';
 import { href } from '../../lib/href';
 const { tools } = loadContent();
-const cats = [...new Set(tools.map((t) => t.category))].sort();
 const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
-const ctaLabel = (t: (typeof tools)[number]) => ({ open: 'Open', download: 'Download', beta: 'Join the beta', talk: 'Ask about it', none: 'Not public yet' })[t.cta];
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <Base title="Tools" description="Software I built for video, images and creator workflows: plugins, web apps and small utilities.">
-  <PageHead kicker="Tools" title="Software that does the grind." lede="Plugins, web apps and small utilities I built for video, images and creator workflows." count={tools.length} />
+  <PageHead kicker="Tools" title="Software that does the grind." count={tools.length} />
   <BuiltTabs />
   <section class="wrap section">
-    <div class="cat-filter" hidden role="group" aria-label="Filter by category">
-      <button type="button" class="btn" aria-pressed="true" data-cat="">All</button>
-      {cats.map((c) => <button type="button" class="btn" aria-pressed="false" data-cat={c}>{c}</button>)}
-    </div>
-    <ul class="grid-cards" role="list">
-      {tools.map((t) => (
-        <li class="card" data-cat={t.category}>
-          <p class="chip-row"><span class="tag">{t.category}</span><span class="chip-status">{STATUS[t.status]}</span>{t.standIn && <StandIn />}</p>
-          <h2 class="h3"><a href={href(`/tools/${t.slug}/`)}>{t.title}</a></h2>
-          <p class="muted">{t.summary}</p>
-          <p class="small muted">{t.platforms.join(' · ')}</p>
-          <div class="actions">
-            {t.cta === 'open' && t.url ? (
-              <a class="btn btn-primary" href={t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifloh&utm_medium=tools&utm_campaign=${t.slug}`} rel="noopener" data-track="Tool Click" data-track-slug={t.slug}>{ctaLabel(t)}</a>
-            ) : t.cta === 'talk' ? (
-              <a class="btn" href={href('/contact/')} data-track="CTA Click" data-track-id="tool-talk">{ctaLabel(t)}</a>
-            ) : t.cta === 'none' ? (
-              <span class="muted small">{ctaLabel(t)}</span>
-            ) : null}
-            <a class="btn" href={href(`/tools/${t.slug}/`)}>Details</a>
-          </div>
+    <ol class="cat" role="list">
+      {tools.map((t, i) => (
+        <li>
+          <a href={href(`/tools/${t.slug}/`)}>
+            <span class="n label">{pad(i + 1)}</span>
+            <span class="t">{t.title} {t.standIn && <StandIn />}</span>
+            <span class="s">{t.summary}</span>
+            <span class="m label">{t.platforms[0] ?? t.category}</span>
+            <span class="st label">{STATUS[t.status]}</span>
+          </a>
         </li>
       ))}
-    </ul>
+    </ol>
   </section>
 </Base>
-<script>
-  const bar = document.querySelector<HTMLElement>('.cat-filter');
-  if (bar) {
-    bar.hidden = false;
-    bar.addEventListener('click', (e) => {
-      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-cat]');
-      if (!b) return;
-      bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      document.querySelectorAll<HTMLElement>('li.card[data-cat]').forEach((li) => (li.hidden = !!b.dataset.cat && li.dataset.cat !== b.dataset.cat));
-    });
-  }
-</script>
 <style>
-  .cat-filter { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0; }
-  .cat-filter [aria-pressed=true] { border-color: var(--color-a); color: var(--color-a); }
-  .grid-cards { list-style: none; padding: 0; margin: var(--space-6) 0 0; }
-  .chip-row { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
-  .h3 { font-size: var(--text-lg); margin: 0; }
-  .h3 a { text-decoration: none; }
-  .small { font-size: var(--text-sm); }
-  .shot { aspect-ratio: 16 / 10; border: 1px dashed var(--color-line); border-radius: 4px; display: grid; place-items: center; }
+  .cat { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+  .cat li { border-bottom: 1px solid var(--color-line-strong); }
+  .cat a { position: relative; isolation: isolate; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); padding: var(--space-6) 0; text-decoration: none; align-items: baseline; }
+  .n { color: var(--color-text-muted); grid-row: 1 / span 3; }
+  .t { font-size: var(--t-row-sm); font-weight: 750; letter-spacing: -0.03em; line-height: 1.1; }
+  .s { grid-column: 2; color: var(--color-text-muted); max-width: 52ch; }
+  .m { grid-column: 2; color: var(--color-text-muted); }
+  .st { grid-column: 3; grid-row: 1; }
+  @media (min-width: 48rem) {
+    .cat a { grid-template-columns: 3rem minmax(0, 1fr) 12rem 8rem; }
+    .n, .st, .m { grid-row: 1; }
+    .m { grid-column: 3; }
+    .st { grid-column: 4; text-align: right; }
+    .s { grid-row: 2; }
+    .t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; }
+  }
+  .cat a::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
+  @media (hover: hover) { .cat a:hover::before { transform: scaleX(1); } .cat a:hover .s, .cat a:hover .m, .cat a:hover .n { color: var(--color-text); } }
+  .cat a:focus-visible::before { transform: scaleX(1); }
 </style>

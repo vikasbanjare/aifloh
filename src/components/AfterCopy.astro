@@ -1,5 +1,5 @@
 ---
-// After the first copy only: "Where did you see this?" (six chips, no text field) and one soft email ask.
+// After the first copy only: "Where did you see this?" (six chips, no text field) (no email ask until sign-up exists).
 import { SOCIALS } from '../lib/config';
 ---
 <aside class="after-copy" hidden aria-label="Quick question">
@@ -8,7 +8,6 @@ import { SOCIALS } from '../lib/config';
     {SOCIALS.map((s) => <button type="button" class="btn ac-chip" data-track="Source Chip" data-track-platform={s.platform}>{s.label}</button>)}
   </div>
   <p class="ac-thanks muted" hidden role="status">Thanks, that helps.</p>
-  <p class="ac-email muted"><span class="stand-in">Needs backend</span> Want new drops by email? Sign-up arrives soon. Everything here works without it.</p>
 </aside>
 <script>
   let shown = false;

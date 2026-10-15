@@ -58,7 +58,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     </figure>
 
     <div class="hero-foot">
-      <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8&nbsp;years, 1000+&nbsp;projects.</p>
+      <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8+&nbsp;years, 1000+&nbsp;projects.</p>
       <div class="cw-plate">
         <p class="note" aria-hidden="true">type the word here<svg viewBox="0 0 60 50" class="note-arrow"><path d="M4 4c10 2 26 10 34 22 4 6 6 12 7 18" /><path d="M36 38l9 7 6-11" /></svg></p>
         <CodeWordBox id="cw-home" />
@@ -67,7 +67,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   </section>
 
   <section class="room wrap" aria-labelledby="free-h">
-    <h2 id="free-h" class="room-h"><span class="label n">( 01 )</span> <span>Take one<span class="stop-a">.</span></span></h2>
+    <h2 id="free-h" class="room-h"><span class="label n">( 01 )</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
         <li>
@@ -84,7 +84,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   </section>
 
   <section class="room wrap" id="work" aria-labelledby="work-h">
-    <h2 id="work-h" class="room-h"><span class="label n">( 02 )</span> <span>Works<span class="stop-b">.</span></span></h2>
+    <h2 id="work-h" class="room-h"><span class="label n">( 02 )</span> <span>Work<span class="stop-b">.</span></span></h2>
     <ol class="index index-big" role="list" data-work>
       {work.map((w: any, i: number) => (
         <li>
@@ -102,7 +102,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   </section>
 
   <section class="room wrap" aria-labelledby="studio-h">
-    <h2 id="studio-h" class="room-h"><span class="label n">( 03 )</span> <span>Commissions<span class="stop-a">.</span></span></h2>
+    <h2 id="studio-h" class="room-h"><span class="label n">( 03 )</span> <span>Studio<span class="stop-a">.</span></span></h2>
     <div class="pair">
       <a class="side side-a" href={href('/studio/')}>
         <span class="label"><i class="k k-a" aria-hidden="true"></i>Studio</span>
@@ -121,7 +121,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   </section>
 
   <section class="room wrap" aria-labelledby="built-h">
-    <h2 id="built-h" class="room-h"><span class="label n">( 04 )</span> <span>Instruments<span class="stop-b">.</span></span></h2>
+    <h2 id="built-h" class="room-h"><span class="label n">( 04 )</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
         {c.tools.map((t, i) => (
@@ -144,7 +144,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   </section>
 
   <section class="room wrap" aria-labelledby="about-h">
-    <h2 id="about-h" class="room-h"><span class="label n">( 05 )</span> <span>The maker<span class="stop-a">.</span></span></h2>
+    <h2 id="about-h" class="room-h"><span class="label n">( 05 )</span> <span>About<span class="stop-a">.</span></span></h2>
     <div class="maker">
       <figure class="me">
         <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
@@ -278,7 +278,8 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .side-b { background: var(--color-b); color: var(--color-b-ink); }
   .side-b .k { border-color: var(--color-b-ink); background: var(--color-b-ink); }
   .side-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin-top: auto; }
-  .side-m { font-size: var(--text-sm); opacity: 0.85; }
+  .side .label { color: inherit; }
+  .side-m { font-size: var(--text-sm); }
   @media (hover: hover) { .side:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--color-text); } }
   .steps { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: var(--space-6) 0 0; padding: 0; counter-reset: s; }
   .steps li { counter-increment: s; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-text); }

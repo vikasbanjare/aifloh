@@ -8,20 +8,16 @@ question: Can one image prompt produce a finished podcast thumbnail, real hosts 
 result: failed
 tools: [ChatGPT]
 tags: [thumbnail]
-standIn: true
 publish: true
 ---
-## Question
-STAND-IN. Can one image prompt produce a finished podcast thumbnail, real hosts and text included?
-
 ## What I tried
-STAND-IN.
+One ChatGPT prompt for the whole podcast thumbnail: the real hosts, the idea and the headline, all in one image.
 
 ## What happened
-STAND-IN.
+Four outputs, four failures. A metaphor with no readable shape, a meaning a camera can't capture, four objects fighting for attention, and repetition that turned into texture. All four also had AI-drawn text in the wrong font and faces lit differently from the scene.
 
-## What I would do next
-STAND-IN.
+## What I do now
+Split the job. ChatGPT makes one thing it is good at: a people-free, text-free background plate. The hosts, the headline and the final grade happen in Photoshop.
 
 ## Try it
-See the thumbnail prompt skill on the Free page.
+The method is the [Thumbnail Prompt Generator](../../free/thumbnail-prompt-generator/) skill.

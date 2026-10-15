@@ -4,7 +4,12 @@ import BuiltTabs from '../../components/BuiltTabs.astro';
 import Base from '../../layouts/Base.astro';
 import { loadContent } from '../../lib/content';
 import { href } from '../../lib/href';
-const { repos } = loadContent();
+const c = loadContent();
+const { repos } = c;
+// A repo's line on this page: the matching tool or experiment's own summary beats an empty GitHub description.
+const owner = (repo: string) => [...c.tools, ...c.experiments].find((x: any) => x.repo && x.repo.toLowerCase() === repo.toLowerCase()) as { title: string; summary: string } | undefined;
+const nameOf = (r: (typeof repos)[number]) => owner(r.repo)?.title ?? r.title;
+const lineOf = (r: (typeof repos)[number]) => r.summary || owner(r.repo)?.summary || '';
 const groups: { key: string; label: string }[] = [
   { key: 'tool', label: 'Tools' },
   { key: 'experiment', label: 'Experiments' },
@@ -39,8 +44,8 @@ function bar(langs: Record<string, number>) {
               const segs = bar(r.languages);
               return (
                 <li class="card">
-                  <h3>{r.title}</h3>
-                  <p class="muted">{r.summary || '—'}</p>
+                  <h3>{nameOf(r)}</h3>
+                  {lineOf(r) && <p class="muted">{lineOf(r)}</p>}
                   {r.private ? <p class="muted">Private. Available on request.</p> : (
                     <>
                       {segs.length > 0 && (
@@ -54,7 +59,6 @@ function bar(langs: Record<string, number>) {
                       <p class="small muted">Last push {fmt(r.pushedAt)}{r.license ? ` · ${r.license}` : ''}</p>
                       {r.topics.length > 0 && <p class="topics">{r.topics.slice(0, 6).map((t) => <span class="tag">{t}</span>)}</p>}
                       {r.builtWith.length > 0 && <p class="small">Built with {r.builtWith.join(', ')}</p>}
-                      {r.readmeExcerpt && <p class="excerpt small">{r.readmeExcerpt}</p>}
                     </>
                   )}
                   <div class="actions">

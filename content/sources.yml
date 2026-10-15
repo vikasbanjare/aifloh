@@ -17,6 +17,7 @@ items:
   - repo: vikasbanjare/YT-Thumbnail-downloader
     group: tool
     publish: true
+    readme: false
     note: Thumbnail ZIP tool. Add aifloh.yml and the "thumbnails belong to their creators" line.
   - repo: vikasbanjare/video
     group: tool

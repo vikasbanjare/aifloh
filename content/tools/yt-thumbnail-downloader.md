@@ -6,7 +6,7 @@ status: live
 date: 2026-06-03
 category: image
 cta: none
-platforms: [Runs on your computer (Node.js)]
+platforms: [Your computer (Node.js)]
 tags: [youtube, thumbnails]
 whoFor: Anyone collecting thumbnail references for their own channel.
 howItWorks:

@@ -6,7 +6,7 @@ status: live
 date: 2026-10-03
 type: design
 standIn: true
-publish: true
+publish: false
 shots:
   - { at: "00:00", note: "STAND-IN note made by hand", madeBy: A }
   - { at: "00:04", note: "STAND-IN note made by AI", madeBy: B }

@@ -12,6 +12,10 @@ const { items, filter = true, pageSize = 24 } = Astro.props;
 const intents = [...new Set(items.map((r) => r.intent))].sort();
 const tools = [...new Set(items.flatMap((r) => r.tools))].sort();
 const isDownload = (r: Resource) => r.type === 'skill' && r.skill?.zip;
+// What the row shows: the text without a skill file's YAML header, cut at 1200 characters.
+const body = (r: Resource) => copyText(r).replace(/^---\n[\s\S]*?\n---\n+/, '');
+const preview = (r: Resource) => { const b = body(r); return b.length > 1200 ? `${b.slice(0, 1200)}\n…` : b; };
+const copyable = (r: Resource) => preview(r) === copyText(r);
 ---
 {
   filter && items.length > 1 && (
@@ -54,9 +58,9 @@ const isDownload = (r: Resource) => r.type === 'skill' && r.skill?.zip;
             <span class="chev" aria-hidden="true" />
           </summary>
           <div class="body">
-            <pre class="copy-box" id={`copy-${r.slug}`}>{copyText(r).slice(0, 1200)}{copyText(r).length > 1200 ? '\n…' : ''}</pre>
+            <pre class="copy-box" id={`copy-${r.slug}`} tabindex="0" aria-label={`${r.title}: text`}>{preview(r)}</pre>
             <div class="row-actions">
-              {copyText(r).length <= 1200 ? <CopyButton target={`copy-${r.slug}`} slug={r.slug} /> : <a class="btn btn-primary" href={href(`/free/${r.slug}/`)}>Open to copy all</a>}
+              {copyable(r) ? <CopyButton target={`copy-${r.slug}`} slug={r.slug} /> : <a class="btn btn-primary" href={href(`/free/${r.slug}/`)}>Open to copy all</a>}
               {isDownload(r) && (
                 <a class="btn dl-btn" href={href(r.skill!.zip!)} download data-track="Resource Download" data-track-slug={r.slug}>
                   Download .zip

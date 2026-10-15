@@ -11,7 +11,7 @@ const stale = tested ? days > STALE_DAYS : false;
 {
   tested ? (
     <span class="stamp" data-tested={tested.on.toISOString().slice(0, 10)} data-stale={stale ? '' : undefined}>
-      <span class="stamp-fresh">Tested {fmt(tested.on)} · {tested.tool} · {tested.version}</span>
+      <span class="stamp-fresh">Tested {fmt(tested.on)} · {tested.tool}{tested.version && tested.version !== 'STAND-IN' ? ` · ${tested.version}` : ''}</span>
       <span class="stamp-stale">Last tested <span data-days>{days}</span> days ago, may need tweaks</span>
     </span>
   ) : (

@@ -1,63 +1,73 @@
 ---
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import PageHead from '../components/PageHead.astro';
 import Base from '../layouts/Base.astro';
-import StandIn from '../components/StandIn.astro';
 import { href } from '../lib/href';
+const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
+const studio = P.services.filter((s: any) => s.title !== 'AI workflows');
+const automate = P.services.find((s: any) => s.title === 'AI workflows');
+const steps = [
+  { t: 'Brief', d: 'One call: what you need, who it is for, where it runs.' },
+  { t: 'Sketch by hand', d: 'Storyboard, layout or flow before anything is generated.', c: 'a' },
+  { t: 'Make with AI', d: 'People make the calls; AI and automation carry the repeats.', c: 'b' },
+  { t: 'Ship', d: 'Files, sources and how it was made. No black boxes.' },
+];
 ---
-<Base title="Studio" description="AI-Floh has two sides: Studio, done-for-you AI video, motion and design, and Automate, workflows and tools built for your team.">
-  <PageHead kicker="Studio" title="Craft where it counts. Automation for the rest." lede="We make AI video, motion and design for brands, and we build the workflows that take the repetitive parts off a team's plate." />
+<Base title="Studio" description="Studio makes video, motion and design. Automate builds workflows and tools for your team.">
+  <PageHead kicker="Studio" title="Craft where it counts. Automation for the rest." />
 
   <section class="wrap section">
-    <div class="two">
-      <div class="panel panel-a">
-        <span class="tag tag-a">Studio · done for you</span>
-        <h2>We make it</h2>
-        <p>AI video, motion graphics and design. The ideas, the taste and the final calls stay with people. AI does the heavy lifting in between.</p>
+    <div class="pair">
+      <div class="side side-a">
+        <p class="label">Studio · done for you</p>
+        <h2 class="side-t">We make it.</h2>
+        <ul class="plain" role="list">{studio.map((s: any) => <li><b>{s.title}</b><span>{s.tags.join(' · ')}</span></li>)}</ul>
       </div>
-      <div class="panel panel-b">
-        <span class="tag tag-b">Automate · built for you</span>
-        <h2>We build it</h2>
-        <p>Workflows and tools for your team: plugins, small apps and pipelines that turn the grind into a button.</p>
+      <div class="side side-b">
+        <p class="label">Automate · built for you</p>
+        <h2 class="side-t">We build the machine.</h2>
+        <ul class="plain" role="list">
+          {automate && <li><b>{automate.title}</b><span>{automate.tags.join(' · ')}</span></li>}
+          <li><b>Tools</b><span><a href={href('/tools/')}>ContentIntel · CutPilot · Pulse</a></span></li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section class="wrap section">
-    <h2>Who we work with</h2>
-    <ul class="verticals" role="list">
-      <li>Finance and fintech</li>
-      <li>Edtech</li>
-      <li>Medical and health</li>
-    </ul>
-  </section>
-
-  <section class="wrap section">
-    <h2>How we work <StandIn /></h2>
-    <ol class="steps">
-      <li><strong>Brief.</strong> One call about what you need, who it's for and where it will run.</li>
-      <li><strong>Plan by hand.</strong> Sketches, a storyboard or a flow before anything is generated.</li>
-      <li><strong>Make.</strong> AI and automation for the repetitive parts, people for the decisions.</li>
-      <li><strong>Hand over.</strong> Files, sources and how it was made, so nothing is a black box.</li>
+    <h2 class="room-h"><span class="label n">( 01 )</span> How a project runs</h2>
+    <ol class="steps" role="list">
+      {steps.map((s, i) => <li class={s.c ? `c-${s.c}` : ''}><span class="label">{String(i + 1).padStart(2, '0')}</span><b>{s.t}</b><span>{s.d}</span></li>)}
     </ol>
   </section>
 
   <section class="wrap section">
-    <h2>Tools we built</h2>
-    <p>CutPilot and Pulse for Premiere Pro, and ContentIntel for checking a post before it goes out. <a class="a" href={href('/tools/')}>See all tools</a>.</p>
-    <p class="cta"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="studio-talk">Talk to us about a project</a></p>
+    <h2 class="room-h"><span class="label n">( 02 )</span> Who for</h2>
+    <p class="verticals">Finance and fintech · Edtech · Medical and health</p>
+    <p class="cta"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="studio-talk">Start a project <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 </Base>
 <style>
-  h2 { font-size: var(--text-xl); letter-spacing: -0.02em; }
-  .two { display: grid; gap: var(--space-4); }
-  @media (min-width: 48rem) { .two { grid-template-columns: 1fr 1fr; } }
-  .panel { padding: var(--space-8); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); }
-  .panel-a { border-top: 3px solid var(--color-a); }
-  .panel-b { border-top: 3px solid var(--color-b-strong); }
-  .panel h2 { margin-top: var(--space-4); }
-  .verticals { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .verticals li { font-size: var(--text-lg); font-weight: 700; padding: var(--space-3) var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius); }
-  .steps { padding-left: 1.2em; max-width: var(--measure); }
-  .steps li { margin-bottom: var(--space-3); }
-  .cta { margin-top: var(--space-6); }
+  .pair { display: grid; gap: var(--space-4); }
+  @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } }
+  .side { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); border: 1px solid var(--color-text); min-height: 22rem; }
+  .side .label { color: inherit; margin: 0; }
+  .side-a { background: var(--color-a-fill); color: var(--color-a-ink); }
+  .side-b { background: var(--color-b); color: var(--color-b-ink); }
+  .side-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin: auto 0 0; }
+  .plain { list-style: none; margin: 0; padding: 0; border-top: 1px solid currentColor; }
+  .plain li { display: grid; gap: 2px; padding: var(--space-3) 0; border-bottom: 1px solid currentColor; }
+  .plain span { font-size: var(--text-sm); }
+  .plain a { color: inherit; }
+  .room-h { display: flex; gap: var(--space-4); align-items: baseline; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+  .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
+  .steps { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: grid; gap: var(--space-6); }
+  @media (min-width: 48rem) { .steps { grid-template-columns: repeat(4, 1fr); } }
+  .steps li { display: grid; gap: var(--space-1); padding-top: var(--space-3); border-top: 2px solid var(--color-text); }
+  .steps .c-a { border-top-color: var(--color-a-fill); }
+  .steps .c-b { border-top-color: var(--color-b); }
+  .steps li > span:last-child { color: var(--color-text-muted); font-size: var(--text-sm); }
+  .verticals { font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.02em; }
+  .cta { margin-top: var(--space-8); }
 </style>

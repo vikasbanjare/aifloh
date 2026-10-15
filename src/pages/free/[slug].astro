@@ -5,7 +5,6 @@ import StandIn from '../../components/StandIn.astro';
 import CopyButton from '../../components/CopyButton.astro';
 import AfterCopy from '../../components/AfterCopy.astro';
 import InAppBanner from '../../components/InAppBanner.astro';
-import Follow from '../../components/Follow.astro';
 import { loadContent, TYPE_LABEL, copyText } from '../../lib/content';
 import { renderLocal } from '../../lib/markdown';
 import { href } from '../../lib/href';
@@ -20,8 +19,7 @@ const related = [
   ...r.related.map((s) => all.find((x) => x.slug === s)).filter(Boolean),
   ...all.filter((x) => x.slug !== r.slug && x.type === r.type),
   ...all.filter((x) => x.slug !== r.slug && x.intent === r.intent),
-  ...all.filter((x) => x.slug !== r.slug),
-].filter((x, i, a) => x && a.findIndex((y) => y!.slug === x.slug) === i && !r.related.includes(r.slug)).slice(0, 3) as Resource[];
+].filter((x, i, a) => x && x.slug !== r.slug && a.findIndex((y) => y!.slug === x.slug) === i).slice(0, 3) as Resource[];
 const text = copyText(r);
 const claudeUrl = r.openInClaude && text.length < 2000 ? `https://claude.ai/new?q=${encodeURIComponent(text)}` : null;
 const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
@@ -43,7 +41,6 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
 
     {r.type === 'skill' && r.skill && (
       <dl class="dl skill-facts">
-        <dt>Use it when</dt><dd>{r.skill.useWhen}</dd>
         <dt>Files</dt><dd>{r.skill.fileCount} file{r.skill.fileCount === 1 ? '' : 's'}, {kb(r.skill.bytes)}</dd>
         <dt>Install</dt><dd>{r.skill.installNote} <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview" rel="noopener noreferrer">Anthropic's skills documentation</a></dd>
         {r.links.repo && <dt>Source</dt>}
@@ -59,17 +56,17 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
           <button role="tab" id="tab-zh" aria-controls="panel-zh" aria-selected="false" tabindex="-1" class="btn">中文</button>
         </div>
         <div role="tabpanel" id="panel-en" aria-labelledby="tab-en">
-          <pre class="copy-box" id="copy-main">{r.video.prompt.en}</pre>
+          <pre class="copy-box" id="copy-main" tabindex="0" aria-label="Prompt in English">{r.video.prompt.en}</pre>
           <div class="actions"><CopyButton target="copy-main" slug={r.slug} /></div>
         </div>
         <div role="tabpanel" id="panel-zh" aria-labelledby="tab-zh" lang="zh" data-hide-js>
-          <pre class="copy-box" id="copy-zh">{r.video.prompt.zh}</pre>
+          <pre class="copy-box" id="copy-zh" tabindex="0" aria-label="Prompt in Chinese">{r.video.prompt.zh}</pre>
           <div class="actions"><CopyButton target="copy-zh" slug={r.slug} label="Copy Chinese" /></div>
         </div>
       </div>
     ) : (
       <>
-        <pre class="copy-box" id="copy-main">{text}</pre>
+        <pre class="copy-box" id="copy-main" tabindex="0" aria-label="The text to copy">{text}</pre>
         <div class="actions">
           <CopyButton target="copy-main" slug={r.slug} />
           {claudeUrl && <a class="btn" href={claudeUrl} rel="noopener noreferrer" data-track="Open In Claude" data-track-slug={r.slug}>Open in Claude with this prompt</a>}
@@ -87,7 +84,7 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
       </dl>
     )}
     {r.video && r.video.shots.length > 0 && (
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Shot list">
         <table>
           <caption class="visually-hidden">Shot list</caption>
           <thead><tr><th scope="col">Shot</th><th scope="col">Seconds</th><th scope="col">Camera</th><th scope="col">Action</th><th scope="col">Audio</th></tr></thead>
@@ -99,8 +96,8 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
 
     {r.howTo && <div class="prose how" set:html={renderLocal(r.howTo)} />}
 
-    <h2 class="h2">How it was made</h2>
-    {r.receipt ? (
+    {r.receipt && (<h2 class="h2">How it was made</h2>)}
+    {r.receipt && (
       <dl class="dl receipt">
         <dt>Tool</dt><dd>{r.receipt.tool}</dd>
         <dt>Attempts</dt><dd>{r.receipt.attempts ?? '—'}</dd>
@@ -108,14 +105,10 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
         <dt>What failed</dt><dd>{r.receipt.failed ?? '—'}</dd>
         <dt>What worked</dt><dd>{r.receipt.worked ?? '—'}</dd>
       </dl>
-    ) : (
-      <p class="muted">The receipt (attempts, time, what failed, what worked) gets added here.</p>
     )}
     {r.changelog && <p class="small muted">Changelog: {r.changelog}</p>}
 
-    <h2 class="h2">From the post</h2>
-    {r.sourcePost ? <p><a href={r.sourcePost} rel="noopener noreferrer">See the post this came from</a></p> : <p class="muted">The link to the original post gets added when it goes up.</p>}
-    <Follow />
+    {r.sourcePost && <p><a href={r.sourcePost} rel="noopener noreferrer">See the post this came from</a></p>}
 
     {related.length > 0 && (
       <>
@@ -125,8 +118,6 @@ const kb = (n: number) => (n < 1024 ? `${n} B` : `${(n / 1024).toFixed(1)} KB`);
         </ul>
       </>
     )}
-    <p class="soft">Want this done for you? <a href={href('/contact/')} data-track="CTA Click" data-track-id="resource-studio">Let's talk</a>.</p>
-    <InAppBanner quiet />
   </article>
 </Base>
 <script>

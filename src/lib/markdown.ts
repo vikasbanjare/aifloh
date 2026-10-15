@@ -20,9 +20,12 @@ export function renderUntrusted(src: string, repoUrl: string, branch: string): s
   const html = md.render(src);
   return sanitizeHtml(html, {
     allowedTags: sanitizeHtml.defaults.allowedTags.filter((t) => !['img', 'iframe', 'style', 'script', 'form'].includes(t)),
-    allowedAttributes: { a: ['href', 'title', 'rel', 'target'], code: ['class'] },
+    allowedAttributes: { a: ['href', 'title', 'rel', 'target'], code: ['class'], pre: ['tabindex'], table: ['tabindex'] },
     allowedSchemes: ['http', 'https', 'mailto'],
     transformTags: {
+      // Scrollable code blocks must be reachable by keyboard (WCAG 2.1.1).
+      pre: (tagName) => ({ tagName, attribs: { tabindex: '0' } }),
+      table: (tagName) => ({ tagName, attribs: { tabindex: '0' } }),
       a: (tagName, attribs) => {
         let href = attribs.href ?? '';
         if (href && !/^[a-z]+:/i.test(href) && !href.startsWith('#')) {

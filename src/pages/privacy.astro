@@ -1,49 +1,33 @@
 ---
 import Base from '../layouts/Base.astro';
-import { EVENTS } from '../lib/events';
 import { ANALYTICS_TOOL } from '../lib/config';
 const toolName = ANALYTICS_TOOL === 'plausible' ? 'Plausible' : ANALYTICS_TOOL === 'umami' ? 'Umami' : null;
 ---
-<Base title="Privacy" description="What this site counts, what it never collects, and how to ask for deletion.">
+<Base title="Privacy" description="What this site counts, what it never collects, and who to ask.">
   <article class="wrap section prose">
-    <p class="draft">DRAFT, not legally reviewed. Version 0.1 · last updated 15 Oct 2026.</p>
+    <p class="draft">Draft, not legally reviewed · v0.2 · 15 Oct 2026</p>
     <h1>Privacy</h1>
-    <p class="lede">Short version: anonymous visit counts, no cookies, nothing stored in your browser.</p>
+    <p class="lede">No cookies. Nothing stored in your browser. {toolName ? 'Anonymous visit counts only.' : 'Nothing is counted yet.'}</p>
 
-    <h2>What we count</h2>
+    <h2>What I count</h2>
     {toolName ? (
-      <p>We use {toolName} to count visits and a short list of clicks. It counts totals; it does not identify you.</p>
+      <p>{toolName} counts visits and about 20 named clicks, such as "Resource Copy" or "Filter Used". It counts totals and never identifies you.</p>
     ) : (
-      <p>Right now no analytics tool is switched on, so nothing is counted. When one is, it will be Plausible or Umami, and this page will say which.</p>
+      <p>No analytics tool is switched on, so nothing is counted. If that changes, it will be Plausible or Umami, and this page will say so first.</p>
     )}
-    <p>These are the only events the site can send, with no free text attached:</p>
-    <ul>{Object.values(EVENTS).map((e) => <li>{e}</li>)}</ul>
-    <p>Some events carry one small label from a fixed list: the item's short name (slug), a platform name, a page area, a button id, a filter option, an in-app browser name, match or no-match, a hero display mode, or a game name. Two of them are about your browser: “In-App Browser” (whether you opened the site inside Instagram, Facebook, X or LinkedIn) and “Hero Mode” (whether the home animation ran or showed a still).</p>
-    <p>Before counting, the site removes everything from the address except the four utm_ tags, so click IDs added by social apps are never seen. The part after # in an address is never stored.</p>
+    <p>Before anything is counted, the site strips the address down to its four utm_ tags, so click IDs added by social apps are never seen.</p>
 
-    <h2>What we never collect</h2>
-    <p>No cookies, no local storage, no fingerprinting, no session replay, no ad pixels, no tag managers. We never send what you type (search words, code words, emails) to analytics.</p>
+    <h2>What I never collect</h2>
+    <p>No cookies, local storage, fingerprinting, session replay, ad pixels or tag managers. What you type (search words, code words) never leaves your browser.</p>
 
-    <h2>Email</h2>
-    <p>Email sign-up isn't live yet. When it is, your address will be used only to send the file link and new drops, and you'll be able to unsubscribe at any time. This page will name the email provider.</p>
+    <h2>Other sites</h2>
+    <p>GitHub data is fetched when the site is built, not by your browser. Links to other sites, including my tools' own sites, follow those sites' policies.</p>
 
-    <h2>DM tools</h2>
-    <p>If you ask for a resource by commenting on a post, the comment-to-DM tool keeps its subscriber data on its own servers, under its own privacy policy.</p>
-
-    <h2>Video playback</h2>
-    <p>Videos from YouTube load only after you press play, from youtube-nocookie.com. Once you press play, YouTube may set cookies.</p>
-
-    <h2>GitHub</h2>
-    <p>Repo details on this site are fetched from GitHub when the site is built, not by your browser.</p>
-
-    <h2>Outbound links</h2>
-    <p>Links to other sites, including the tools' own sites, are covered by those sites' policies. Links to our own tools carry utm_ tags so we can count them.</p>
-
-    <h2>Deletion and questions</h2>
-    <p>Because the site keeps no personal data, there is usually nothing to delete. For email (once it's live) you can unsubscribe or ask for deletion through the contact page.</p>
+    <h2>Questions or deletion</h2>
+    <p>The site keeps no personal data, so there is usually nothing to delete. Ask anyway on the <a href="../contact/">contact page</a>.</p>
   </article>
 </Base>
 <style>
-  .draft { display: inline-block; background: var(--color-standin-bg); color: var(--color-standin-text); font-weight: 700; padding: var(--space-1) var(--space-3); border-radius: 4px; font-size: var(--text-sm); }
+  .draft { display: inline-block; background: var(--color-standin-bg); color: var(--color-standin-text); font-weight: 700; padding: var(--space-1) var(--space-3); font-size: var(--text-sm); }
   h2 { font-size: var(--text-lg); margin-top: var(--space-8); }
 </style>

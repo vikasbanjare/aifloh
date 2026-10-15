@@ -22,12 +22,17 @@ const out = t.url ? t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifl
     <div class="cta">
       {t.cta === 'open' && out && <a class="btn btn-primary" href={out} rel="noopener" data-track="Tool Click" data-track-slug={t.slug}>Open {t.title}</a>}
       {repo && <a class="btn" href={repo.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={repo.slug}>The code on GitHub</a>}
-      {t.cta === 'none' && <span class="muted">Not public yet</span>}
+      {t.cta === 'none' && !repo && <span class="muted">Not public yet</span>}
     </div>
-    <div class="shot" aria-hidden="true"><span class="stand-in">Real screenshot coming</span></div>
+    {t.screenshots[0] && (
+      <figure class="shot">
+        <img src={href(t.screenshots[0].src)} alt={t.screenshots[0].alt} width={t.screenshots[0].w} height={t.screenshots[0].h} loading="lazy" decoding="async" />
+        <figcaption class="label">Fig. 1 · {t.title}</figcaption>
+      </figure>
+    )}
 
     <h2>How it works</h2>
-    <ol class="steps">{t.howItWorks.map((s) => <li>{s}</li>)}</ol>
+    {t.howItWorks.every((s) => s.startsWith('STAND-IN')) ? <p><StandIn /> The three steps get written when the tool is public.</p> : <ol class="steps">{t.howItWorks.map((s) => <li>{s}</li>)}</ol>}
     {t.whoFor && (<><h2>Who it's for</h2><p>{t.whoFor}</p></>)}
     <dl class="dl facts">
       <dt>Runs on</dt><dd>{t.platforms.join(', ') || '—'}</dd>
@@ -37,19 +42,18 @@ const out = t.url ? t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifl
     {t.body && <div class="prose" set:html={renderLocal(t.body)} />}
     {t.changelog && <p class="muted">Changelog: {t.changelog}</p>}
     {t.faq.length > 0 && (<><h2>Questions</h2>{t.faq.map((f) => <details class="faq"><summary>{f.q}</summary><p>{f.a}</p></details>)}</>)}
-    <p class="soft">Want something like this built for your team? <a href={href('/contact/')} data-track="CTA Click" data-track-id="tool-talk">Let's talk</a>.</p>
   </article>
 </Base>
 <style>
   .row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
   .cta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0; align-items: center; }
-  .shot { aspect-ratio: 16 / 9; max-width: 48rem; border: 1px dashed var(--color-line); border-radius: var(--radius); display: grid; place-items: center; margin-bottom: var(--space-8); }
+  .shot { margin: 0 0 var(--space-8); max-width: 26rem; border: 1px solid var(--color-text); background: var(--color-surface); box-shadow: 6px 6px 0 var(--color-text); }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
   h2 { font-size: var(--text-lg); margin-top: var(--space-8); }
   .steps { padding-left: 1.2em; max-width: var(--measure); }
   .steps li { margin-bottom: var(--space-2); }
   .facts { margin: var(--space-6) 0; }
   .faq { border-bottom: 1px solid var(--color-line); max-width: var(--measure); }
   .faq summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
-  .soft { margin-top: var(--space-12); }
-  .soft a { color: var(--color-a); font-weight: 700; }
 </style>

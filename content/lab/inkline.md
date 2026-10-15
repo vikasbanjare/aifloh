@@ -20,10 +20,8 @@ Can a pasted product script become a finished 30-second engraved 3D launch film?
 A Remotion and Three.js pipeline that drops each claim from a script into a fixed storyboard of shots: a garden that turns into a card, a foil strip that opens onto a globe, a number rising like a pearl, a phone mockup, then the logo. The music and sound effects are generated in code and timed to every cut.
 
 ## What happened
-The example film renders end to end from one spec file. The result is marked ongoing until the receipt (attempts, time, what failed) is filled in.
+The example film renders end to end from one spec file.
 
-## What I would do next
-STAND-IN.
 
 ## Try it
 The repo is free to use under the MIT licence. The 3D models are Khronos glTF samples (CC0 and CC-BY 4.0) and the map data is Natural Earth; credits are in the repo.

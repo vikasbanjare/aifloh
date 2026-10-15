@@ -46,13 +46,9 @@ const ctaId = isHome ? 'home-talk' : 'nav-talk';
           <li><a href={BEHANCE_URL} rel="me noopener">Behance</a></li>
         </ul>
       </section>
-      <section aria-labelledby="f-email">
-        <h2 id="f-email">New drops by email</h2>
-        <p class="small muted">One email when something new and free goes up. <span class="stand-in">Needs backend</span></p>
-      </section>
     </div>
     <div class="base">
-      <a href={href('/privacy/')}>Anonymous visit counts. No cookies.</a>
+      <a href={href('/privacy/')}>No cookies. Nothing stored in your browser.</a>
       <span class="muted">© 2026 Vikas Banjare · AI-Floh</span>
     </div>
   </div>
@@ -65,7 +61,7 @@ const ctaId = isHome ? 'home-talk' : 'nav-talk';
   .big-cta .arrow { display: inline-block; color: var(--color-b); transition: transform var(--dur-base) var(--ease-standard); }
   @media (hover: hover) { .big-cta:hover .arrow { transform: translateX(0.15em); } }
   .cols { display: grid; gap: var(--space-8); padding-block: var(--space-12); grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 56rem) { .cols { grid-template-columns: repeat(4, 1fr) 1.3fr; } }
+  @media (min-width: 56rem) { .cols { grid-template-columns: repeat(4, 1fr); } }
   h2 { font-family: var(--font-mono); font-size: var(--t-label); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); font-weight: 500; margin-bottom: var(--space-3); }
   ul { list-style: none; margin: 0; padding: 0; }
   li { min-height: 36px; display: flex; align-items: center; gap: var(--space-2); }
