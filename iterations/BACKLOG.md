@@ -1,6 +1,6 @@
 # Backlog (ranked by impact; [ ] open, [x] done, [-] rejected)
 
-1. [ ] K/H — Hero has no clear primary action for people who want to hire; add one strong, quiet CTA next to the intro line ("Start a project →") without the banned two-button hero.
+1. [x] K/H — Hero has no clear primary action for people who want to hire; add one strong, quiet CTA next to the intro line ("Start a project →") without the banned two-button hero.
 2. [ ] H/D — The work is the strongest asset but appears third. Tease it in the hero on desktop: a small fanned stack of three prints beside the intro, linking to #work.
 3. [ ] C/S — Studio's lime + cobalt blocks repeat the band colours; make Studio cards paper with a coloured edge / key so the bands stay special.
 4. [ ] S — About is sparse and lopsided (small photo, stats strip, lots of air). Rebalance: larger photo print, stats grid, one line of voice.
@@ -10,3 +10,4 @@
 8. [ ] D — Margin ledger thread is faint noise on desktop; test removing it (simplify).
 9. [ ] M — Phone page ≈7,000 px; trim (e.g. Free shows 4 rows on phones).
 10. [ ] T — Section titles ("Free.", "Work.") are small next to full-bleed bands; scale up.
+11. [ ] H — At 1440 the hero CTA and code box fall below the fold (Fig. 1 is tall); tighten hero vertical rhythm.

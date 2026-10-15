@@ -18,3 +18,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
   - A 9: axe clean, focus visible, alt text.
   - P 9: LH 97.
 - Decision: baseline, tagged `best`.
+
+## iter-01 · Hero CTA: one clear 'Start a project →' under the intro
+- Hypothesis: hiring visitors had no obvious next step above the fold; one ink button plus a quiet 'or see the work ↓' raises copy/CTA clarity without the banned two-big-buttons hero.
+- Change: src/pages/index.astro hero-foot gets .who-cta.
+- Verify: build/check/unit/21 e2e pass; no console errors or overflow; LH 97/100/100/100; axe 0.
+- Critique: K 6→7 (clear action). At 1440 the CTA sits just below the first fold because Fig. 1 is tall: note for a later hierarchy iteration. No other category moved.
+- Scores: H7 T7 C7 S6 D7 M7 I7 K7 A9 P9 = 73.
+- Decision: KEPT.
