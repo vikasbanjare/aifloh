@@ -115,3 +115,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: D 7→8; subtle, consistent with the paper/prints idea; no clutter added to type or layout.
 - Scores: H8 T8 C8 S8 D8 M8 I7 K8 A9 P9 = 81.
 - Decision: KEPT.
+
+## iter-12 · Live code-word confirmation while typing
+- Hypothesis: visitors arriving from a post need to know the word is right before submitting; a live '✓ <resource>' plus a lime Go is purposeful interaction for the site's main job.
+- Change: CodeWordBox: polite live region shows the matching resource on exact match; field and Go button switch to the lime 'hand' state. Partial words stay silent (no chatty announcements).
+- Verify: all checks pass incl. 21 e2e (code-word flows); LH 96/100/100/100; axe 0. Tested: 'deck' → nothing, 'decks' → '✓ Deck Director'.
+- Critique: I 7→8; also helps K slightly (already 8).
+- Scores: H8 T8 C8 S8 D8 M8 I8 K8 A9 P9 = 82.
+- Decision: KEPT.

@@ -24,6 +24,18 @@ const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord,
     const base = form.dataset.base || '/free/';
     const msg = form.querySelector<HTMLElement>('.cw-msg')!;
     const input = form.querySelector<HTMLInputElement>('input')!;
+    // Live confirmation: the moment the typed word matches, show what it opens. Silent until then.
+    const hit = document.createElement('p');
+    hit.className = 'cw-hit';
+    hit.setAttribute('aria-live', 'polite');
+    msg.before(hit);
+    input.addEventListener('input', () => {
+      const w = input.value.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
+      const m = words[w];
+      hit.textContent = m ? `✓ ${m.title}` : '';
+      form.classList.toggle('is-hit', !!m);
+      if (m) msg.replaceChildren();
+    });
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const w = input.value.trim().toLowerCase().replace(/^\/+|\/+$/g, '');
@@ -70,4 +82,8 @@ const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord,
   .cw-msg:empty { margin: 0; }
   .cw-msg a { color: var(--color-a); font-weight: 700; }
   .cw-help { font-size: var(--text-sm); }
+  .cw-hit { margin: var(--space-2) 0 0; font-size: var(--text-sm); font-weight: 700; color: var(--color-a); }
+  .cw-hit:empty { margin: 0; }
+  .cw.is-hit input { border-color: var(--color-a); box-shadow: inset 0 -3px 0 var(--color-a-fill); }
+  .cw.is-hit .btn-primary { background: var(--color-a-fill); color: var(--color-a-ink); border-color: var(--color-text); }
 </style>
