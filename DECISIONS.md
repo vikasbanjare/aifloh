@@ -21,3 +21,4 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
 - 2026-10-15 · Light redesign · Colours: lime (#b8f000) is a fill and highlight only on light (1.2:1 as text). Cobalt (#2b4bff) carries accent text (5.4:1). "By hand" text uses #3d5c00 (7:1).
 - 2026-10-15 · Intro · Home has a pixel-tile intro after anfalova.art, at Vikas's request. This relaxes the Section 1/6 ban on preloaders. Limits: about 1.5 s, hard cap 3 s, skippable with tap/click/Esc, off for prefers-reduced-motion, never shown without JavaScript, removed from the DOM after, no storage.
 - 2026-10-15 · Header · Home shows local time in IST (time zone only, no city) next to "Open to projects".
+- 2026-10-15 · Domain · Site moves to https://aifloh.com (GoDaddy DNS: four GitHub Pages A records on @, www CNAME to vikasbanjare.github.io; email records kept). Repo variables SITE_URL=https://aifloh.com and BASE_PATH=/ drive the build; the github.io preview path is retired.
