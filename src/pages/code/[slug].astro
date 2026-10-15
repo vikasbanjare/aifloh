@@ -9,7 +9,7 @@ const { r } = Astro.props as { r: RepoItem };
 ---
 <Base title={`${r.title}: the code`} description={r.summary || `The code behind ${r.title}, from GitHub.`}>
   <article class="wrap section">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/code/')}>Code</a> / {r.name}</nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/code/')}>Code</a> <span>{r.name}</span></nav>
     <p class="muted small">Copied from GitHub at build time. Images are left out. <a class="a" href={r.htmlUrl} rel="noopener noreferrer" data-track="Repo Click" data-track-slug={r.slug}>Open the repo</a></p>
     <div class="prose readme" set:html={r.readmeHtml} />
   </article>

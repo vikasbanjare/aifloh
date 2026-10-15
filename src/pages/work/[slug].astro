@@ -14,7 +14,7 @@ const img = w.media && 'src' in w.media ? w.media : null;
 ---
 <Base title={w.title} description={w.summary}>
   <article class="wrap section">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/work/')}>Work</a> / {w.type}</nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/work/')}>Work</a> <span>{w.type}</span></nav>
     <h1>{w.title} {w.standIn && <StandIn />}</h1>
     <p class="lede">{w.summary}</p>
 

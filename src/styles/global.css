@@ -174,8 +174,15 @@ p.label { max-width: none; }
 .dl dd { margin: 0; }
 @media (max-width: 30rem) { .dl { grid-template-columns: 1fr; gap: var(--space-1); } .dl dd { margin-bottom: var(--space-3); } }
 
-.breadcrumb { font-size: var(--text-sm); margin-bottom: var(--space-6); color: var(--color-text-muted); }
-.breadcrumb a { color: var(--color-text-muted); }
+.breadcrumb {
+  display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6);
+  font-family: var(--font-mono); font-size: var(--t-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted);
+}
+.breadcrumb a { color: var(--color-b); text-decoration: none; }
+.breadcrumb a::before { content: '( '; } .breadcrumb a::after { content: ' )'; }
+.breadcrumb::after { content: ''; flex: 1; max-width: 12rem; height: 1px; background: var(--color-text); }
+/* detail-page titles share the catalogue scale */
+article > h1, .section > h1 { font-size: clamp(2.5rem, 1rem + 5vw, 5.5rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; max-width: 16ch; }
 
 /* Load-in: one rise per page, on the page title only. */
 .rise { animation: rise var(--dur-slow) var(--ease-standard) both; }

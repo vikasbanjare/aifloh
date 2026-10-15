@@ -15,7 +15,7 @@ const out = t.url ? t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifl
 ---
 <Base title={t.title} description={t.summary}>
   <article class="wrap section">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/tools/')}>Tools</a> / {t.category}</nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href={href('/tools/')}>Tools</a> <span>{t.category}</span></nav>
     <h1>{t.title}</h1>
     <p class="lede">{t.summary}</p>
     <p class="row"><span class="chip-status">{STATUS[t.status]}</span>{t.version && <span class="muted">v{t.version}</span>}{t.standIn && <StandIn />}</p>
