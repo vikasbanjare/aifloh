@@ -211,3 +211,8 @@ Not a scored loop iteration: Vikas asked mid-loop for the site to look like a mo
 The figure read as segmented tubes: visible seams at elbows and knees, ball hands, tiny dot eyes. Added clay joint spheres at elbows and knees, mitten hands with a thumb, larger open eyes and a soft mouth. Checked at the bed-edge and stretch shots. Rule note (most reasonable reading, recorded here): Vikas directly asked for a premium, not-a-joke character, which the 10-point rubric does not measure finely; character-quality changes that drop no category are kept even when the total ties.
 - Scores: H8 T9 C8 S8 D9 M8 I9 K8 A10 P9 = 86.
 - Decision: KEPT.
+
+## iter-29 · Sunbeams through the window after 1 PM
+Additive gradient planes slanting from the window plus a sun patch on the floor. On the bright clay walls they read as hard-edged grey sheets crossing the desk shot rather than light, which cheapens the frame. Reverted. A better route if revisited: a cookie (window-shaped light pattern) through the shadow map, or a soft sun patch only.
+- Scores: H8 T9 C8 S8 D9 M8 I9 K8 A10 P9 = 86.
+- Decision: REJECTED.

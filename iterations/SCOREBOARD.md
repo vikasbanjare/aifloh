@@ -34,5 +34,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 24r | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | 10 | 10 | **93** | best (re-measured) | iter-24 on gzip server: LH 99, LCP 2.0 s |
 | 27 | 8 | 9 | 8 | 8 | 9 | 8 | 9 | 8 | 10 | 9 | **86** | NEW BASELINE | brand-level: 3D clay room film (Vikas's request); rubric restarts here |
 | 28 | 8 | 9 | 8 | 8 | 9 | 8 | 9 | 8 | 10 | 9 | **86** | KEPT | 86 = baseline; kept under Vikas's standing ask for a premium character (no category dropped) |
+| 29 | 8 | 9 | 8 | 8 | 9 | 8 | 9 | 8 | 10 | 9 | **86** | REJECTED | 86; the shafts read as glass panels, not light |
 
 **CURRENT BEST: iter-28** (tag `best`; new baseline after the film hero)
