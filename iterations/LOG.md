@@ -50,3 +50,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: S 6→7. Leftover: the second stats row leaves one empty cell; photo source is only 230 px so it is slightly soft at 256 px (needs a bigger photo from Vikas).
 - Scores: H7 T7 C8 S7 D7 M7 I7 K7 A9 P9 = 75.
 - Decision: KEPT.
+
+## iter-05 · Poster-size section titles
+- Hypothesis: 'Free.' and 'Work.' were small next to full-bleed bands; display-scale titles give each room a poster entrance and a clearer type hierarchy.
+- Change: .room-h clamp(2.75rem, 1rem + 6.4vw, 7.5rem), tighter tracking; the ( 0n ) label sits at the cap line.
+- Verify: all checks pass; LH 97/100/100/100; axe 0.
+- Critique: T 7→8 at desktop (scale contrast between titles, rows and labels); on phones the gain is small but no regressions.
+- Scores: H7 T8 C8 S7 D7 M7 I7 K7 A9 P9 = 76.
+- Decision: KEPT.

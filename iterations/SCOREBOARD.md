@@ -9,5 +9,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 02 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **73** | REJECTED | spacing + narrower Fig. 1 |
 | 03 | 7 | 7 | 8 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **74** | KEPT | paper Studio cards |
 | 04 | 7 | 7 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **75** | KEPT | About balanced |
+| 05 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | KEPT | room titles at display scale |
 
-**CURRENT BEST: iter-04** (tag `best`)
+**CURRENT BEST: iter-05** (tag `best`)

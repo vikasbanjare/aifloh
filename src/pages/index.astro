@@ -301,7 +301,8 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 
   /* ---------- rooms ---------- */
   .room { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
-  .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; margin: 0 0 var(--space-8); }
+  .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: clamp(2.75rem, 1rem + 6.4vw, 7.5rem); font-weight: 800; letter-spacing: -0.055em; line-height: 0.9; margin: 0 0 var(--space-12); }
+  .room-h .n { align-self: flex-start; margin-top: 0.6em; }
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
 
   .more { margin: var(--space-8) 0 0; }
