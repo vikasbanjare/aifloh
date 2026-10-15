@@ -86,3 +86,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: no category moves a full point. Rejected; mobile length needs a structural fix, not trimming rows.
 - Scores: H8 T8 C8 S7 D7 M7 I7 K8 A9 P9 = 78.
 - Decision: REJECTED.
+
+## iter-09 · Phones: the gallery becomes a swipeable row
+- Hypothesis: six full-width prints stacked on phones cost ~2,600 px; a scroll-snap row (user-controlled, never auto-moving, not a marquee) keeps the prints big and cuts the page.
+- Change: Wall.astro below 40rem: grid-auto-flow column, 78% wide prints, mandatory snap, 'Swipe the wall →' hint; tablets/desktop unchanged.
+- Verify: all checks pass; LH 96/100/100/100 (perf within run-to-run noise; LCP 2.3→2.5 s); axe 0; no horizontal page overflow (the row scrolls inside itself).
+- Critique: M 7→8: home is 22% shorter on phones and the peeking second print makes the gesture obvious.
+- Scores: H8 T8 C8 S7 D7 M8 I7 K8 A9 P9 = 79.
+- Decision: KEPT.

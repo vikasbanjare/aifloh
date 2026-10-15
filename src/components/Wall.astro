@@ -8,6 +8,7 @@ const { items, start = 4, limit } = Astro.props;
 const covered = items.filter((w) => w.cover).slice(0, limit);
 const plain = items.filter((w) => !w.cover);
 ---
+<p class="swipe label" aria-hidden="true">Swipe the wall →</p>
 <ul class="wall" role="list">
   {covered.map((w, i) => (
     <li class={`print t${i % 6}`}>
@@ -27,6 +28,14 @@ const plain = items.filter((w) => !w.cover);
 )}
 <style>
   .wall { list-style: none; margin: 0; padding: var(--space-4) 0 0; display: grid; gap: var(--space-12) var(--space-8); grid-template-columns: minmax(0, 1fr); }
+  .swipe { display: none; margin: 0 0 var(--space-2); color: inherit; opacity: 0.75; }
+  /* phones: one swipeable row of prints (native scroll-snap, never auto-moving) */
+  @media (max-width: 39.99rem) {
+    .swipe { display: block; }
+    .wall { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; gap: var(--space-6); overflow-x: auto; scroll-snap-type: x mandatory; padding: var(--space-4) var(--gutter) var(--space-8); margin-inline: calc(-1 * var(--gutter)); scrollbar-width: none; }
+    .wall::-webkit-scrollbar { display: none; }
+    .print { scroll-snap-align: center; }
+  }
   @media (min-width: 40rem) { .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 64rem) { .wall { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .print a { display: block; text-decoration: none; background: var(--color-surface); border: 1px solid var(--color-text); padding: 10px 10px 0; box-shadow: 6px 6px 0 var(--color-text); transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1.1), box-shadow 320ms var(--ease-standard); }
