@@ -226,3 +226,8 @@ Step-back review (iter-30). Since the film went in, the risk is time: seven scre
 Lens: distinctiveness. Added a BokehPass (desktop only, after GTAO) with focus locked each frame to the camera-to-subject distance, aperture 0.0016, max blur 0.006. The clock close-up gets a macro-lens falloff on the lamp and drawer; over-the-shoulder at the desk softens his head in the foreground; the wide end shot stays crisp. This is the visual cue that makes a 3D room read as a hand-made miniature. Phones keep the plain render (no AO, no DOF) for speed.
 - Scores: H8 T9 C8 S9 D10 M8 I9 K9 A10 P9 = 89.
 - Decision: KEPT.
+
+## iter-32 · Closing shot frames the room right so the title sits on dark
+Lens: colour and contrast. The closing wide shot centred the room, so the white headline sat over the cream floor slab. On wide screens the camera now pans along its right axis as it pulls back (up to 4.4 units by aspect), placing the room centre-right with the headline on the dark background; the final camera is further out so the whole box fits. Depth of field eases off in the wide shot so the room stays crisp, and focus uses the subject distance, not the shifted look point. Phones keep the centred framing (title already sits on dark below the room). Posters regenerated to match.
+- Scores: H8 T9 C9 S9 D10 M8 I9 K9 A10 P9 = 90.
+- Decision: KEPT.

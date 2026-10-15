@@ -511,9 +511,10 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     [0.62, new Vector3(3.6, 3.2, 3.6), new Vector3(0.2, 0.8, -1.2)],
     [0.76, new Vector3(3.0, 1.9, 0.6), new Vector3(1.6, 1.1, -2.2)],
     [0.9, new Vector3(2.55, 1.55, -0.55), new Vector3(1.65, 1.35, -2.75)],
-    [1.0, new Vector3(8.6, 7.4, 8.6), new Vector3(0, 0.7, -0.4)],
+    [1.0, new Vector3(10.4, 8.9, 10.4), new Vector3(0, 0.6, -0.4)],
   ];
-  const camPos = new Vector3(), camLook = new Vector3(), dir = new Vector3();
+  const camPos = new Vector3(), camLook = new Vector3(), dir = new Vector3(), side = new Vector3();
+  const UP = new Vector3(0, 1, 0);
   let aspect = 16 / 9;
   const placeCamera = (p: number) => {
     let i = 0;
@@ -524,6 +525,12 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     camLook.lerpVectors(l0, l1, t);
     const f = clamp(1.25 / aspect, 1, 2.1);
     dir.subVectors(camPos, camLook).multiplyScalar(f);
+    // the closing wide shot on wide screens: frame the room to the right so the title sits on the dark
+    if (aspect > 1.2) {
+      const k = ease(clamp((p - 0.9) / 0.1)) * Math.min(4.4, (aspect - 1.0) * 5.0);
+      side.crossVectors(dir, UP).normalize().multiplyScalar(k);
+      camLook.add(side);
+    }
     camera.position.copy(camLook).add(dir);
     camera.lookAt(camLook);
   };
@@ -620,7 +627,10 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     screenLight.intensity = on * 0.9;
 
     placeCamera(p);
-    if (bokeh) (bokeh.uniforms as any).focus.value = camera.position.distanceTo(camLook);
+    if (bokeh) {
+      (bokeh.uniforms as any).focus.value = dir.length();
+      (bokeh.uniforms as any).aperture.value = 0.0016 * (1 - seg(p, 0.88, 1) * 0.85);
+    }
     composer.render();
     if (first) { first = false; onFirstFrame(); }
     if (visible) raf = requestAnimationFrame(frame);
