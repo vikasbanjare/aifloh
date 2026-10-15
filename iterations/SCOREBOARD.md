@@ -12,5 +12,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 05 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | KEPT | room titles at display scale |
 | 06 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | REJECTED | thread removal, no gain |
 | 07 | 8 | 8 | 8 | 7 | 7 | 7 | 7 | 8 | 9 | 9 | **78** | KEPT | everything above the fold at 1440 |
+| 08 | 8 | 8 | 8 | 7 | 7 | 7 | 7 | 8 | 9 | 9 | **78** | REJECTED | saves only 163 px |
 
 **CURRENT BEST: iter-07** (tag `best`)

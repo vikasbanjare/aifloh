@@ -79,3 +79,10 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: H 7→8 and K 7→8: at 1440x900 the whole hero, both actions and the top of the lime Free band are visible. Small loss: the margin note no longer shows on desktop.
 - Scores: H8 T8 C8 S7 D7 M7 I7 K8 A9 P9 = 78.
 - Decision: KEPT.
+
+## iter-08 · Phones: 3 free picks instead of 5
+- Hypothesis: fewer free rows on phones reach the gallery a screen sooner.
+- Result: page 7,331 → 7,168 px (-2%); a real resource hidden for little gain.
+- Critique: no category moves a full point. Rejected; mobile length needs a structural fix, not trimming rows.
+- Scores: H8 T8 C8 S7 D7 M7 I7 K8 A9 P9 = 78.
+- Decision: REJECTED.
