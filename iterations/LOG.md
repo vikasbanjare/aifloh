@@ -42,3 +42,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: C 7→8, the cobalt Tools band now reads as the colour event; cards still clearly two-sided. D unchanged.
 - Scores: H7 T7 C8 S6 D7 M7 I7 K7 A9 P9 = 74.
 - Decision: KEPT.
+
+## iter-04 · About rebalance: bigger photo print, 3-column stats
+- Hypothesis: the About room was lopsided (small print, thin 5-up stats strip, empty air); a 16rem print and a 3-column stats grid with bigger numbers balance it.
+- Change: .maker 16rem column, centred; .me 16rem; stats 3 columns from 64rem, larger numerals.
+- Verify: all checks pass; LH 97/100/100/100; axe 0.
+- Critique: S 6→7. Leftover: the second stats row leaves one empty cell; photo source is only 230 px so it is slightly soft at 256 px (needs a bigger photo from Vikas).
+- Scores: H7 T7 C8 S7 D7 M7 I7 K7 A9 P9 = 75.
+- Decision: KEPT.

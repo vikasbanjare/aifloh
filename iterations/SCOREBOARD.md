@@ -8,5 +8,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 01 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **73** | KEPT | hero CTA + 'see the work' link |
 | 02 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **73** | REJECTED | spacing + narrower Fig. 1 |
 | 03 | 7 | 7 | 8 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **74** | KEPT | paper Studio cards |
+| 04 | 7 | 7 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **75** | KEPT | About balanced |
 
-**CURRENT BEST: iter-03** (tag `best`)
+**CURRENT BEST: iter-04** (tag `best`)
