@@ -58,3 +58,16 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: T 7→8 at desktop (scale contrast between titles, rows and labels); on phones the gain is small but no regressions.
 - Scores: H7 T8 C8 S7 D7 M7 I7 K7 A9 P9 = 76.
 - Decision: KEPT.
+
+## Step-back review after iter-05
+- Best 76 vs iter-00 72. Gains: hero CTA (K), paper Studio cards (C), About balance (S), poster titles (T).
+- Drift check: palette, logo and core copy unchanged; no new dependencies. Changes were subtractive or structural, not decorative.
+- Over-decoration candidate: the margin ledger thread (lime wobble in the left gutter) duplicates the hand→machine idea already carried by Fig. 1 and the colour bands. Next iteration simplifies by testing its removal.
+
+## iter-06 · Simplify: remove the margin ledger thread
+- Hypothesis (step-back simplification): the left-gutter thread is ornament duplicating Fig. 1.
+- Tried: removed the .room::before/::after thread and nodes.
+- Result: paper rooms marginally calmer, but the thread was faint and the page reads the same; it is also the only hand mark on the paper rooms below the hero.
+- Critique: equal total, no category improved by a full point. Rule says only strictly better is kept.
+- Scores: H7 T8 C8 S7 D7 M7 I7 K7 A9 P9 = 76.
+- Decision: REJECTED.

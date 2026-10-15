@@ -10,5 +10,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 03 | 7 | 7 | 8 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **74** | KEPT | paper Studio cards |
 | 04 | 7 | 7 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **75** | KEPT | About balanced |
 | 05 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | KEPT | room titles at display scale |
+| 06 | 7 | 8 | 8 | 7 | 7 | 7 | 7 | 7 | 9 | 9 | **76** | REJECTED | thread removal, no gain |
 
 **CURRENT BEST: iter-05** (tag `best`)
