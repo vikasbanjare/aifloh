@@ -216,3 +216,8 @@ The figure read as segmented tubes: visible seams at elbows and knees, ball hand
 Additive gradient planes slanting from the window plus a sun patch on the floor. On the bright clay walls they read as hard-edged grey sheets crossing the desk shot rather than light, which cheapens the frame. Reverted. A better route if revisited: a cookie (window-shaped light pattern) through the shadow map, or a soft sun patch only.
 - Scores: H8 T9 C8 S8 D9 M8 I9 K8 A10 P9 = 86.
 - Decision: REJECTED.
+
+## iter-30 · Step-back: Skip intro, and the film runs full-bleed under the nav
+Step-back review (iter-30). Since the film went in, the risk is time: seven screens of scrolling stand between a recruiter and the work. Added a 'Skip intro' pill (streaming-player idiom, not 'scroll to explore') at bottom right while the film is live; it jumps to the end card (#start) and hides on the title card. Also found the film started 66 px down the page (the sticky glass header takes flow), so its bottom edge, the status line and the skip control sat below the fold on phones; the film now pulls up under the header (-66 px). Drift check: the film added one motif (the clock), no extra decoration elsewhere. Next: simplify the rooms below the film so the page after the film is shorter.
+- Scores: H8 T9 C8 S9 D9 M8 I9 K9 A10 P9 = 88.
+- Decision: KEPT.

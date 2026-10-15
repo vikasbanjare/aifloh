@@ -52,11 +52,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
         <span class="s1">I keep the <span class="hand">craft</span><span class="stop-a">.</span></span>
         <span class="s2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
       </h1>
+      <a class="skip-film" href="#start">Skip intro <span aria-hidden="true">↓</span></a>
       <p class="status label"><span><span class="live" aria-hidden="true"></span>{P.profile.availability}</span> <span data-clock>India</span></p>
     </div>
   </section>
 
-  <section class="endcard wrap" aria-label="Who and how to start">
+  <section class="endcard wrap" id="start" aria-label="Who and how to start">
     <div class="who-wrap">
       <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8+&nbsp;years, 1000+&nbsp;projects.</p>
       <p class="who-cta"><a class="btn btn-primary btn-lime" href={href('/contact/')} data-track="CTA Click" data-track-id="hero-talk">Start a project <span class="arrow" aria-hidden="true">→</span></a> <a class="see" href="#work">or see the work ↓</a></p>
@@ -229,7 +230,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
 <style>
   /* ---------- the film ---------- */
-  .film { --night: #1c1a1e; position: relative; background: var(--night); color: var(--color-bg); }
+  /* the film runs under the floating glass nav (the sticky header takes 66 px of flow: 10 px gap + 56 px bar) */
+  .film { --night: #1c1a1e; position: relative; margin-top: -66px; background: var(--night); color: var(--color-bg); }
   .film.is-live { height: 720svh; }
   .film-stage { position: relative; height: 100svh; min-height: 30rem; overflow: hidden; background: var(--night); }
   .film.is-live .film-stage { position: sticky; top: 0; }
@@ -275,6 +277,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .status { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: var(--space-6); margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: #b9b6ad; }
   .film.is-live .status { opacity: 0; transition: opacity 600ms var(--ease-standard); }
   .film.is-live [data-shot='6'] .status { opacity: 1; }
+  /* like a streaming player: the film never stands between someone and the work */
+  .skip-film { position: absolute; z-index: 4; right: var(--gutter); bottom: var(--space-6); display: none; align-items: center; gap: 0.4em; min-height: 44px; padding: 0 1.1em; border-radius: 999px; color: var(--color-bg); text-decoration: none; font-size: var(--text-sm); font-weight: 650; background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / 0.18); }
+  .film.is-live .skip-film { display: inline-flex; }
+  .film.is-live [data-shot='6'] .skip-film { display: none; }
+  @media (hover: hover) { .skip-film:hover { background: var(--color-bg); color: var(--color-text); } }
+  .skip-film:focus-visible { outline: 3px solid var(--color-a-fill); outline-offset: 3px; }
   .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); margin-right: 0.6em; vertical-align: 0.05em; }
 
   /* the end card: who, and how to start */
