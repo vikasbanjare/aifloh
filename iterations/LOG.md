@@ -94,3 +94,16 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: M 7→8: home is 22% shorter on phones and the peeking second print makes the gesture obvious.
 - Scores: H8 T8 C8 S7 D7 M8 I7 K8 A9 P9 = 79.
 - Decision: KEPT.
+
+## iter-10 · Phones: Studio cards size to content
+- Hypothesis: 15rem min-height left ~120 px of empty space above the Studio titles on phones.
+- Change: .side min-height 9rem on phones, 15rem from 48rem.
+- Verify: all checks pass; LH 96/100/100/100; axe 0. Phone home 5,685 → 5,493 px.
+- Critique: S 7→8: with About (iter-04) and these cards, the remaining rooms now sit on a consistent rhythm at all three widths.
+- Scores: H8 T8 C8 S8 D7 M8 I7 K8 A9 P9 = 80.
+- Decision: KEPT.
+
+## Step-back review after iter-10
+- Best 80 vs iter-00 72. Kept: hero CTA (01), paper Studio cards (03), About balance (04), poster titles (05), side-column hero on wide screens (07), swipe gallery on phones (09), compact phone cards (10). Rejected: tighter hero rhythm (02), removing the thread (06), fewer free rows (08).
+- Drift check: palette, logo and copy unchanged; one new line of UI copy ("Swipe the wall →", "Start a project", "or see the work") — all functional labels. No new dependencies. The page got calmer, not busier.
+- Lowest scores now: D 7 (distinctiveness), I 7 (motion), A 9, P 9. Next iterations should target distinctiveness and interaction quality, without adding ornament.

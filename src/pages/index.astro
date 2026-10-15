@@ -400,8 +400,8 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 
   /* ---------- commissions ---------- */
   .pair { display: grid; gap: var(--space-4); }
-  @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } }
-  .side { display: flex; flex-direction: column; gap: var(--space-2); min-height: 15rem; padding: var(--space-6); border: 1px solid var(--color-text); text-decoration: none; transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
+  @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } .side { min-height: 15rem; } }
+  .side { display: flex; flex-direction: column; gap: var(--space-2); min-height: 9rem; padding: var(--space-6); border: 1px solid var(--color-text); text-decoration: none; transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
   /* paper cards: the full colour belongs to the bands; here it is a thick top edge + key */
   .side { background: var(--color-surface); box-shadow: 6px 6px 0 var(--color-text); }
   .side-a { border-top: 10px solid var(--color-a-fill); }
