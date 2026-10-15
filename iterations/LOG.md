@@ -26,3 +26,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: K 6→7 (clear action). At 1440 the CTA sits just below the first fold because Fig. 1 is tall: note for a later hierarchy iteration. No other category moved.
 - Scores: H7 T7 C7 S6 D7 M7 I7 K7 A9 P9 = 73.
 - Decision: KEPT.
+
+## iter-02 · Tighter hero rhythm so the CTA fits the first desktop screen
+- Hypothesis: smaller gaps and a narrower Fig. 1 on desktop bring the CTA and code box into the first 900 px at 1440.
+- Tried: margins 12→8 around status, figure and hero foot; first max-height on the SVG (broke the 3D canvas sizing contract), then max-width 66rem on the figure.
+- Result: phones and tablets slightly tighter; at 1440 the CTA still lands just below 900 px, and the narrower figure no longer aligns with the right-aligned code box (new alignment flaw).
+- Critique: marginal gain, new flaw. Not better than best.
+- Scores: H7 T7 C7 S6 D7 M7 I7 K7 A9 P9 = 73.
+- Decision: REJECTED.

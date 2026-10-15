@@ -10,4 +10,4 @@
 8. [ ] D — Margin ledger thread is faint noise on desktop; test removing it (simplify).
 9. [ ] M — Phone page ≈7,000 px; trim (e.g. Free shows 4 rows on phones).
 10. [ ] T — Section titles ("Free.", "Work.") are small next to full-bleed bands; scale up.
-11. [ ] H — At 1440 the hero CTA and code box fall below the fold (Fig. 1 is tall); tighten hero vertical rhythm.
+11. [-] H — Hero CTA below the 1440 fold: tighter spacing + narrower Fig. 1 rejected in iter-02 (misalignment, still below fold). Next try: move intro + CTA beside the headline instead of under the figure.
