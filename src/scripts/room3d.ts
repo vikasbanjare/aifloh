@@ -156,6 +156,7 @@ const P = (o: Partial<Pose>): Pose => ({
   hipL: 0, knL: 0, hipR: 0, knR: 0, ...o,
 });
 const HP = Math.PI / 2;
+const REACH = { sh: [-0.9, 1.5] as [number, number], el: -0.2 };
 // key poses (world units: the room floor is y = 0)
 const POSE = {
   sleep: P({ pos: [-2.08, 0.64, -1.68], rx: -HP, head: 0.12, shL: [0, 0.06], shR: [0, -0.06], elL: 0, elR: 0, hipL: 0, hipR: 0, knL: 0.05, knR: 0.05 }),
@@ -564,7 +565,7 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
     const minutes = p < 0.26 ? 57 + (p / 0.26) * 3 : 60 + ((p - 0.26) / 0.74) * 14;
     const hh = minutes >= 60 ? 1 : 12;
     const mm = Math.floor(minutes >= 60 ? minutes - 60 : minutes);
-    const ringing = p >= 0.26 && p < 0.34;
+    const ringing = p >= 0.26 && p < 0.284; // until his hand taps it
     face.draw(`${hh}:${String(mm).padStart(2, '0')}`, ringing && Math.floor(time * 3) % 2 === 0);
     clockBody.position.x = -0.92 + (ringing ? Math.sin(time * 60) * 0.006 : 0);
 
@@ -580,7 +581,11 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
 
     // ---- him
     let q: Pose;
-    if (p < 0.3) q = POSE.sleep;
+    if (p < 0.3) {
+      // 1:00 PM: still half asleep, his left hand finds the alarm and taps it off
+      const reach = seg(p, 0.262, 0.28) * (1 - seg(p, 0.288, 0.3));
+      q = { ...POSE.sleep, shL: [lerp(0, REACH.sh[0], reach), lerp(0.06, REACH.sh[1], reach)], elL: lerp(0, REACH.el, reach), head: lerp(0.12, -0.25, reach) };
+    }
     else if (p < 0.38) q = blend(POSE.sleep, POSE.sitUp, seg(p, 0.3, 0.38));
     else if (p < 0.42) q = blend(POSE.sitUp, POSE.sitUpRest, seg(p, 0.38, 0.42));
     else if (p < 0.48) q = blend(POSE.sitUpRest, POSE.edge, seg(p, 0.42, 0.48));

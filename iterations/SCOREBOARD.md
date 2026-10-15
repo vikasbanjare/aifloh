@@ -39,5 +39,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 31 | 8 | 9 | 8 | 9 | 10 | 8 | 9 | 9 | 10 | 9 | **89** | KEPT | 89 |
 | 32 | 8 | 9 | 9 | 9 | 10 | 8 | 9 | 9 | 10 | 9 | **90** | KEPT | 90 |
 | 33 | 8 | 9 | 9 | 9 | 10 | 8 | 9 | 9 | 10 | 9 | **90** | KEPT | 90 = best; polish fix kept (no category dropped, a visible defect removed) |
+| 34 | 8 | 9 | 9 | 9 | 10 | 8 | 10 | 9 | 10 | 9 | **91** | KEPT | 91 |
 
-**CURRENT BEST: iter-33** (tag `best`; new baseline after the film hero)
+**CURRENT BEST: iter-34** (tag `best`; new baseline after the film hero)

@@ -236,3 +236,8 @@ Lens: colour and contrast. The closing wide shot centred the room, so the white 
 Lens: would a top studio ship this. Where the film ended and the end card began there was a hard horizontal seam: ACES tone mapping renders the scene background (#1c1a1e) as #0e0c0f, and the lens vignette darkened the bottom further, while the end card used the raw #1c1a1e. The film, stage and end card now share the rendered colour (#0e0c0f, sampled from the poster), and the vignette only darkens the sides and the top, so the film flows straight into 'Vikas Banjare, or Bubu…'. A seam is a defect, not a taste call, so this is kept at a tied total.
 - Scores: H8 T9 C9 S9 D10 M8 I9 K9 A10 P9 = 90.
 - Decision: KEPT.
+
+## iter-34 · Story beat: at 1:00 PM his hand reaches out and taps the alarm off
+Lens: motion and story. Between the alarm and sitting up nothing happened to him; the clock rang by itself. Now, half asleep, his left arm swings out toward the bedside table (shoulder abducts and lifts, elbow loosens, head turns toward it) and the clock's blinking stops the moment the reach lands (ringing ends at p 0.284). One small human beat that makes him a character, not a mannequin.
+- Scores: H8 T9 C9 S9 D10 M8 I10 K9 A10 P9 = 91.
+- Decision: KEPT.
