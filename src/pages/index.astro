@@ -73,7 +73,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     </div>
   </section>
 
-  <section class="room wrap" aria-labelledby="free-h">
+  <section class="room room-lime wrap" aria-labelledby="free-h">
     <h2 id="free-h" class="room-h"><span class="label n">( 01 )</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
@@ -115,7 +115,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     </ol>
   </section>
 
-  <section class="room room-m wrap" aria-labelledby="built-h">
+  <section class="room room-m room-blue wrap" aria-labelledby="built-h">
     <h2 id="built-h" class="room-h"><span class="label n">( 04 )</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
@@ -357,6 +357,31 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .room-dark .btn { color: var(--color-bg); border-color: var(--color-bg); }
   @media (hover: hover) { .room-dark .btn:hover { background: var(--color-bg); color: var(--color-text); } }
   .room-dark::before, .room-dark::after { display: none; }
+
+  /* colour rooms: Free on lime (made by hand), Tools on cobalt (the machine) */
+  .room-lime, .room-blue { box-shadow: 0 0 0 100vmax var(--bandc); clip-path: inset(0 -100vmax); background: var(--bandc); }
+  .room-lime { --bandc: var(--color-a-fill); color: var(--color-a-ink); }
+  .room-blue { --bandc: var(--color-b); color: var(--color-b-ink); }
+  .room-lime::before, .room-lime::after, .room-blue::before, .room-blue::after { display: none; }
+  .room-lime .room-h .n, .room-lime .stop-a { color: var(--color-a-ink); }
+  .room-blue .room-h .n, .room-blue .stop-b { color: var(--color-b-ink); }
+  .room-lime .index, .room-lime .index li { border-color: rgba(20, 20, 20, 0.35); }
+  .room-blue .index, .room-blue .index li { border-color: rgba(255, 255, 255, 0.4); }
+  .room-lime .ix-n, .room-lime .ix-m, .room-lime .ix-w { color: rgba(20, 20, 20, 0.75); }
+  .room-blue .ix-n, .room-blue .ix-m, .room-blue .ix-w { color: rgba(255, 255, 255, 0.85); }
+  .room-lime .ix::before { background: var(--color-text); }
+  .room-blue .ix::before { background: var(--color-bg); }
+  @media (hover: hover) {
+    .room-lime .ix:hover, .room-lime .ix:hover .ix-n, .room-lime .ix:hover .ix-m, .room-lime .ix:hover .ix-w { color: var(--color-a-fill); }
+    .room-blue .ix:hover, .room-blue .ix:hover .ix-n, .room-blue .ix:hover .ix-m, .room-blue .ix:hover .ix-w { color: var(--color-b); }
+  }
+  .room-lime .ix:focus-visible, .room-lime .ix:focus-visible * { color: var(--color-a-fill); }
+  .room-blue .ix:focus-visible, .room-blue .ix:focus-visible * { color: var(--color-b); }
+  .room-blue .btn { color: var(--color-b-ink); border-color: var(--color-b-ink); }
+  @media (hover: hover) { .room-blue .btn:hover { background: var(--color-b-ink); color: var(--color-b); } }
+  .room-blue .plate { border-color: var(--color-b-ink); box-shadow: 8px 8px 0 var(--color-text); }
+  .room-blue :global(.stand-in), .room-lime :global(.stand-in) { color: inherit; border-color: currentColor; }
+  .room-lime :focus-visible, .room-blue :focus-visible { outline-color: var(--color-text); }
 
   /* ---------- commissions ---------- */
   .pair { display: grid; gap: var(--space-4); }
