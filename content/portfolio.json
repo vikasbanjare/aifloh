@@ -35,16 +35,6 @@
   ],
   "projects": [
     {
-      "title": "Emailer Design",
-      "tags": [
-        "Email",
-        "Graphic design"
-      ],
-      "year": "2026",
-      "summary": "Newsletters with strong visual hierarchy, built to be opened, read and clicked.",
-      "link": "https://www.behance.net/gallery/250525969/Emailer-Design"
-    },
-    {
       "title": "AI YT Thumbnails",
       "tags": [
         "YouTube",
@@ -54,7 +44,13 @@
       "summary": "Click-worthy YouTube thumbnails made with AI tools.",
       "link": "https://www.behance.net/gallery/232938571/AI-YT-Thumbnails-design",
       "cover": "/media/portfolio/work-thumbnails.webp",
-      "coverAlt": "Cover: \"YouTube Thumbnails\" in 3D gold letters with game coins"
+      "coverAlt": "Cover: \"YouTube Thumbnails\" in 3D gold letters with game coins",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     },
     {
       "title": "AI Videos",
@@ -65,7 +61,13 @@
       "summary": "Video generation and editing experiments with Runway, HeyGen and others.",
       "link": "https://www.behance.net/gallery/232940741/AI-Videos",
       "cover": "/media/portfolio/work-ai-videos.webp",
-      "coverAlt": "Cover: \"AI Videos\" in red serif letters on a stage with gold curtains"
+      "coverAlt": "Cover: \"AI Videos\" in red serif letters on a stage with gold curtains",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     },
     {
       "title": "Social Media Designs",
@@ -77,7 +79,13 @@
       "summary": "Daily and campaign creatives across Instagram, LinkedIn and more.",
       "link": "https://www.behance.net/gallery/218001529/Social-Media-Designs",
       "cover": "/media/portfolio/work-social.webp",
-      "coverAlt": "Cover: \"social media designs\" in bold serif type with sticker notes"
+      "coverAlt": "Cover: \"social media designs\" in bold serif type with sticker notes",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     },
     {
       "title": "Podcast Videos",
@@ -89,7 +97,13 @@
       "summary": "Podcast production from concept to short-form clips.",
       "link": "https://www.behance.net/gallery/218001379/Podcast-Videos",
       "cover": "/media/portfolio/work-podcast.webp",
-      "coverAlt": "Cover: \"podcast videos\" in white blocky type on a blue brick wall"
+      "coverAlt": "Cover: \"podcast videos\" in white blocky type on a blue brick wall",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     },
     {
       "title": "Trailer Video",
@@ -101,7 +115,13 @@
       "summary": "A high-energy trailer edit: pacing, sound design and story in seconds.",
       "link": "https://www.behance.net/gallery/217989345/Trailer-Video",
       "cover": "/media/portfolio/work-trailer.webp",
-      "coverAlt": "Cover: \"trailer videos\", a woman in red light with film reels"
+      "coverAlt": "Cover: \"trailer videos\", a woman in red light with film reels",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     },
     {
       "title": "Motion Graphic",
@@ -112,7 +132,13 @@
       "summary": "Motion graphics that bring static brands to life.",
       "link": "https://www.behance.net/gallery/218106207/Motion-Graphic",
       "cover": "/media/portfolio/work-motion.webp",
-      "coverAlt": "Cover: \"motion graphic videos\" seen through a window onto a green field"
+      "coverAlt": "Cover: \"motion graphic videos\" seen through a window onto a green field",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
     }
   ],
   "services": [
