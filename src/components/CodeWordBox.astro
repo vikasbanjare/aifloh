@@ -1,5 +1,6 @@
 ---
 // "Got a word from a post? Type it." Jumps to the resource; suggests close matches (edit distance <= 2).
+import { safeJson } from '../lib/json';
 import { loadContent } from '../lib/content';
 import { href } from '../lib/href';
 interface Props { id?: string; autofocus?: boolean }
@@ -14,7 +15,7 @@ const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord,
   </div>
   <p class="cw-msg" role="status" aria-live="polite"></p>
   <noscript><p class="muted cw-help">You can also type the word straight after the address, like <code>/hooks</code>.</p></noscript>
-  <script type="application/json" class="cw-words" set:html={JSON.stringify(words)} />
+  <script type="application/json" class="cw-words" set:html={safeJson(words)} />
 </form>
 <script>
   import { editDistance } from '../lib/rules';

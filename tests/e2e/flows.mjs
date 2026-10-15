@@ -9,6 +9,7 @@ const ok = (n, c) => { if (!c) failed++; console.log(`${c ? 'PASS' : 'FAIL'} ${n
 let ctx = await b.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
 let p = await ctx.newPage();
 const errs = []; p.on('pageerror', (e) => errs.push(String(e)));
+const csp = []; p.on('console', (m) => { if (/Content Security Policy/.test(m.text())) csp.push(m.text()); });
 
 // 1. code word keeps query string
 await p.goto(`${B}/hooks/?utm_source=instagram&utm_medium=post&utm_campaign=viral-hooks&fbclid=abc`);
@@ -53,6 +54,8 @@ ok(`library search works (${n} hits)`, n > 0 && n < 30);
 ok('no storage used', (await p.evaluate(() => Object.keys(localStorage).length + Object.keys(sessionStorage).length)) === 0);
 ok('no cookies', (await ctx.cookies()).length === 0);
 ok('no page errors', errs.length === 0);
+await p.goto(`${B}/`); await p.waitForTimeout(800);
+ok('no CSP violations (home included)', csp.length === 0);
 await ctx.close();
 
 // 10. in-app modes

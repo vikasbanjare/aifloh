@@ -28,7 +28,7 @@ const { quiet = false } = Astro.props;
         await navigator.clipboard.writeText(url);
         b.textContent = 'Link copied';
       } catch {
-        b.insertAdjacentHTML('afterend', '<input class="copy-box" readonly style="width:100%;margin-top:.5rem" aria-label="Page link">');
+        b.insertAdjacentHTML('afterend', '<input class="copy-box link-box" readonly aria-label="Page link">');
         const inp = b.nextElementSibling as HTMLInputElement;
         inp.value = url;
         inp.select();
@@ -37,6 +37,7 @@ const { quiet = false } = Astro.props;
   });
 </script>
 <style>
+  :global(.link-box) { width: 100%; margin-top: 0.5rem; }
   .inapp { display: none; gap: var(--space-3); align-items: center; flex-wrap: wrap; padding: var(--space-4); margin-bottom: var(--space-6); border: 1px solid var(--color-a); border-radius: var(--radius); }
   .inapp p { margin: 0; }
   :global(html.in-app) .inapp { display: flex; }

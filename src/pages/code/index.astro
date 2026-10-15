@@ -19,7 +19,7 @@ function bar(langs: Record<string, number>) {
   let x = 0;
   return Object.entries(langs).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, n], i) => {
     const w = (n / total) * 100;
-    const seg = { name, x, w, pct: Math.round(w), color: PALETTE[i] };
+    const seg = { name, x, w, pct: Math.round(w), color: PALETTE[i], i };
     x += w;
     return seg;
   });
@@ -48,7 +48,7 @@ function bar(langs: Record<string, number>) {
                           <svg viewBox="0 0 100 4" preserveAspectRatio="none" role="img" aria-label={segs.map((s) => `${s.name} ${s.pct}%`).join(', ')}>
                             {segs.map((s) => <rect x={s.x} y="0" width={s.w} height="4" fill={s.color} />)}
                           </svg>
-                          <figcaption>{segs.map((s) => <span><i style={`background:${s.color}`} />{s.name} {s.pct}%</span>)}</figcaption>
+                          <figcaption>{segs.map((s) => <span><i class={`sw sw${s.i}`} />{s.name} {s.pct}%</span>)}</figcaption>
                         </figure>
                       )}
                       <p class="small muted">Last push {fmt(r.pushedAt)}{r.license ? ` · ${r.license}` : ''}</p>
@@ -72,6 +72,7 @@ function bar(langs: Record<string, number>) {
   </section>
 </Base>
 <style>
+  .sw0 { background: #b8f000; } .sw1 { background: #9aa8ff; } .sw2 { background: #f2f3f5; } .sw3 { background: #ffb547; } .sw4 { background: #6b6e78; }
   .group { margin-top: var(--space-12); }
   .grid-cards { list-style: none; padding: 0; margin: 0; }
   h2 { font-size: var(--text-lg); }
