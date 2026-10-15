@@ -1,6 +1,6 @@
 ---
-// Home, v4 (Oct 2026): the site as a small exhibition catalogue.
-//   Fig. 1 is an original drawing of the brand idea: one line, drawn by hand (lime), finished by machine (cobalt).
+// Home, v5 (Oct 2026): opens as a short film, then the rooms.
+//   The film: Lino (the hand, lime clay) draws a line; Bit (the machine, a cobalt box) finishes it. Scroll is the playhead.
 //   Sections read like rooms; rows read like wall labels (title, medium, year). Free things are "Take one",
 //   like the free prints at a gallery door. Few words, big type, lots of air.
 // Rules kept: one type rule (DECISIONS.md), lime as fill/stroke only, works without JS, no style attributes (CSP).
@@ -24,55 +24,45 @@ const work = P.projects.slice(0, 6);
 const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
 const pad = (n: number) => String(n).padStart(2, '0');
 
-// Fig. 1: the machine half of the line, snapped to a 40-unit grid.
-const MACHINE = [[600, 200], [680, 200], [680, 120], [800, 120], [800, 280], [920, 280], [920, 160], [1040, 160], [1040, 240], [1160, 240]];
-const machinePath = 'M' + MACHINE.map(([x, y]) => `${x} ${y}`).join(' L');
-const dots: [number, number][] = [];
-for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.push([x, y]);
 ---
 <Base title="Vikas Banjare" description="Vikas Banjare (Bubu): designer, editor and storyteller. Video, design, UI/UX and AI workflows. Founder of AI-Floh." intro>
   <Boot />
   <div class="wrap"><InAppBanner /></div>
 
-  <section class="hero wrap" aria-labelledby="hero-h">
-    <p class="status label rise">
-      <span><span class="live" aria-hidden="true"></span>{P.profile.availability}</span>
-      <span data-clock>India</span>
-    </p>
-    <h1 id="hero-h" class="display rise-2">
-      <span class="l1">I keep the <span class="hand">craft</span><span class="stop-a">.</span></span>
-      <span class="l2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
-    </h1>
+  <!-- The film: a miniature clay room. Scrolling is the playhead. Without JS or with reduced motion it is one still
+       frame (the whole room) with the headline. -->
+  <section class="film" aria-labelledby="hero-h">
+    <div class="film-stage" data-shot="0">
+      <picture class="film-poster poster-start">
+        <source media="(max-aspect-ratio: 4/5)" srcset={href('/media/film/room-start-tall.webp')} width="900" height="1600" />
+        <img src={href('/media/film/room-start.webp')} alt="" width="1600" height="900" fetchpriority="high" decoding="async" />
+      </picture>
+      <picture class="film-poster poster-end">
+        <source media="(max-aspect-ratio: 4/5)" srcset={href('/media/film/room-end-tall.webp')} width="900" height="1600" />
+        <img src={href('/media/film/room-end.webp')} alt="A miniature clay bedroom: an unmade bed with a blue blanket, a bedside clock, type posters on the wall, and a young man at his desk editing a video under a sunny window." width="1600" height="900" decoding="async" />
+      </picture>
+      <p class="hud" aria-hidden="true"><span data-hud-time>12:57</span><span class="hud-pm">PM</span><span class="hud-where label">in India</span></p>
+      <ol class="caps" aria-hidden="true">
+        <li class="c1">His day starts at 1 PM.</li>
+        <li class="c2">Alarm.</li>
+        <li class="c3">Coffee can wait.</li>
+        <li class="c4">The edit can't.</li>
+      </ol>
+      <h1 id="hero-h" class="subs">
+        <span class="s1">I keep the <span class="hand">craft</span><span class="stop-a">.</span></span>
+        <span class="s2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
+      </h1>
+      <p class="status label"><span><span class="live" aria-hidden="true"></span>{P.profile.availability}</span> <span data-clock>India</span></p>
+    </div>
+  </section>
 
-    <figure class="fig1 rise-3">
-      <svg viewBox="0 0 1200 380" role="img" aria-labelledby="fig1-cap">
-        <g class="grid">{dots.map(([x, y]) => <circle cx={x} cy={y} r="1.6" />)}</g>
-        <g class="ink"><circle cx="34" cy="246" r="11" /><circle cx="14" cy="268" r="3" /><circle cx="52" cy="276" r="2" /><circle cx="22" cy="222" r="2.2" /></g>
-        <path class="by-hand" pathLength="1" d="M34 246 C 58 196, 84 292, 122 252 S 152 168, 198 212 C 230 244, 218 292, 188 278 C 160 264, 198 198, 250 214 S 316 306, 362 252 S 418 150, 472 206 S 552 262, 600 200" />
-        <path class="by-machine" pathLength="1" d={machinePath} />
-        <g class="nodes">{MACHINE.slice(1).map(([x, y], i) => <rect class={`nd nd${i}`} x={x - 5} y={y - 5} width="10" height="10" />)}</g>
-      </svg>
-      <div class="fig-tools" hidden>
-        <button type="button" class="gbtn" data-draw aria-pressed="false"><span aria-hidden="true">✎</span> <span data-draw-label>Draw your own</span></button>
-        <button type="button" class="gbtn gbtn-quiet" data-auto hidden>Draw for me</button>
-        <p class="fig-status label" role="status" aria-live="polite"></p>
-      </div>
-      <figcaption id="fig1-cap" class="label">
-        <span>Fig. 1</span>
-        <span class="key"><i class="k k-a" aria-hidden="true"></i>Hand</span><span aria-hidden="true">→</span><span class="key"><i class="k k-b" aria-hidden="true"></i>Machine</span>
-        <span class="visually-hidden">One line, drawn by hand and finished by machine.</span>
-      </figcaption>
-    </figure>
-
-    <div class="hero-foot">
-      <div class="who-wrap">
-        <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8+&nbsp;years, 1000+&nbsp;projects.</p>
-        <p class="who-cta"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="hero-talk">Start a project <span class="arrow" aria-hidden="true">→</span></a> <a class="see" href="#work">or see the work ↓</a></p>
-      </div>
-      <div class="cw-plate">
-        <p class="note" aria-hidden="true">type the word here<svg viewBox="0 0 60 50" class="note-arrow"><path d="M4 4c10 2 26 10 34 22 4 6 6 12 7 18" /><path d="M36 38l9 7 6-11" /></svg></p>
-        <CodeWordBox id="cw-home" />
-      </div>
+  <section class="endcard wrap" aria-label="Who and how to start">
+    <div class="who-wrap">
+      <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8+&nbsp;years, 1000+&nbsp;projects.</p>
+      <p class="who-cta"><a class="btn btn-primary btn-lime" href={href('/contact/')} data-track="CTA Click" data-track-id="hero-talk">Start a project <span class="arrow" aria-hidden="true">→</span></a> <a class="see" href="#work">or see the work ↓</a></p>
+    </div>
+    <div class="cw-plate">
+      <CodeWordBox id="cw-home" />
     </div>
   </section>
 
@@ -95,7 +85,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 
   <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
     <h2 id="work-h" class="room-h"><span class="label n" aria-hidden="true">( 02 )</span> <span>Work<span class="stop-b">.</span></span></h2>
-    <Wall items={P.projects} start={2} limit={6} />
+    <Wall items={P.projects} start={1} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
@@ -138,7 +128,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
       </ol>
       <figure class="plate">
         <img src={href('/media/portfolio/contentintel-site.webp')} alt="The ContentIntel website: a dark landing page reading Know it'll work before you hit publish" width="900" height="1347" loading="lazy" decoding="async" />
-        <figcaption class="label">Fig. 8 · ContentIntel</figcaption>
+        <figcaption class="label">Fig. 7 · ContentIntel</figcaption>
       </figure>
     </div>
     <p class="more"><a class="btn" href={href('/tools/')}>Tools, lab and code <span class="arrow" aria-hidden="true">→</span></a></p>
@@ -149,7 +139,7 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     <div class="maker">
       <figure class="me">
         <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
-        <figcaption class="label">Fig. 9 · {P.profile.nickname}</figcaption>
+        <figcaption class="label">Fig. 8 · {P.profile.nickname}</figcaption>
       </figure>
       <div class="stats">
         <dl>
@@ -164,57 +154,62 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 <script>
   import { track } from '../scripts/track';
 
-  // Fig. 1: try the 3D version once the hero is on screen. The SVG is the poster and the fallback.
-  const fig = document.querySelector<HTMLElement>('.fig1');
-  const svg = fig?.querySelector<SVGSVGElement>('svg');
+  // The film. Scroll position is the playhead (native scroll, no hijacking): the stage is sticky inside a tall
+  // section and the story follows progress. The poster is the first frame people see; the 3D room takes over once
+  // the page is idle or someone moves, and steps back to the poster on slow devices.
+  const film = document.querySelector<HTMLElement>('.film');
+  const stage = film?.querySelector<HTMLElement>('.film-stage');
+  const hudTime = stage?.querySelector<HTMLElement>('[data-hud-time]');
   const report = (mode: string) => track('Hero Mode', { mode });
-  if (fig && svg) {
+  if (film && stage && hudTime) {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
     if (reduce) report('static-reduced-motion');
-    else if (!gl) report('static-no-webgl');
     else {
-      // Upgrade to 3D on the first sign of a person (move, scroll, touch, key) or after a quiet spell,
-      // so the heavy script never competes with the first paint.
-      let started = false;
-      const go = async () => {
-        if (started) return;
-        started = true;
-        EVENTS.forEach((ev) => removeEventListener(ev, go));
-        const { mountFig3d } = await import('../scripts/fig3d');
-        const m = mountFig3d(fig, svg, () => fig.classList.add('is-3d'), { instant: performance.now() > 2600 });
-        // Probe: after 30 frames, a median above 28 ms means this device should keep the drawing.
-        setTimeout(() => {
-          const f = [...m.frameTimes].sort((a, b) => a - b);
-          const median = f.length ? f[Math.floor(f.length / 2)] : 0;
-          if (f.length >= 30 && median > 28) { m.dispose(); fig.classList.remove('is-3d'); report('static-low-power'); }
-          else report('3d');
-        }, 1800);
+      film.classList.add('is-live');
+      let progress = 0;
+      // shots: 0 clock close-up · 1 asleep · 2 alarm · 3 up · 4 walk · 5 at work · 6 title
+      const SHOTS = [0, 0.1, 0.26, 0.34, 0.5, 0.78, 0.94];
+      let shot = -1, lastTime = '';
+      const measure = () => {
+        const r = film.getBoundingClientRect();
+        const run = film.offsetHeight - innerHeight;
+        progress = run > 0 ? Math.min(1, Math.max(0, -r.top / run)) : 0;
+        let s = 0;
+        while (s < SHOTS.length - 1 && progress >= SHOTS[s + 1]) s++;
+        if (s !== shot) { shot = s; stage.dataset.shot = String(s); }
+        const minutes = progress < 0.26 ? 57 + (progress / 0.26) * 3 : 60 + ((progress - 0.26) / 0.74) * 14;
+        const t = minutes >= 60 ? `1:${String(Math.floor(minutes - 60)).padStart(2, '0')}` : `12:${String(Math.floor(minutes))}`;
+        if (t !== lastTime) { lastTime = t; hudTime.textContent = t; }
       };
-      const EVENTS = ['pointermove', 'scroll', 'touchstart', 'keydown'] as const;
-      EVENTS.forEach((ev) => addEventListener(ev, go, { passive: true, once: true }));
-      const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1));
-      setTimeout(() => idle(go, { timeout: 2000 }), 6000);
-    }
-  }
+      let queued = false;
+      addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; measure(); }); } }, { passive: true });
+      addEventListener('resize', measure, { passive: true });
+      measure();
 
-  // "Finish my line": an invitation to draw the hand half; the machine answers. Loaded on first click.
-  const tools = document.querySelector<HTMLElement>('.fig-tools');
-  if (fig && svg && tools) {
-    tools.hidden = false;
-    const btn = tools.querySelector<HTMLButtonElement>('[data-draw]')!;
-    const label = tools.querySelector<HTMLElement>('[data-draw-label]')!;
-    const auto = tools.querySelector<HTMLButtonElement>('[data-auto]')!;
-    const status = tools.querySelector<HTMLElement>('.fig-status')!;
-    let stop: (() => void) | null = null;
-    btn.addEventListener('click', async () => {
-      if (stop) { stop(); stop = null; btn.setAttribute('aria-pressed', 'false'); label.textContent = 'Draw your own'; auto.hidden = true; return; }
-      const { startDrawing } = await import('../scripts/draw');
-      stop = startDrawing(fig, svg, { status, auto });
-      btn.setAttribute('aria-pressed', 'true');
-      label.textContent = 'Back to Fig. 1';
-      auto.hidden = false;
-    });
+      const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
+      if (!gl) report('static-no-webgl');
+      else {
+        let started = false;
+        const go = async () => {
+          if (started) return;
+          started = true;
+          EVENTS.forEach((ev) => removeEventListener(ev, go));
+          const { mountRoom } = await import('../scripts/room3d');
+          const m = mountRoom(stage, () => progress, () => stage.classList.add('is-3d'), import.meta.env.BASE_URL.replace(/\/?$/, '/'));
+          // Probe: after about 30 frames, a median above 34 ms means this device should keep the poster.
+          setTimeout(() => {
+            const f = [...m.frameTimes].sort((a, b) => a - b);
+            const median = f.length ? f[Math.floor(f.length / 2)] : 0;
+            if (f.length >= 30 && median > 34) { m.dispose(); stage.classList.remove('is-3d'); report('static-low-power'); }
+            else report('3d');
+          }, 2500);
+        };
+        const EVENTS = ['pointermove', 'scroll', 'touchstart', 'keydown'] as const;
+        EVENTS.forEach((ev) => addEventListener(ev, go, { passive: true, once: true }));
+        const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1));
+        setTimeout(() => idle(go, { timeout: 2000 }), 2500);
+      }
+    }
   }
 
   const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
@@ -226,93 +221,73 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
 </script>
 
 <style>
-  /* ---------- hero ---------- */
-  .hero { padding-block: var(--space-8) var(--space-16); }
-  /* wide screens: the figure takes the stage, the actions stand beside it, all above the fold */
-  @media (min-width: 72rem) {
-    .hero { display: grid; grid-template-columns: minmax(0, 1fr) 24rem; column-gap: var(--space-12); align-items: center; }
-    .hero > .status, .hero > h1 { grid-column: 1 / -1; }
-    .hero > .fig1 { grid-column: 1; margin-top: var(--space-8); }
-    .hero > .hero-foot { grid-column: 2; margin-top: var(--space-8); grid-template-columns: minmax(0, 1fr) !important; align-items: start; }
-    .hero > .hero-foot .cw-plate { justify-self: stretch; }
-    .hero > .hero-foot .note { display: none !important; }
-  }
-  .status { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin-bottom: var(--space-12); color: var(--color-text-muted); }
-  .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); box-shadow: 0 0 0 1px var(--color-text); margin-right: 0.6em; vertical-align: 0.05em; }
-  .display { font-size: var(--t-display); font-weight: 800; letter-spacing: -0.055em; line-height: 0.92; margin: 0; max-width: none; }
-  .display .l1, .display .l2 { display: block; }
-  .hand { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; padding-inline: 0.04em; background: linear-gradient(transparent 62%, var(--color-a-fill) 62%, var(--color-a-fill) 88%, transparent 88%); }
-  /* the hand stop is the lime itself, outlined in ink so it holds on paper (decorative glyph, aria-hidden by context) */
-  .stop-a { color: var(--color-a-fill); -webkit-text-stroke: 0.035em var(--color-text); paint-order: stroke fill; }
-  .stop-b { color: var(--color-b); }
+  /* ---------- the film ---------- */
+  .film { --night: #1c1a1e; position: relative; background: var(--night); color: var(--color-bg); }
+  .film.is-live { height: 720svh; }
+  .film-stage { position: relative; height: 100svh; min-height: 30rem; overflow: hidden; background: var(--night); }
+  .film.is-live .film-stage { position: sticky; top: 0; }
+  .film-poster, .film-poster img, .film-stage :global(.film-canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+  /* the live film opens on the clock; the still version shows the whole room */
+  .poster-start { display: none; }
+  .film.is-live .poster-start { display: block; }
+  .film.is-live .poster-end { display: none; }
+  .film-stage.is-3d .film-poster { visibility: hidden; }
+  /* vignette: the edges fall off like a lens */
+  .film-stage:global(.no-vignette)::after { display: none; }
+  .film-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(0 0 0 / 0.45)); }
 
-  .fig1 { position: relative; margin: var(--space-12) 0 0; }
-  .fig1 :global(.fig3d-canvas) { position: absolute; left: 0; top: 0; display: block; touch-action: pan-y; }
-  .fig1.is-3d:not(.is-drawing) svg { visibility: hidden; }
-  .fig1.is-drawing :global(.fig3d-canvas) { visibility: hidden; }
-  .fig1.is-drawing .by-hand, .fig1.is-drawing .by-machine, .fig1.is-drawing .nodes, .fig1.is-drawing .ink { display: none; }
-  .fig1.is-drawing svg { touch-action: none; }
-  .fig1 :global(.draw-hit) { fill: transparent; }
-  .fig1 :global(.draw-hand) { fill: none; stroke: var(--color-a-fill); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-  .fig1 :global(.draw-machine) { fill: none; stroke: var(--color-b); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 900ms linear forwards; pointer-events: none; }
-  .fig1 :global(.draw-hand-auto) { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 650ms cubic-bezier(0.45, 0, 0.2, 1) forwards; }
-  .fig1 :global(.draw-node) { fill: var(--color-bg); stroke: var(--color-b); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; animation: pop 220ms var(--ease-standard) forwards; pointer-events: none; }
-  @media (prefers-reduced-motion: reduce) { .fig1 :global(.draw-machine), .fig1 :global(.draw-hand-auto) { stroke-dashoffset: 0; } .fig1 :global(.draw-node) { opacity: 1; } }
-  .fig-tools { position: absolute; left: 0; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
-  .gbtn {
-    display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4); border-radius: 999px;
-    background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow);
-    font: inherit; font-size: var(--text-sm); font-weight: 650; color: var(--color-text); cursor: pointer; transition: transform 160ms var(--ease-standard);
+  /* the clock you scroll: big, quiet, always there */
+  .hud { position: absolute; z-index: 3; left: var(--gutter); top: clamp(5rem, 13vh, 7.5rem); margin: 0; display: flex; align-items: baseline; gap: 0.35em; padding: 0.35em 0.7em 0.4em; border-radius: 18px; font-family: var(--font-mono); color: var(--color-bg); background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .film:not(.is-live) .hud { display: none; }
+  .hud [data-hud-time] { font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); font-weight: 600; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; line-height: 1; }
+  .hud-pm { font-size: clamp(0.9rem, 0.7rem + 0.6vw, 1.3rem); font-weight: 600; }
+  .hud-where { color: #b9b6ad; margin-left: 0.6em; }
+  .film-stage[data-shot='2'] .hud [data-hud-time] { color: var(--color-a-fill); }
+
+  /* captions: one line at a time, like a film */
+  .caps { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(5.5rem, 14vh, 8rem); margin: 0; padding: 0; list-style: none; text-align: center; }
+  .caps li { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: max-content; max-width: 100%; padding: 0.3em 0.75em; border-radius: 14px; background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem); font-weight: 650; letter-spacing: -0.02em; color: var(--color-bg); opacity: 0; transition: opacity var(--dur-slow) var(--ease-standard); }
+  .film-stage[data-shot='1'] .c1, .film-stage[data-shot='2'] .c2, .film-stage[data-shot='3'] .c3, .film-stage[data-shot='4'] .c3, .film-stage[data-shot='5'] .c4 { opacity: 1; }
+  .film:not(.is-live) .caps { display: none; }
+
+  /* the headline is the title card at the end (and the whole story in the still version) */
+  .subs {
+    position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(5rem, 13vh, 7.5rem);
+    margin: 0; max-width: none; font-size: clamp(2.25rem, 1rem + 4.6vw, 6rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95;
+    color: var(--color-bg); text-shadow: 0 2px 24px rgb(0 0 0 / 0.55); transition: opacity 600ms var(--ease-standard);
   }
-  .gbtn[aria-pressed='true'] { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
-  .gbtn:active { transform: scale(0.96); }
-  .gbtn-quiet { font-weight: 500; }
-  .fig-status { margin: 0; color: var(--color-text-muted); max-width: 30ch; }
-  @media (max-width: 47.99rem) { .fig-tools { position: static; margin-bottom: var(--space-4); } }
-  .fig1 svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .grid circle { fill: var(--color-line-strong); }
-  .ink circle { fill: var(--color-a-fill); }
-  .by-hand { fill: none; stroke: var(--color-a-fill); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
-  .by-machine { fill: none; stroke: var(--color-b); stroke-width: 3; stroke-linejoin: miter; }
-  .nd { fill: var(--color-bg); stroke: var(--color-b); stroke-width: 2.5; }
-  .fig1 figcaption { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-text); color: var(--color-text-muted); }
+  .subs .s1, .subs .s2 { display: block; }
+  .film.is-live .subs { opacity: 0; }
+  .film.is-live [data-shot='6'] .subs { opacity: 1; }
+  .hand { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; padding-inline: 0.04em; color: var(--color-a-fill); }
+  .stop-a { color: var(--color-a-fill); }
+  .stop-b { color: var(--color-b); }
+  .subs .stop-b { color: #6f86ff; }
+  /* on paper the hand stop is outlined in ink so it holds */
+  .room .stop-a { -webkit-text-stroke: 0.035em var(--color-text); paint-order: stroke fill; }
+  .status { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: var(--space-6); margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: #b9b6ad; }
+  .film.is-live .status { opacity: 0; transition: opacity 600ms var(--ease-standard); }
+  .film.is-live [data-shot='6'] .status { opacity: 1; }
+  .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); margin-right: 0.6em; vertical-align: 0.05em; }
+
+  /* the end card: who, and how to start */
+  .endcard { display: grid; gap: var(--space-8); align-items: end; padding-block: var(--space-16); background: #1c1a1e; color: var(--color-bg); box-shadow: 0 0 0 100vmax #1c1a1e; clip-path: inset(0 -100vmax); }
+  .endcard > * { min-width: 0; }
+  .who-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 0; }
+  .see { color: #b9b6ad; font-size: var(--text-sm); }
+  .who { font-size: var(--t-lede); line-height: 1.35; letter-spacing: -0.015em; max-width: 26ch; margin: 0; }
+  .btn-lime { background: var(--color-a-fill); color: var(--color-a-ink); border-color: var(--color-a-fill); }
+  @media (hover: hover) { .btn-lime:hover { background: var(--color-bg); border-color: var(--color-bg); color: var(--color-text); } }
+  .endcard :focus-visible { outline-color: var(--color-a-fill); }
+  .cw-plate { position: relative; border: 1px solid var(--color-bg); background: var(--color-surface); color: var(--color-text); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-a-fill); }
+  .cw-plate :focus-visible { outline-color: var(--color-text); }
+  @media (min-width: 56rem) {
+    .endcard { grid-template-columns: 1fr minmax(0, 28rem); }
+    .cw-plate { justify-self: end; width: 100%; }
+  }
   .k { display: inline-block; width: 0.9em; height: 0.9em; margin-right: 0.45em; vertical-align: -0.1em; border: 1px solid var(--color-text); }
   .k-a { background: var(--color-a-fill); }
   .k-b { background: var(--color-b); }
-  .key { white-space: nowrap; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .by-hand, .by-machine { stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .by-hand { animation: draw 1100ms cubic-bezier(0.45, 0, 0.2, 1) 450ms forwards; }
-    .by-machine { animation: draw 900ms linear 1500ms forwards; }
-    .nd { opacity: 0; transform-box: fill-box; transform-origin: center; animation: pop 220ms var(--ease-standard) forwards; }
-    .nd0 { animation-delay: 1560ms; } .nd1 { animation-delay: 1640ms; } .nd2 { animation-delay: 1740ms; }
-    .nd3 { animation-delay: 1840ms; } .nd4 { animation-delay: 1960ms; } .nd5 { animation-delay: 2060ms; }
-    .nd6 { animation-delay: 2160ms; } .nd7 { animation-delay: 2260ms; } .nd8 { animation-delay: 2380ms; }
-    :global(html.booting) .by-hand, :global(html.booting) .by-machine, :global(html.booting) .nd { animation-play-state: paused; }
-  }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  @keyframes pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: none; } }
-
-  .hero-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); margin-top: var(--space-12); align-items: end; }
-  .hero-foot > * { min-width: 0; }
-  .who-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 0; }
-  .see { color: var(--color-text-muted); font-size: var(--text-sm); }
-  .who { font-size: var(--t-lede); line-height: 1.35; letter-spacing: -0.015em; max-width: 24ch; margin: 0; }
-  .cw-plate { position: relative; border: 1px solid var(--color-text); background: var(--color-surface); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-text); }
-  .note { display: none; }
-  @media (min-width: 56rem) {
-    .hero-foot { grid-template-columns: 1fr minmax(0, 28rem); }
-    .cw-plate { justify-self: end; width: 100%; }
-  }
-  @media (min-width: 72rem) {
-    .note {
-      display: block; position: absolute; right: calc(100% + 1.5rem); top: 0; width: 10rem; margin: 0;
-      font-family: var(--font-serif); font-style: italic; font-size: 1.5rem; line-height: 1.05; color: var(--color-b); text-align: right; transform: rotate(-5deg);
-    }
-    .note-arrow { position: absolute; right: -2.8rem; top: 1rem; width: 3rem; height: 2.5rem; overflow: visible; }
-    .note-arrow path { fill: none; stroke: var(--color-b); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  }
 
   /* ---------- rooms ---------- */
   .room { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
