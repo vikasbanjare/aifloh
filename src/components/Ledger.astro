@@ -143,10 +143,10 @@ const copyable = (r: Resource) => preview(r) === copyText(r);
   .title-hi { font-size: var(--text-sm); color: var(--color-text-muted); }
   .what { color: var(--color-text-muted); font-size: var(--text-md); max-width: 62ch; }
   .meta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-1); align-items: center; }
-  .chev { width: 2rem; height: 2rem; border-radius: 50%; border: 1px solid var(--color-line-strong); position: relative; margin-top: 0.15em; transition: transform var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); }
+  .chev { width: 2rem; height: 2rem; border-radius: 0; border: 1px solid var(--color-text); position: relative; margin-top: 0.15em; transition: transform var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); }
   .chev::before, .chev::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
   .chev::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform var(--dur-base) var(--ease-standard); }
-  details[open] .chev { border-color: var(--color-a); color: var(--color-a); }
+  details[open] .chev { background: var(--color-text); color: var(--color-bg); }
   details[open] .chev::after { transform: translate(-50%, -50%) rotate(0deg); }
   .body { padding: 0 0 var(--space-8) calc(2.5rem + var(--space-4)); animation: fade var(--dur-slow) var(--ease-standard); }
   .row-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }

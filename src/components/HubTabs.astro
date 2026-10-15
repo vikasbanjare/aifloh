@@ -25,6 +25,8 @@ const here = Astro.url.pathname.replace(/\/?$/, '/');
 </nav>
 <style>
   .tabs ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+  /* phones: one swipeable row instead of a wrapped block */
+  @media (max-width: 40rem) { .tabs ul { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); } .tabs ul::-webkit-scrollbar { display: none; } .tabs li { flex: none; } }
   .tabs a {
     display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4);
     border: 1px solid var(--color-line-strong); border-radius: 0; text-decoration: none;
