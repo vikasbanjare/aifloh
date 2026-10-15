@@ -81,6 +81,9 @@ const tiles = Array.from({ length: COLS * ROWS }, (_, i) => {
   .d0 { --delay: -0.0s; } .d1 { --delay: -0.8s; } .d2 { --delay: -1.6s; } .d3 { --delay: -2.4s; } .d4 { --delay: -3.2s; }
   .boot { display: none; }
   :global(html.booting) { overflow: hidden; }
+  /* CSS fail-safe too: even if no script runs after the class is set, the overlay fades out and stops catching taps. */
+  :global(html.booting) .boot { animation: boot-gone 1ms linear 3.6s forwards; }
+  @keyframes boot-gone { to { opacity: 0; visibility: hidden; pointer-events: none; } }
   :global(html.booting) .boot,
   .boot.boot-out {
     display: grid; position: fixed; inset: 0; z-index: 200; place-items: center; background: var(--color-bg); cursor: pointer;

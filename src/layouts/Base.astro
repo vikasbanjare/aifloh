@@ -84,7 +84,10 @@ const analyticsOn = ANALYTICS_TOOL !== 'none' && !!ANALYTICS_SRC && !!ANALYTICS_
           (function () {
             try {
               if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-              document.documentElement.classList.add('booting');
+              var d = document.documentElement;
+              d.classList.add('booting');
+              // Fail-safe: whatever happens to the intro script, the page is never held for more than 3.5 s.
+              setTimeout(function () { d.classList.remove('booting'); }, 3500);
             } catch (e) {}
           })();
         </script>
