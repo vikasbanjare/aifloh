@@ -7,5 +7,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 00 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 6 | 9 | 9 | **72** | baseline | colour rooms + gallery wall (LH 97/100/100/100, axe 0) |
 | 01 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **73** | KEPT | hero CTA + 'see the work' link |
 | 02 | 7 | 7 | 7 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **73** | REJECTED | spacing + narrower Fig. 1 |
+| 03 | 7 | 7 | 8 | 6 | 7 | 7 | 7 | 7 | 9 | 9 | **74** | KEPT | paper Studio cards |
 
-**CURRENT BEST: iter-01** (tag `best`)
+**CURRENT BEST: iter-03** (tag `best`)

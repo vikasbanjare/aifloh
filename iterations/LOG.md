@@ -34,3 +34,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: marginal gain, new flaw. Not better than best.
 - Scores: H7 T7 C7 S6 D7 M7 I7 K7 A9 P9 = 73.
 - Decision: REJECTED.
+
+## iter-03 · Studio cards become paper cards with a coloured top edge
+- Hypothesis: solid lime and cobalt Studio blocks between the lime and cobalt bands cause colour fatigue; paper cards with a 10 px coloured top edge let the bands own the colour.
+- Change: index.astro .side-a/.side-b -> paper, hard shadow, coloured top edge, cobalt headline on the Automate card.
+- Verify: all checks pass; LH 97/100/100/100; axe 0; no overflow.
+- Critique: C 7→8, the cobalt Tools band now reads as the colour event; cards still clearly two-sided. D unchanged.
+- Scores: H7 T7 C8 S6 D7 M7 I7 K7 A9 P9 = 74.
+- Decision: KEPT.

@@ -392,9 +392,11 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .pair { display: grid; gap: var(--space-4); }
   @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } }
   .side { display: flex; flex-direction: column; gap: var(--space-2); min-height: 15rem; padding: var(--space-6); border: 1px solid var(--color-text); text-decoration: none; transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
-  .side-a { background: var(--color-a-fill); color: var(--color-a-ink); }
-  .side-b { background: var(--color-b); color: var(--color-b-ink); }
-  .side-b .k { border-color: var(--color-b-ink); background: var(--color-b-ink); }
+  /* paper cards: the full colour belongs to the bands; here it is a thick top edge + key */
+  .side { background: var(--color-surface); box-shadow: 6px 6px 0 var(--color-text); }
+  .side-a { border-top: 10px solid var(--color-a-fill); }
+  .side-b { border-top: 10px solid var(--color-b); }
+  .side-b .side-t { color: var(--color-b); }
   .side-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin-top: auto; }
   .side .label { color: inherit; }
   .side-m { font-size: var(--text-sm); }
