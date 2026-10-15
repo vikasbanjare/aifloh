@@ -1,0 +1,76 @@
+# GitHub opt-in list (SITE-BUILD.md Section 9). Only items listed here with
+# publish: true are fetched at build time. A repo is never listed because it exists.
+# Repos and skills not on this list stay off the site on purpose.
+# This file is public: notes say what to do next, never why something is excluded.
+owner: vikasbanjare
+items:
+  # TOOLS
+  - repo: vikasbanjare/Contentintel
+    group: tool
+    publish: true
+    note: ContentIntel. Outbound link to contentintel.in. Add aifloh.yml; turn on Enforce HTTPS for the custom domain.
+  - repo: vikasbanjare/caption-and-video-editor
+    group: tool
+    publish: true
+    note: CutPilot AI Caption Studio. Add aifloh.yml, description, topics and a screenshot.
+  - repo: vikasbanjare/YT-Thumbnail-downloader
+    group: tool
+    publish: true
+    note: Thumbnail ZIP tool. Add aifloh.yml and the "thumbnails belong to their creators" line.
+  - repo: vikasbanjare/video
+    group: tool
+    publish: false
+    note: Premiere tools. Flip after README, aifloh.yml and a default-branch check.
+  - repo: vikasbanjare/QR-Code-Generator
+    group: tool
+    publish: false
+    note: Small utility. Flip only if you want it listed.
+  - repo: vikasbanjare/daxio-app
+    group: tool
+    publish: false
+    note: Needs a README that says what Daxio is.
+  - repo: vikasbanjare/-DAXIO-
+    group: tool
+    publish: false
+    note: Probably a duplicate of daxio-app. Confirm, then delete this entry or the repo.
+  - repo: vikasbanjare/gold
+    group: tool
+    publish: false
+    note: Needs a check before publishing.
+
+  # EXPERIMENTS
+  - repo: vikasbanjare/inkline-Motion-Graphic
+    group: experiment
+    publish: true
+    note: 30-second engraved 3D launch film from a script. Credit asset sources; add the final film.
+  - repo: vikasbanjare/motion-graphic
+    group: experiment
+    publish: false
+    note: Flip after checking which skills in .claude/skills are yours.
+  - repo: vikasbanjare/vikas-portfolio
+    group: experiment
+    publish: false
+    note: Earlier portfolio. Flip after checking every image is your own work.
+  - repo: vikasbanjare/Vikasbanjare
+    group: experiment
+    publish: false
+    note: Earlier single-page portfolio. Same check as vikas-portfolio.
+
+  # SITE
+  - repo: vikasbanjare/aifloh
+    group: site
+    publish: false
+    note: This site. Flip once it has an aifloh.yml.
+
+  # SKILLS (repo vikasbanjare/aifloh-skills, one folder per skill; clean copies prepared)
+  - { repo: vikasbanjare/aifloh-skills, path: deck-director, group: skills, publish: false, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: logo-director, group: skills, publish: false, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: logo-identity-strategist, group: skills, publish: false, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: brand-design-studio, group: skills, publish: false, note: Design set. Generic brand template. }
+  - { repo: vikasbanjare/aifloh-skills, path: motion-designer, group: skills, publish: false, note: Design set. }
+  - { repo: vikasbanjare/aifloh-skills, path: thumbnail-prompt-generator, group: skills, publish: false, note: Prompt set. }
+  - { repo: vikasbanjare/aifloh-skills, path: seedance-director, group: skills, publish: false, note: Prompt set. }
+  - { repo: vikasbanjare/aifloh-skills, path: anti-ai-writing, group: skills, publish: false, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: dumbify, group: skills, publish: false, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: viral-hooks, group: skills, publish: false, note: Writing set. }
+  - { repo: vikasbanjare/aifloh-skills, path: storytelling, group: skills, publish: false, note: Writing set. }
