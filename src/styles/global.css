@@ -254,3 +254,13 @@ html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-
   }
 }
 @keyframes row-in { from { opacity: 0; transform: translateY(18px); } }
+
+/* ---------- print: the catalogue on paper ---------- */
+@media print {
+  .site-header, .site-footer .cols, .site-footer .wordmark, .skip-link, .boot, .fig-tools, .in-app-banner, .btn, .tabs { display: none !important; }
+  body::after { display: none; }
+  body { background: #fff; color: #000; }
+  a { text-decoration: underline; }
+  .cat-row::before, .ix::before { display: none; }
+  .copy-box { max-height: none; overflow: visible; border: 1px solid #999; }
+}

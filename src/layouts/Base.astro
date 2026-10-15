@@ -4,7 +4,8 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { href } from '../lib/href';
-import { SITE_NAME, ANALYTICS_TOOL, ANALYTICS_SRC, ANALYTICS_DOMAIN } from '../lib/config';
+import { SITE_NAME, ANALYTICS_TOOL, ANALYTICS_SRC, ANALYTICS_DOMAIN, BEHANCE_URL, GITHUB_URL, SOCIALS } from '../lib/config';
+const LINKEDIN_URL = SOCIALS.find((s) => s.platform === 'linkedin')?.url;
 import { loadContent } from '../lib/content';
 
 interface Props {
@@ -29,7 +30,12 @@ const intents = [...new Set(c.resources.map((r) => r.intent))];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Organization', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString(), founder: { '@type': 'Person', name: 'Vikas Banjare' } },
+    { '@type': 'Organization', '@id': '#org', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString(), founder: { '@id': '#vikas' } },
+    {
+      '@type': 'Person', '@id': '#vikas', name: 'Vikas Banjare', alternateName: 'Bubu',
+      jobTitle: 'Designer, video editor and storyteller', url: new URL(href('/about/'), Astro.site).toString(),
+      sameAs: [LINKEDIN_URL, BEHANCE_URL, GITHUB_URL].filter(Boolean),
+    },
     { '@type': 'WebSite', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString() },
   ],
 };
