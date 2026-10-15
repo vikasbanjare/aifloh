@@ -1,0 +1,46 @@
+---
+// The gallery wall: real covers hung like prints, each a little crooked until you look at it.
+// Projects without a cover are listed underneath as plain lines.
+import { href } from '../lib/href';
+interface Work { title: string; tags: string[]; year: string; link: string; cover?: string; coverAlt?: string }
+interface Props { items: Work[]; start?: number; limit?: number }
+const { items, start = 4, limit } = Astro.props;
+const covered = items.filter((w) => w.cover).slice(0, limit);
+const plain = items.filter((w) => !w.cover);
+---
+<ul class="wall" role="list">
+  {covered.map((w, i) => (
+    <li class={`print t${i % 6}`}>
+      <a href={w.link} rel="noopener">
+        <img src={href(w.cover!)} alt={w.coverAlt ?? w.title} width="356" height="210" loading="lazy" decoding="async" />
+        <span class="cap">
+          <span class="label fig">Fig. {start + i}</span>
+          <span class="t">{w.title}</span>
+          <span class="label m">{w.tags.join(', ')} · {w.year} ↗</span>
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
+{plain.length > 0 && (
+  <p class="also label">Also: {plain.map((w, i) => <>{i > 0 && ' · '}<a href={w.link} rel="noopener">{w.title} ↗</a></>)}</p>
+)}
+<style>
+  .wall { list-style: none; margin: 0; padding: var(--space-4) 0 0; display: grid; gap: var(--space-12) var(--space-8); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 40rem) { .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .wall { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .print a { display: block; text-decoration: none; background: var(--color-surface); border: 1px solid var(--color-text); padding: 10px 10px 0; box-shadow: 6px 6px 0 var(--color-text); transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1.1), box-shadow 320ms var(--ease-standard); }
+  .print img { display: block; width: 100%; height: auto; aspect-ratio: 356 / 210; object-fit: cover; background: var(--color-surface-2); }
+  .cap { display: grid; gap: 2px; padding: var(--space-3) 2px var(--space-3); }
+  .fig { color: var(--color-b); }
+  .t { font-weight: 800; font-size: var(--t-row-sm); letter-spacing: -0.035em; line-height: 1.1; }
+  .m { color: var(--color-text-muted); }
+  /* hung by hand: each print slightly off-true */
+  .t0 a { transform: rotate(-1.6deg); } .t1 a { transform: rotate(1.2deg) translateY(10px); } .t2 a { transform: rotate(-0.6deg); }
+  .t3 a { transform: rotate(1.8deg); } .t4 a { transform: rotate(-1.2deg) translateY(8px); } .t5 a { transform: rotate(0.8deg); }
+  @media (hover: hover) { .print a:hover { transform: rotate(0) translateY(-6px); box-shadow: 12px 12px 0 var(--color-text); } }
+  .print a:focus-visible { transform: none; }
+  @media (prefers-reduced-motion: reduce) { .print a { transition: none; } }
+  .also { margin-top: var(--space-12); color: var(--color-text-muted); }
+  .also a { color: var(--color-b); }
+</style>

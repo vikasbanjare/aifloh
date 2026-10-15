@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import PageHead from '../../components/PageHead.astro';
+import Wall from '../../components/Wall.astro';
 import Base from '../../layouts/Base.astro';
 import { loadContent } from '../../lib/content';
 import { href } from '../../lib/href';
@@ -13,22 +14,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <Base title="Work" description="Selected video, design and web work by Vikas Banjare, 2024 to 2026.">
   <PageHead kicker="Work" title="Selected work." count={P.projects.length + local.length} />
   <section class="wrap section">
-    <ol class="cat cat-big" role="list">
-      {local.map((w, i) => (
-        <li><a class="cat-row" href={href(`/work/${w.slug}/`)}><span class="c-n label">{pad(i + 1)}</span><span class="c-t">{w.title}</span><span class="c-m label">{w.type}</span><span class="c-y label">{new Date(w.date).getUTCFullYear()}</span></a></li>
-      ))}
-      {P.projects.map((w: any, i: number) => (
-        <li>
-          <a class="cat-row" href={w.link} rel="noopener">
-            <span class="c-n label">{pad(local.length + i + 1)}</span>
-            <span class="c-t">{w.title}</span>
-            <span class="c-m label">{w.tags.join(', ')}</span>
-            <span class="c-y label">{w.year} ↗</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-    <p class="note label">↗ opens the full project on Behance</p>
+    <Wall items={P.projects} start={1} />
   </section>
 </Base>
 <style>

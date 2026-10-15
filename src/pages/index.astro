@@ -11,6 +11,7 @@ import Boot from '../components/Boot.astro';
 import CodeWordBox from '../components/CodeWordBox.astro';
 import InAppBanner from '../components/InAppBanner.astro';
 import StandIn from '../components/StandIn.astro';
+import Wall from '../components/Wall.astro';
 import { loadContent, TYPE_LABEL } from '../lib/content';
 import { href } from '../lib/href';
 
@@ -89,21 +90,9 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
     <p class="more"><a class="btn btn-primary" href={href('/free/')}>All {c.resources.length} free <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 
-  <section class="room wrap" id="work" aria-labelledby="work-h">
+  <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
     <h2 id="work-h" class="room-h"><span class="label n">( 02 )</span> <span>Work<span class="stop-b">.</span></span></h2>
-    <ol class="index index-big" role="list" data-work>
-      {work.map((w: any, i: number) => (
-        <li>
-          <a class="ix" href={w.link} rel="noopener" data-cover={w.cover ? href(w.cover) : undefined}>
-            <span class="ix-n label">{pad(i + 1)}</span>
-            <span class="ix-t">{w.title}</span>
-            <span class="ix-m label">{w.tags.join(', ')}</span>
-            <span class="ix-w label">{w.year}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-    <img class="w-float" alt="" width="360" height="240" hidden decoding="async" />
+    <Wall items={P.projects} start={4} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
@@ -226,19 +215,6 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   tick();
   setInterval(tick, 30000);
 
-  const list = document.querySelector<HTMLElement>('[data-work]');
-  const float = document.querySelector<HTMLImageElement>('.w-float');
-  if (list && float && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let x = 0, y = 0, raf = 0;
-    const move = () => { raf = 0; float.style.transform = `translate(${x}px, ${y}px)`; };
-    list.addEventListener('pointermove', (e) => {
-      const src = (e.target as HTMLElement).closest<HTMLElement>('.ix')?.dataset.cover;
-      if (src) { if (float.getAttribute('src') !== src) float.src = src; float.hidden = false; } else float.hidden = true;
-      x = e.clientX + 28; y = e.clientY - 120;
-      if (!raf) raf = requestAnimationFrame(move);
-    });
-    list.addEventListener('pointerleave', () => (float.hidden = true));
-  }
 </script>
 
 <style>
@@ -369,7 +345,18 @@ for (let x = 600; x <= 1180; x += 40) for (let y = 40; y <= 360; y += 40) dots.p
   .ix::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
   @media (hover: hover) { .ix:hover::before { transform: scaleX(1); } .ix:hover .ix-n, .ix:hover .ix-m, .ix:hover .ix-w { color: var(--color-text); } }
   .ix:focus-visible::before { transform: scaleX(1); }
-  .w-float { position: fixed; left: 0; top: 0; z-index: 60; width: 300px; height: auto; pointer-events: none; border: 1px solid var(--color-text); box-shadow: 6px 6px 0 var(--color-text); }
+  /* the gallery: a full-bleed ink wall for the prints */
+  .room-dark { color: var(--color-bg); background: var(--color-text); box-shadow: 0 0 0 100vmax var(--color-text); clip-path: inset(0 -100vmax); padding-block: var(--space-16) var(--space-24); }
+  .room-dark .room-h .n { color: #9fb0ff; }
+  .room-dark .stop-b { color: #9fb0ff; }
+  .room-dark.room-dark :global(.print a) { box-shadow: 8px 8px 0 var(--color-a-fill); border-color: var(--color-bg); }
+  @media (hover: hover) { .room-dark.room-dark :global(.print a:hover) { box-shadow: 14px 14px 0 var(--color-a-fill); } }
+  .room-dark :global(.print .t) { color: var(--color-text); }
+  .room-dark :global(.also) { color: #b9b6ad; }
+  .room-dark :global(.also a) { color: #9fb0ff; }
+  .room-dark .btn { color: var(--color-bg); border-color: var(--color-bg); }
+  @media (hover: hover) { .room-dark .btn:hover { background: var(--color-bg); color: var(--color-text); } }
+  .room-dark::before, .room-dark::after { display: none; }
 
   /* ---------- commissions ---------- */
   .pair { display: grid; gap: var(--space-4); }

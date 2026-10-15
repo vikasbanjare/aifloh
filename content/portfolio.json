@@ -35,16 +35,6 @@
   ],
   "projects": [
     {
-      "title": "Creative Designs",
-      "tags": [
-        "Graphic design",
-        "Campaigns"
-      ],
-      "year": "2026",
-      "summary": "Key visuals, campaign creatives and design experiments.",
-      "link": "https://www.behance.net/gallery/250526649/Creative-Designs"
-    },
-    {
       "title": "Emailer Design",
       "tags": [
         "Email",
@@ -62,7 +52,9 @@
       ],
       "year": "2025",
       "summary": "Click-worthy YouTube thumbnails made with AI tools.",
-      "link": "https://www.behance.net/gallery/232938571/AI-YT-Thumbnails-design"
+      "link": "https://www.behance.net/gallery/232938571/AI-YT-Thumbnails-design",
+      "cover": "/media/portfolio/work-thumbnails.webp",
+      "coverAlt": "Cover: \"YouTube Thumbnails\" in 3D gold letters with game coins"
     },
     {
       "title": "AI Videos",
@@ -71,7 +63,9 @@
       ],
       "year": "2025",
       "summary": "Video generation and editing experiments with Runway, HeyGen and others.",
-      "link": "https://www.behance.net/gallery/232940741/AI-Videos"
+      "link": "https://www.behance.net/gallery/232940741/AI-Videos",
+      "cover": "/media/portfolio/work-ai-videos.webp",
+      "coverAlt": "Cover: \"AI Videos\" in red serif letters on a stage with gold curtains"
     },
     {
       "title": "Social Media Designs",
@@ -82,8 +76,8 @@
       "year": "2024",
       "summary": "Daily and campaign creatives across Instagram, LinkedIn and more.",
       "link": "https://www.behance.net/gallery/218001529/Social-Media-Designs",
-      "cover": "/media/portfolio/social-hiring-ai.webp",
-      "coverAlt": "Rows of white desks with blue monitors; one screen asks Hiring AI only?"
+      "cover": "/media/portfolio/work-social.webp",
+      "coverAlt": "Cover: \"social media designs\" in bold serif type with sticker notes"
     },
     {
       "title": "Podcast Videos",
@@ -93,7 +87,9 @@
       ],
       "year": "2024",
       "summary": "Podcast production from concept to short-form clips.",
-      "link": "https://www.behance.net/gallery/218001379/Podcast-Videos"
+      "link": "https://www.behance.net/gallery/218001379/Podcast-Videos",
+      "cover": "/media/portfolio/work-podcast.webp",
+      "coverAlt": "Cover: \"podcast videos\" in white blocky type on a blue brick wall"
     },
     {
       "title": "Trailer Video",
@@ -103,7 +99,9 @@
       ],
       "year": "2024",
       "summary": "A high-energy trailer edit: pacing, sound design and story in seconds.",
-      "link": "https://www.behance.net/gallery/217989345/Trailer-Video"
+      "link": "https://www.behance.net/gallery/217989345/Trailer-Video",
+      "cover": "/media/portfolio/work-trailer.webp",
+      "coverAlt": "Cover: \"trailer videos\", a woman in red light with film reels"
     },
     {
       "title": "Motion Graphic",
@@ -112,7 +110,9 @@
       ],
       "year": "2024",
       "summary": "Motion graphics that bring static brands to life.",
-      "link": "https://www.behance.net/gallery/218106207/Motion-Graphic"
+      "link": "https://www.behance.net/gallery/218106207/Motion-Graphic",
+      "cover": "/media/portfolio/work-motion.webp",
+      "coverAlt": "Cover: \"motion graphic videos\" seen through a window onto a green field"
     }
   ],
   "services": [
