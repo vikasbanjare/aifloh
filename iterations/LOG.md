@@ -169,3 +169,8 @@ Lens: motion and interaction. Building a write-on for the Studio steps showed an
 Step-back review (iter-20). Drift check over iter-15..19: one ornament added (steps line), the rest were fixes; no over-decoration, but the brand line now shows in four places, so no more line motifs. Simplification tested: remove the 14rem ContentIntel plate from the Tools band so the index runs full width, like the Free band. It reads calmer but the band becomes text-only and the strongest proof (a real shipped tool) disappears; Distinctiveness -1, total 88, reverted. Kept separately (a correctness fix, not a design change): figure numbers ran 1, 4-9, 2, 3 down the page. They now run in reading order: Fig. 1 hero, Figs. 2-7 wall, Fig. 8 ContentIntel, Fig. 9 portrait. Backlog #7 stays open with a different idea (enlarge the plate rather than drop it).
 - Scores: H9 T8 C8 S9 D8 M9 I9 K9 A10 P9 = 88.
 - Decision: REJECTED.
+
+## iter-21 · Mono labels 12 to 13 px on wide screens
+Lens: typography (backlog #5). --t-label was a flat 12 px everywhere; mono caps at 12 px on a 1440 screen read as fine print beside 120 px titles. Now clamp(12px, 11px + 0.15vw, 13px): 12 px on phones (unchanged), 13 px from about 1280 px wide. Tools index meta column widened 8.5 to 11rem, status 6.5 to 7rem so 'Premiere Pro' / 'Private beta' keep one line; 'Your computer (Node.js)' still wraps to two, which reads fine.
+- Scores: H9 T9 C8 S9 D9 M9 I9 K9 A10 P9 = 90.
+- Decision: KEPT.

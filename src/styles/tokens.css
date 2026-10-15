@@ -49,7 +49,7 @@
   --t-row-sm: clamp(1.25rem, 0.9rem + 1.2vw, 1.875rem);
   --t-lede: clamp(1.1875rem, 1rem + 0.5vw, 1.4375rem);
   --t-body: 1.0625rem;
-  --t-label: 0.75rem;
+  --t-label: clamp(0.75rem, 0.6875rem + 0.15vw, 0.8125rem);
   --text-xs: 0.8125rem;
   --text-sm: 0.9375rem;
   --text-md: 1.0625rem;

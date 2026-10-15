@@ -25,5 +25,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 18 | 9 | 8 | 8 | 9 | 9 | 9 | 8 | 9 | 10 | 9 | **88** | REJECTED | 88 = best; better at 768 but no category moves a point |
 | 19 | 9 | 8 | 8 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | **89** | KEPT | 89; found a shipped bug: no scroll-driven animation had ever run |
 | 20 | 9 | 8 | 8 | 9 | 8 | 9 | 9 | 9 | 10 | 9 | **88** | REJECTED | 88 vs 89: calmer, but the cobalt band loses its only picture |
+| 21 | 9 | 9 | 8 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | **90** | KEPT | 90 |
 
-**CURRENT BEST: iter-19** (tag `best`)
+**CURRENT BEST: iter-21** (tag `best`)
