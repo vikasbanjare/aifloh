@@ -197,3 +197,9 @@ Looked at the whole phone page (iter-24, 5,836 px; iter-00 was 7,062 px) and the
 - Scoring note: eight of ten categories are at 9. Single small fixes now tie and get reverted, which is correct per the rules. Next iterations bundle related fixes into one hypothesis or target a specific 10.
 - Next (simplifies): iter-26 makes the Free band show the range (one row per type) and drops the now-redundant per-row repetition on phones.
 - Decision: REVIEW (no score change, best stays iter-24 at 92).
+
+## iter-26 · Shorter intro (1.4 s to 1.0 s) — no effect; measurement fixed instead
+Hypothesis: the intro length caps LCP. Retimed the intro to 1.0 s; Lighthouse LCP stayed 2.4-2.5 s over three runs, so the intro was not the bottleneck. Reverted (the intro length is a feature Vikas asked for; no reason to cut it without a gain).
+Root cause of the gap: the local test server (python http.server) sends HTML uncompressed (106 KB with inlined CSS). GitHub Pages gzips it (~25 KB). New tool iterations/tools/gzserve.py serves dist/ with gzip on :4332. Same build of best (iter-24): perf 99, LCP 2.0 s, TBT 0, CLS 0.013, twice in a row.
+- Re-measurement, not a design change: best (iter-24) Performance re-scored 9 -> 10 on production-like serving, total 93. All later iterations are measured with gzserve.
+- Scores (iter-26 itself): same as best before re-measure, 92. Decision: REJECTED (reverted).

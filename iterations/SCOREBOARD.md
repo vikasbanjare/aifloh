@@ -31,3 +31,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 24 | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | 10 | 9 | **92** | KEPT | 92; cold Lighthouse unchanged (97), internal return to home skips ~1.6 s |
 
 **CURRENT BEST: iter-24** (tag `best`)
+| 25 | – | – | – | – | – | – | – | – | – | – | – | REVIEW | step-back review, no code change |
+| 26 | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | 10 | 9 | **92** | REJECTED | intro 1.0 s: no LCP change; found local server lacks gzip |
+| 24r | 9 | 9 | 9 | 9 | 9 | 9 | 10 | 9 | 10 | 10 | **93** | best (re-measured) | iter-24 on gzip server: LH 99, LCP 2.0 s |
