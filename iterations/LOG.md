@@ -248,3 +248,8 @@ Since the film baseline (iter-27, 86) the best is 91: character joints and face 
 - What reads weakest now: the page after the film. It jumps from a dark cinematic room into the old lime catalogue band, then ink, paper, cobalt and paper again: five colour rooms after one dark film is a lot of switching. The film earned the right to be the one loud moment; the rest should get quieter.
 - Next (simplifies): test giving the post-film rooms one calmer rhythm (fewer colour switches), and measure page length on phones after the film.
 - Decision: REVIEW (best stays iter-34 at 91).
+
+## iter-36 · Work follows the film: one continuous dark space, the strongest asset first
+From the iter-35 review: too many colour switches after the film, and the work (the strongest proof) sat behind the Free band. Work now comes straight after the end card, renumbered ( 01 ), Free is ( 02 ). The work wall uses the film's rendered black (#0e0c0f) so film, end card and wall read as one dark space before the first colour band; 'or see the work' now lands on the very next section. Figure numbers still run in reading order (Figs. 1-6 wall, 7 ContentIntel, 8 portrait). Backlog #2 closed.
+- Scores: H9 T9 C9 S9 D10 M8 I10 K9 A10 P9 = 92.
+- Decision: KEPT.

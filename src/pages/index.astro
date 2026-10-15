@@ -67,8 +67,14 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </div>
   </section>
 
+  <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
+    <h2 id="work-h" class="room-h"><span class="label n" aria-hidden="true">( 01 )</span> <span>Work<span class="stop-b">.</span></span></h2>
+    <Wall items={P.projects} start={1} limit={6} />
+    <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
+  </section>
+
   <section class="room room-lime wrap" aria-labelledby="free-h">
-    <h2 id="free-h" class="room-h"><span class="label n" aria-hidden="true">( 01 )</span> <span>Free<span class="stop-a">.</span></span></h2>
+    <h2 id="free-h" class="room-h"><span class="label n" aria-hidden="true">( 02 )</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
         <li>
@@ -82,12 +88,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
       ))}
     </ol>
     <p class="more"><a class="btn btn-primary" href={href('/free/')}>All {c.resources.length} free <span class="arrow" aria-hidden="true">→</span></a></p>
-  </section>
-
-  <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
-    <h2 id="work-h" class="room-h"><span class="label n" aria-hidden="true">( 02 )</span> <span>Work<span class="stop-b">.</span></span></h2>
-    <Wall items={P.projects} start={1} limit={6} />
-    <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="studio-h">
@@ -357,7 +357,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   @media (hover: hover) { .ix:hover::before { transform: scaleX(1); } .ix:hover .ix-n, .ix:hover .ix-m, .ix:hover .ix-w { color: var(--color-text); } }
   .ix:focus-visible::before { transform: scaleX(1); }
   /* the gallery: a full-bleed ink wall for the prints */
-  .room-dark { color: var(--color-bg); background: var(--color-text); box-shadow: 0 0 0 100vmax var(--color-text); clip-path: inset(0 -100vmax); padding-block: var(--space-16) var(--space-24); }
+  .room-dark { color: var(--color-bg); background: #0e0c0f; box-shadow: 0 0 0 100vmax #0e0c0f; clip-path: inset(0 -100vmax); padding-block: var(--space-16) var(--space-24); }
   .room-dark .room-h .n { color: #9fb0ff; }
   .room-dark .stop-b { color: #9fb0ff; }
   .room-dark.room-dark :global(.print a) { box-shadow: 8px 8px 0 var(--color-a-fill); border-color: var(--color-bg); }
