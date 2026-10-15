@@ -179,3 +179,8 @@ Lens: typography (backlog #5). --t-label was a flat 12 px everywhere; mono caps 
 Lens: colour and contrast. The full stops after 'craft', 'Studio.' and 'About.' used the text-safe hand green #3d5c00, which next to the lime highlighter and the bright cobalt stop read as a muddy olive, so the two-material idea (lime hand / cobalt machine) looked unequal. They are now the lime fill with a 0.035em ink outline (paint-order stroke fill), which holds on paper and pairs with the cobalt stop. Inside the lime room the stop stays ink with no outline. Palette unchanged: lime stays a fill, never text. The stop is a decorative glyph; no text contrast is affected (axe clean).
 - Scores: H9 T9 C9 S9 D9 M9 I9 K9 A10 P9 = 91.
 - Decision: KEPT.
+
+## iter-23 · Free band shows one of each type
+Lens: copy and CTA. The Free band listed five Claude skills in a row (newest first), so the range (image and video prompts, templates, cheat sheets) never showed. Tested: the newest of each type first, then fill by date. Result: Claude skill, Image prompt, Video prompt, Template, Cheat sheet. Reads better, but no category moves from 9 to 10, so it ties and the rule reverts it. Note: most categories now sit at 9, so single small fixes can no longer win alone; future iterations should bundle a backlog fix into a larger hypothesis or aim at a 10 (e.g. Distinctiveness, Performance). Patch kept in git stash and in BACKLOG #6.
+- Scores: H9 T9 C9 S9 D9 M9 I9 K9 A10 P9 = 91.
+- Decision: REJECTED.

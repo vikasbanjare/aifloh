@@ -5,7 +5,7 @@
 3. [x] C/S — Studio's lime + cobalt blocks repeat the band colours; make Studio cards paper with a coloured edge / key so the bands stay special.
 4. [x] S — About is sparse and lopsided (small photo, stats strip, lots of air). Rebalance: larger photo print, stats grid, one line of voice.
 5. [x] T — Mono labels at 12 px are too small at desktop; 13 px from 64rem up.
-6. [ ] H — Free band shows five Claude skills in a row; mix types (prompt, video, skill, template) so the range reads.
+6. [ ] H — (iter-23 tested: newest of each type first; ties, bundle it) Free band shows five Claude skills in a row; mix types (prompt, video, skill, template) so the range reads.
 7. [ ] S — Tools plate is tiny on the cobalt band; enlarge or drop.
 8. [-] D — Margin ledger thread is faint noise on desktop; test removing it (simplify).
 9. [ ] M — Phone page ≈7,000 px; trim (e.g. Free shows 4 rows on phones).
