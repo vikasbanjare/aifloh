@@ -154,3 +154,8 @@ Five stats left a hole in the 3-column grid (row 2, col 3) and the About me butt
 Lens: mobile. Room titles were 44px on a 375 screen, so the poster rhythm of the desktop collapsed to ordinary headings; the clamp floor is now 3.75rem with a steeper slope (60px at 375, ~93px at 768, still 120px cap at 1440). Stat cells pack from the top so numbers sit on one line even when a label wraps to two (8+ beside 1000+). Watch item: 4-column steps at 768 are tight ('Make with AI' wraps); acceptable.
 - Scores: H9 T8 C8 S9 D9 M9 I8 K9 A10 P9 = 88.
 - Decision: KEPT.
+
+## iter-18 · Steps 2x2 until 64rem (tablet)
+Lens: would a top studio ship this. At 768 the four steps wrapped 'Make with AI' in narrow columns; 2x2 until 64rem aligns them under the two cards. Clearly tidier, but too small to move any rubric category, so the total ties best and the rule says revert. Added to BACKLOG to ride along with the next tablet-focused iteration.
+- Scores: H9 T8 C8 S9 D9 M9 I8 K9 A10 P9 = 88.
+- Decision: REJECTED.

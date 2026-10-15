@@ -22,5 +22,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 15 | 9 | 8 | 8 | 8 | 9 | 8 | 8 | 9 | 10 | 9 | **86** | KEPT | 86; perf 97, LCP 2.4 s (noise band) |
 | 16 | 9 | 8 | 8 | 9 | 9 | 8 | 8 | 9 | 10 | 9 | **87** | KEPT | 87; axe clean on / and /about/ |
 | 17 | 9 | 8 | 8 | 9 | 9 | 9 | 8 | 9 | 10 | 9 | **88** | KEPT | 88; desktop unchanged (cap 7.5rem) |
+| 18 | 9 | 8 | 8 | 9 | 9 | 9 | 8 | 9 | 10 | 9 | **88** | REJECTED | 88 = best; better at 768 but no category moves a point |
 
 **CURRENT BEST: iter-17** (tag `best`)
