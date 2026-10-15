@@ -13,7 +13,7 @@ export default defineConfig({
   output: 'static',
   markdown: { syntaxHighlight: false }, // no Shiki: its inline styles would break the CSP
   trailingSlash: 'ignore',
-  build: { format: 'directory', inlineStylesheets: 'auto' },
+  build: { format: 'directory', inlineStylesheets: 'always' },
   devToolbar: { enabled: false },
   prefetch: false,
   // Content-Security-Policy as a <meta> tag on every page (GitHub Pages cannot send headers).

@@ -131,3 +131,11 @@ Rejected iterations are not committed as code: the working tree is reset to `bes
 - Critique: A 9→10 for this page: semantic headings, visible focus on every band (paper, lime, ink, cobalt), alt text, live regions polite.
 - Scores: H8 T8 C8 S8 D8 M8 I8 K8 A10 P9 = 83.
 - Decision: KEPT.
+
+## iter-14 · Inline stylesheets to cut render-blocking CSS
+- Hypothesis: the mobile LCP waits on render-blocking CSS requests; inlining (Astro inlineStylesheets: 'always') removes a round trip. Astro hashes the inline styles into the CSP.
+- Change: astro.config.mjs build.inlineStylesheets 'auto' → 'always' (no dependency change).
+- Verify: all checks pass; CSP: 0 violations on /, /free/, /tools/. Lighthouse twice before (96, 96; LCP 2.5) and twice after (98, 97; LCP 2.3). Home HTML 104 KB raw (~20 KB gzip).
+- Critique: P 9→10: LH 97–98, LCP 2.3 s on emulated mid-range mobile, CLS 0.01, TBT ≈0.
+- Scores: H8 T8 C8 S8 D8 M8 I8 K8 A10 P10 = 84.
+- Decision: KEPT.

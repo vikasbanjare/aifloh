@@ -18,5 +18,6 @@ Rubric (1–10 each): H hierarchy · T typography · C colour & contrast · S sp
 | 11 | 8 | 8 | 8 | 8 | 8 | 8 | 7 | 8 | 9 | 9 | **81** | KEPT | prints taped to the wall |
 | 12 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 9 | 9 | **82** | KEPT | ✓ match shows before Go |
 | 13 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 10 | 9 | **83** | KEPT | focus + heading names |
+| 14 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 8 | 10 | 10 | **84** | KEPT | LCP 2.5→2.3 s, LH 96→97/98 |
 
-**CURRENT BEST: iter-13** (tag `best`)
+**CURRENT BEST: iter-14** (tag `best`)
