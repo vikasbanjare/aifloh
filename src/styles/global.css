@@ -219,3 +219,27 @@ html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-
 
 /* the printed plate: a framed box with a hard shadow (code-word box, figures) */
 .plate-box { position: relative; border: 1px solid var(--color-text); background: var(--color-surface); padding: var(--space-6); box-shadow: 6px 6px 0 var(--color-text); max-width: min(30rem, calc(100% - 6px)); }
+
+/* ---------- page transitions (cross-document View Transitions, no JS) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-out 220ms var(--ease-exit) both; }
+  ::view-transition-new(root) { animation: vt-in 320ms var(--ease-standard) both; }
+  /* the glass nav stays put while the paper changes underneath */
+  .site-header { view-transition-name: site-nav; }
+  ::view-transition-group(site-nav) { animation-duration: 0s; }
+}
+@keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(12px); } }
+
+/* ---------- rows rise in as they scroll into view (CSS scroll-driven; static where unsupported) ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cat > li, .index > li, .ledger > li {
+      animation: row-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes row-in { from { opacity: 0; transform: translateY(18px); } }
