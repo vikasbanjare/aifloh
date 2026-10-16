@@ -1,40 +1,41 @@
-# Hero film: Google Flow prompts, cinematic live-action version
+# Hero film: Google Flow prompts, premium 3D animated-feature version
 
-**Look:** a premium Hollywood coming-of-age film: a real bedroom, real light and a real person.
-- Shot like a big-studio teen-hero movie: anamorphic lenses, motivated window light, haze and film grain.
-- **Not clay, not cartoon.**
-- I describe the look in words and never name a film or character, because Flow can refuse prompts that name copyrighted films.
+**Look:** a big-studio 3D animated feature film with a cinematic, live-action-style camera and lighting.
+- Stylised characters with appealing proportions, big expressive eyes and soft subsurface skin.
+- Richly detailed sets, warm volumetric light and shallow depth of field.
+- **Not photoreal, not clay.**
+- The prompts describe the style instead of naming a studio, because Flow sometimes refuses brand names. If it accepts it, you can add "Pixar-style" at the start of a prompt.
 
 **How it works on the site:**
-- Scrolling plays the film frame by frame, so normal film cuts between shots are fine.
+- Scrolling plays the film frame by frame, so normal film cuts are fine.
 - Make each shot as its own 8-second clip, and I'll edit them together.
-- The site's 12:57 → 1:14 PM clock and captions stay as crisp overlays on top.
+- The site's 12:57 → 1:14 PM clock and captions stay as overlays.
 
 ---
 
 ## 1. Style line: paste it at the END of every prompt
 
 ```
-Photorealistic live-action cinematic film, modern Hollywood coming-of-age blockbuster look, shot on ARRI Alexa 65 with anamorphic lenses, natural motivated lighting, warm 1 PM sunlight through window blinds with soft haze and visible light beams, practical lamp glow, rich natural colour grade with deep shadows and warm skin tones, subtle teal in the shadows, shallow depth of field, gentle anamorphic flares, realistic skin and fabric texture, fine 35mm film grain, natural 24 fps motion blur, smooth professional camera movement. No text, no subtitles, no logos, no watermark, no costumes, no extra people.
+High-end 3D animated feature film still, stylized CG animation like a major animation studio movie, appealing stylized character design with slightly exaggerated proportions, large expressive eyes, soft subsurface-scattering skin, detailed hair grooming, fabric with soft folds, richly detailed stylized set dressing, cinematic lighting with warm volumetric sunbeams through window blinds, soft bounce light, rim light on the character, gentle haze, shallow depth of field with creamy bokeh, vibrant but harmonious colour palette with warm highlights and cool shadows, polished render, global illumination, 24 fps smooth animation with clear acting and squash-and-stretch subtlety. Not photorealistic, not live action, not claymation. No text, no subtitles, no logos, no watermark, no extra characters.
 ```
 
 ## 2. Two reference images (make these first with Create image)
 
-### A. The hero (attach your sharpest front-facing selfie)
+### A. The hero (attach your selfie)
 
 ```
-Cinematic portrait of the young Indian man from the reference photo, photorealistic, exact same face, hairstyle and skin tone. Mid-20s, wearing a plain off-white crew-neck T-shirt and charcoal grey joggers. Standing in a sunlit bedroom, soft window light from the left, warm skin tones, shallow depth of field, shot on 85mm lens, film still from a Hollywood coming-of-age movie. No text, no watermark.
+Character design sheet of the young Indian man from the reference photo, reimagined as a stylized 3D animated movie character. Keep his recognisable features (face shape, hairstyle, skin tone, eyebrows, any beard), but stylized: slightly larger head and eyes, appealing friendly expression, smooth soft skin shading. Outfit: oversized off-white T-shirt, charcoal grey joggers, white socks. Turnaround: front, three-quarter and side views, plus one expression close-up (sleepy yawn). Clean light grey background, soft studio lighting, polished 3D animated feature render. No text, no watermark.
 ```
 
-**No photo?** Replace the first sentence with: *"Photorealistic young South Asian man, mid-20s, slim build, warm brown skin, short thick black hair, clean or light stubble, friendly face"*. Edit those traits to match you.
+**No photo?** Replace the first sentence with: *"Character design sheet of a young South Asian man in his mid-20s with warm brown skin and short thick black hair, as a stylized 3D animated movie character"*. Edit the traits to match you.
 
 ### B. The bedroom
 
 ```
-Wide cinematic film still of a young video editor's bedroom in a high-rise city apartment in India, early afternoon. Unmade bed with a deep cobalt blue duvet and white pillows on the left, a wooden nightstand with a small black digital alarm clock, a lamp and a lime green mug. On the right, a clean desk under a large window with half-closed blinds: two monitors, a mechanical keyboard, a small plant and a lime green office chair. Three bold typographic posters on the wall, a shelf with books and a camera, a pair of sneakers on the floor. City skyline through the window. Warm sunlight through the blinds, soft haze, light beams across the room. Lived-in, tidy, aspirational. Shot on anamorphic lens, Hollywood production design, photorealistic. No people, no text, no watermark.
+Wide establishing shot from a 3D animated feature film: a young video editor's cosy bedroom in a high-rise city apartment in India, early afternoon. Stylized set design with slightly exaggerated shapes. Unmade bed with a cobalt blue duvet on the left, a wooden nightstand with a chunky black digital alarm clock, a lamp and a lime green mug. On the right, a desk under a big window with half-closed blinds, two glowing monitors, a keyboard, a small plant and a lime green gaming chair. Bold typographic posters on the walls, a shelf with books and a camera, sneakers on the floor, a city skyline outside. Warm volumetric sunbeams through the blinds, dust in the air, cosy and aspirational. Polished 3D animated movie render. No people, no text, no watermark.
 ```
 
-Save the best of each and attach both as **Ingredients** to every clip below.
+Save the best of each and attach both as **Ingredients** to every clip.
 
 ---
 
@@ -52,7 +53,7 @@ Overhead top-down shot, slowly rotating: the young man from the reference fast a
 
 **Clip 3. The tap (close-up)**
 ```
-Close-up, shallow depth of field: his hand slides out from under the cobalt duvet, gropes across the nightstand and slaps the alarm clock silent. Cut to his face on the pillow: one eye opens, squinting into the sunlight, then both eyes. A small tired smile. Natural, realistic performance, no exaggeration. [STYLE LINE]
+Close-up, shallow depth of field: his hand slides out from under the cobalt duvet, gropes across the nightstand and slaps the alarm clock silent. Cut to his face on the pillow: one eye opens, squinting into the sunlight, then both eyes. A small tired smile. Expressive animated acting, readable and charming. [STYLE LINE]
 ```
 
 **Clip 4. Waking up (backlit medium shot)**
