@@ -233,6 +233,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
   /* the film runs under the floating glass nav (the sticky header takes 66 px of flow: 10 px gap + 56 px bar) */
   .film { --night: #0e0c0f; position: relative; margin-top: -66px; background: var(--night); color: var(--color-bg); }
   .film.is-live { height: 720svh; }
+  /* phones flick-scroll: a shorter run plays the same story with less thumb travel */
+  @media (max-width: 47.99rem) { .film.is-live { height: 560svh; } }
   .film-stage { position: relative; height: 100svh; min-height: 30rem; overflow: hidden; background: var(--night); }
   .film.is-live .film-stage { position: sticky; top: 0; }
   .film-poster, .film-poster img, .film-stage :global(.film-canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }

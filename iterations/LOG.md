@@ -253,3 +253,8 @@ Since the film baseline (iter-27, 86) the best is 91: character joints and face 
 From the iter-35 review: too many colour switches after the film, and the work (the strongest proof) sat behind the Free band. Work now comes straight after the end card, renumbered ( 01 ), Free is ( 02 ). The work wall uses the film's rendered black (#0e0c0f) so film, end card and wall read as one dark space before the first colour band; 'or see the work' now lands on the very next section. Figure numbers still run in reading order (Figs. 1-6 wall, 7 ContentIntel, 8 portrait). Backlog #2 closed.
 - Scores: H9 T9 C9 S9 D10 M8 I10 K9 A10 P9 = 92.
 - Decision: KEPT.
+
+## iter-37 · Shorter film run on phones (720 to 560 screen heights)
+Lens: mobile. Phones flick-scroll, so 7.2 screen-heights of film meant a lot of thumb travel before the work. Below 48rem the film section is now 560svh; the story is mapped to progress, so every beat (alarm, reach, walk, the edit, the title) still plays, just a little quicker. Checked at 390x844 at 0.28 / 0.6 / 0.88. Note: the session's worker restarted around 01:00 IST and the 01:36 check-in was held until 07:22 IST, so roughly six hours of loop time were lost; the loop resumed at 07:22 with about an hour before STOP_AT.
+- Scores: H9 T9 C9 S9 D10 M9 I10 K9 A10 P9 = 93.
+- Decision: KEPT.
