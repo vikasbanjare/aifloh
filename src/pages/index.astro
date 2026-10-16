@@ -79,13 +79,13 @@ const posters = HV
   </section>
 
   <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
-    <h2 id="work-h" class="room-h"><span class="label n" aria-hidden="true">( 01 )</span> <span>Work<span class="stop-b">.</span></span></h2>
+    <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
     <Wall items={P.projects} start={1} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
   <section class="room room-lime wrap" aria-labelledby="free-h">
-    <h2 id="free-h" class="room-h"><span class="label n" aria-hidden="true">( 02 )</span> <span>Free<span class="stop-a">.</span></span></h2>
+    <h2 id="free-h" class="room-h"><span class="label n chip" aria-hidden="true">3:00 PM</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
         <li>
@@ -102,7 +102,7 @@ const posters = HV
   </section>
 
   <section class="room wrap" aria-labelledby="studio-h">
-    <h2 id="studio-h" class="room-h"><span class="label n" aria-hidden="true">( 03 )</span> <span>Studio<span class="stop-a">.</span></span></h2>
+    <h2 id="studio-h" class="room-h"><span class="label n chip" aria-hidden="true">4:30 PM</span> <span>Studio<span class="stop-a">.</span></span></h2>
     <div class="pair">
       <a class="side side-a" href={href('/studio/')}>
         <span class="label"><i class="k k-a" aria-hidden="true"></i>Studio</span>
@@ -115,6 +115,10 @@ const posters = HV
         <span class="side-m">Workflows · Plugins · Claude skills</span>
       </a>
     </div>
+    <figure class="still">
+      <img src={href('/media/day/at-work.webp')} alt="Animated still from the film: Vikas grinning at two monitors full of a video edit, afternoon sun through the window." width="1200" height="800" loading="lazy" decoding="async" />
+      <figcaption class="label">Fig. 7 · 4:30 PM, deep in an edit</figcaption>
+    </figure>
     <ol class="steps" role="list" aria-label="How a project runs">
       <li><span class="s-n" aria-hidden="true">01</span><b>Brief</b><span class="s-d">One call: what you need, who it is for, where it runs.</span></li>
       <li class="s-a"><span class="s-n" aria-hidden="true">02</span><b>Sketch by hand</b><span class="s-d">Storyboard, layout or flow before anything is generated.</span></li>
@@ -124,7 +128,7 @@ const posters = HV
   </section>
 
   <section class="room room-m room-blue wrap" aria-labelledby="built-h">
-    <h2 id="built-h" class="room-h"><span class="label n" aria-hidden="true">( 04 )</span> <span>Tools<span class="stop-b">.</span></span></h2>
+    <h2 id="built-h" class="room-h"><span class="label n chip" aria-hidden="true">7:00 PM</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
         {c.tools.map((t, i) => (
@@ -140,19 +144,25 @@ const posters = HV
       </ol>
       <figure class="plate">
         <img src={href('/media/portfolio/contentintel-site.webp')} alt="The ContentIntel website: a dark landing page reading Know it'll work before you hit publish" width="900" height="1347" loading="lazy" decoding="async" />
-        <figcaption class="label">Fig. 7 · ContentIntel</figcaption>
+        <figcaption class="label">Fig. 8 · ContentIntel</figcaption>
       </figure>
     </div>
     <p class="more"><a class="btn" href={href('/tools/')}>Tools, lab and code <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="about-h">
-    <h2 id="about-h" class="room-h"><span class="label n" aria-hidden="true">( 05 )</span> <span>About<span class="stop-a">.</span></span></h2>
+    <h2 id="about-h" class="room-h"><span class="label n chip" aria-hidden="true">11:30 PM</span> <span>About<span class="stop-a">.</span></span></h2>
     <div class="maker">
-      <figure class="me">
-        <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
-        <figcaption class="label">Fig. 8 · {P.profile.nickname}</figcaption>
-      </figure>
+      <div class="me-pair">
+        <figure class="me me-real">
+          <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
+          <figcaption class="label">Fig. 9 · {P.profile.nickname}</figcaption>
+        </figure>
+        <figure class="me me-toon">
+          <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} as the animated character from the film`} width="720" height="720" loading="lazy" decoding="async" />
+          <figcaption class="label">Fig. 10 · animated</figcaption>
+        </figure>
+      </div>
       <div class="stats">
         <dl>
           {P.stats.map((s: any) => <div><dt class="label">{s.label}</dt><dd>{s.value}</dd></div>)}
@@ -341,6 +351,7 @@ const posters = HV
   .k-a { background: var(--color-a-fill); }
   .k-b { background: var(--color-b); }
 
+
   /* ---------- rooms ---------- */
   .room { padding-block: var(--space-16); background: linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
   .room-h { display: flex; align-items: baseline; gap: var(--space-4); font-size: clamp(3.75rem, 1.5rem + 9vw, 7.5rem); font-weight: 800; letter-spacing: -0.055em; line-height: 0.9; margin: 0 0 var(--space-12); }
@@ -397,8 +408,8 @@ const posters = HV
   .room-dark { color: var(--color-bg); background: #0e0c0f; box-shadow: 0 0 0 100vmax #0e0c0f; clip-path: inset(0 -100vmax); padding-block: var(--space-16) var(--space-24); }
   .room-dark .room-h .n { color: #9fb0ff; }
   .room-dark .stop-b { color: #9fb0ff; }
-  .room-dark.room-dark :global(.print a) { box-shadow: 8px 8px 0 var(--color-a-fill); border-color: var(--color-bg); }
-  @media (hover: hover) { .room-dark.room-dark :global(.print a:hover) { box-shadow: 14px 14px 0 var(--color-a-fill); } }
+  .room-dark.room-dark :global(.print a) { box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.85), 0 0 0 1px rgb(255 255 255 / 0.06); border-color: transparent; }
+  @media (hover: hover) { .room-dark.room-dark :global(.print a:hover) { box-shadow: 0 44px 80px -28px rgb(0 0 0 / 0.9), 0 0 0 2px var(--color-a-fill); } }
   .room-dark :global(.print .t) { color: var(--color-text); }
   .room-dark.room-dark :global(.also) { color: #b9b6ad; }
   .room-dark.room-dark :global(.also a) { color: #9fb0ff; }
@@ -481,8 +492,8 @@ const posters = HV
 
   /* ---------- the maker ---------- */
   .maker { display: grid; gap: var(--space-8); }
-  @media (min-width: 48rem) { .maker { grid-template-columns: 16rem minmax(0, 1fr); align-items: center; column-gap: var(--space-12); } }
-  .me { margin: 0; border: 1px solid var(--color-text); background: var(--color-surface); max-width: 16rem; transform: rotate(-2deg); box-shadow: 6px 6px 0 var(--color-text); }
+  @media (min-width: 48rem) { .maker { grid-template-columns: 24rem minmax(0, 1fr); align-items: center; column-gap: var(--space-12); } }
+  .me { margin: 0; border: 1px solid var(--color-text); background: var(--color-surface); }
   .me img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
   .me figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
   /* the stats and the way in share one grid: five numbers, then "About me" fills the sixth cell */
@@ -498,4 +509,32 @@ const posters = HV
   @media (hover: hover) { .stat-more:hover { background: var(--color-b); } .stat-more:hover .arrow { transform: translateX(4px); } }
   .stat-more:focus-visible { outline-offset: 3px; }
   @media (min-width: 64rem) { .stats { grid-template-columns: repeat(3, 1fr); } .stats dl div, .stat-more { padding-block: var(--space-6); } .stats dd { font-size: clamp(2.5rem, 1rem + 3vw, 4rem); } }
+
+  /* ---------- the rest of his day: the film's warmth carries down the page ---------- */
+  /* each room is a time of day, shown like the film's clock */
+  .room-h .chip { padding: 0.45em 0.8em 0.4em; border-radius: 999px; background: rgb(22 21 24 / 0.86); color: var(--color-bg); letter-spacing: 0.04em; font-weight: 600; white-space: nowrap; }
+  .room-dark .room-h .chip { background: rgb(255 255 255 / 0.12); color: var(--color-bg); }
+  .room-lime .room-h .chip { background: var(--color-a-ink); color: var(--color-a-fill); }
+  .room-blue .room-h .chip { background: rgb(14 12 15 / 0.32); color: #fff; }
+  /* paper rooms get the afternoon window light from the film */
+  .room:not(.room-dark):not(.room-lime):not(.room-blue) { background:
+    radial-gradient(70% 55% at 88% 8%, rgb(255 214 150 / 0.38), transparent 70%),
+    linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
+  /* softer, rounder, lit like a set: soft shadows instead of hard ink offsets */
+  .side { border-radius: 22px; border-color: rgb(20 20 20 / 0.14); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
+  .side-a { border-top-width: 10px; } .side-b { border-top-width: 10px; }
+  @media (hover: hover) { .side:hover { transform: translateY(-6px); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 34px 60px -28px rgb(60 40 10 / 0.55); } }
+  .cw-plate { border-radius: 18px; box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.7), 0 0 0 6px rgb(184 240 0 / 0.9); }
+  .stat-more { border-radius: 18px; }
+  .plate { border-radius: 16px; overflow: hidden; }
+  .room-blue .plate { box-shadow: 0 30px 60px -24px rgb(0 0 30 / 0.6); }
+  .still { margin: var(--space-12) 0 0; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 40px 80px -40px rgb(60 40 10 / 0.6); }
+  .still img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+  .still figcaption { position: absolute; left: var(--space-4); bottom: var(--space-4); padding: 0.45em 0.8em; border-radius: 999px; background: rgb(22 21 24 / 0.7); color: var(--color-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  @media (min-width: 64rem) { .still img { aspect-ratio: 21 / 9; object-position: 50% 30%; } }
+  .me-pair { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); max-width: 26rem; }
+  .me { border-radius: 14px; border-color: rgb(20 20 20 / 0.12); box-shadow: 0 24px 50px -26px rgb(60 40 10 / 0.55); overflow: hidden; }
+  .me-real { transform: rotate(-3deg); }
+  .me-toon { transform: rotate(2.5deg) translateY(14px); }
+
 </style>
