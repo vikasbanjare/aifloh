@@ -1,6 +1,7 @@
 # aifloh.com: final report of the design iteration loop
 
 Loop: 15 Oct 2026, 21:00 IST, to 16 Oct 2026, 08:30 IST. Branch `claude/new-session-skts1d`; every kept iteration was pushed and deployed to https://aifloh.com.
+Wrap-up ran at 08:32 IST on 16 Oct 2026 against tag `best` (eb3dd11). The site code at HEAD is identical to `best`; only reports were added on top.
 Winning iteration: **iter-37** (local tag `best`; git tags cannot be pushed through this environment's proxy, so `SCOREBOARD.md` is the durable record).
 
 ## Two halves of one night
@@ -19,13 +20,13 @@ Winning iteration: **iter-37** (local tag `best`; git tags cannot be pushed thro
 - Scores: performance 98, accessibility 100, best practices 100, SEO 100.
 - LCP 2.3 s, TBT 60 ms, CLS 0.001.
 - axe found 0 issues on `/` and `/free/` at both 390 and 1440 px.
-- `verify.sh` passes: build, typecheck, unit tests and 21 end-to-end flows.
+- Final wrap-up on `best`: build, typecheck and unit tests pass; 21/21 end-to-end flows pass; no console errors and no horizontal overflow at 375, 768 and 1440 px (`screens/iter-final/`).
 
 ## Before and after
 
 - Before (iter-00): `final/before-home-1440.jpg`, `final/before-home-375.jpg`
 - After, the film as people see it: `final/after-film-frames-1440.jpg` and `final/after-film-frames-390.jpg`. The 1440 sheet shows 12:57, the 1:00 alarm, the walk, the edit and the closing room; the 390 sheet shows phone frames.
-- After, the still version (reduced motion or no JavaScript, plus the rest of the page): `final/after-home-1440-still.jpg`, `final/after-home-375-still.jpg`
+- After, the still version (reduced motion or no JavaScript, plus the rest of the page): `final/after-home-1440-still.jpg`, `final/after-home-768-still.jpg`, `final/after-home-375-still.jpg`
 
 ## Top 10 changes
 
@@ -78,5 +79,5 @@ Winning iteration: **iter-37** (local tag `best`; git tags cannot be pushed thro
   - Add the BLOCKLIST secret in CI.
 - **Old git history** still contains employer names. The current files are scrubbed, but history was not rewritten.
 - **The `best` tag is local only**, because the proxy blocks tag pushes.
-- **About six hours of loop time were lost.** The session's worker restarted around 01:00 IST and the 01:36 check-in was held until 07:22 IST. The loop resumed for the last hour.
+- **About six hours of loop time were lost.** The session's worker restarted around 01:00 IST and the 01:36 check-in was held until 07:22 IST. The loop resumed for the last hour. The container restarted again at 08:12 IST; nothing was lost, since every change had been pushed.
 - **Backlog items still open:** #6 (Free range), #7 (larger Tools plate), #9 (phone page length after the film), and calmer colour bands after the Work wall (from the iter-35 review).
