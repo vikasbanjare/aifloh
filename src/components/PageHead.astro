@@ -25,5 +25,9 @@ const at = DAY[kicker];
   .light-day { --glow: rgb(255 214 150 / 0.42); }
   .light-dusk { --glow: rgb(255 168 140 / 0.38); }
   .light-night { --glow: rgb(150 170 255 / 0.26); }
+  /* the whole page takes the hour's paper: sunlit cream, evening rose, cool moonlight. Text stays dark on all three. */
+  :global(body:has(.page-head.light-day)) { background: linear-gradient(to bottom, #fbf4e4, #f6e6c6 70%, #f3ddb4); }
+  :global(body:has(.page-head.light-dusk)) { background: linear-gradient(to bottom, #f8e9de, #f0e0e2 60%, #e7dcea); }
+  :global(body:has(.page-head.light-night)) { background: linear-gradient(to bottom, #eceef5, #e3e6f1 60%, #dde2f0); }
   .clock { padding: 0.45em 0.8em 0.4em; border-radius: 999px; background: rgb(22 21 24 / 0.86); color: var(--color-bg); font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
 </style>

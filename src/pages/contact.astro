@@ -3,13 +3,20 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import PageHead from '../components/PageHead.astro';
 import Base from '../layouts/Base.astro';
+import { href } from '../lib/href';
 const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
 ---
 <Base title="Contact" description="Tell me what you're making. Email me or message me on LinkedIn.">
   <PageHead kicker="Contact" title="Tell me what you're making." lede="A few lines is enough: what it is, who it's for, and when." />
-  <section class="wrap section">
+  <section class="wrap section reach">
+    <figure class="me">
+      <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} as the animated character from the film on the home page`} width="720" height="720" loading="lazy" decoding="async" />
+      <figcaption class="label">Fig. 1 · {P.profile.nickname}, animated</figcaption>
+    </figure>
+    <div>
     <a class="mail" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="contact-email">{P.profile.email}<span aria-hidden="true"> →</span></a>
     <p class="label alt">Or <a href={P.profile.linkedin} rel="me noopener">LinkedIn</a> · <span class="muted">nothing you type here is stored by this site</span></p>
+    </div>
   </section>
 </Base>
 <style>
@@ -18,5 +25,10 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
   .mail:focus-visible { background-size: 100% 0.28em; }
   .mail span { color: var(--color-b); }
   .alt { margin-top: var(--space-8); }
+  .reach { display: grid; gap: var(--space-8); align-items: center; }
+  @media (min-width: 56rem) { .reach { grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); column-gap: var(--space-12); } }
+  .me { margin: 0; max-width: 18rem; border: 1px solid rgb(20 20 20 / 0.14); border-radius: 22px; overflow: hidden; background: var(--color-surface); box-shadow: 0 40px 70px -34px rgb(40 30 10 / 0.5); transform: rotate(-2deg); }
+  .me img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  .me figcaption { padding: var(--space-2) var(--space-3); }
   .alt a { color: var(--color-b); }
 </style>

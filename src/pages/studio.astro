@@ -51,22 +51,23 @@ const steps = [
 <style>
   .pair { display: grid; gap: var(--space-4); }
   /* subgrid: both cards share row heights, so the two headlines sit on one line */
-  .side { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); border: 1px solid var(--color-text); min-height: 22rem; }
-  .side .label { color: inherit; margin: 0; }
-  .side-a { background: var(--color-a-fill); color: var(--color-a-ink); }
-  .side-b { background: var(--color-b); color: var(--color-b-ink); }
+  .side { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); min-height: 22rem; background: var(--color-surface); border: 1px solid rgb(20 20 20 / 0.14); border-radius: 22px; box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
+  .side .label { color: var(--color-text-muted); margin: 0; }
+  .side-a { border-top: 10px solid var(--color-a-fill); }
+  .side-b { border-top: 10px solid var(--color-b); }
+  .side-b .side-t { color: var(--color-b); }
   .side-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin: auto 0 0; }
   @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; } .side { display: grid; grid-row: span 3; grid-template-rows: subgrid; gap: var(--space-4); } .side-t { margin: 0; align-self: end; } }
-  .plain { list-style: none; margin: 0; padding: 0; border-top: 1px solid currentColor; }
-  .plain li { display: grid; gap: 2px; padding: var(--space-3) 0; border-bottom: 1px solid currentColor; }
-  .plain span { font-size: var(--text-sm); }
-  .plain a { color: inherit; }
+  .plain { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+  .plain li { display: grid; gap: 2px; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-line); }
+  .plain span { font-size: var(--text-sm); color: var(--color-text-muted); }
+  .plain a { color: var(--color-b); }
   .room-h { display: flex; gap: var(--space-4); align-items: baseline; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
   .steps { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: grid; gap: var(--space-6); }
   @media (min-width: 48rem) { .steps { grid-template-columns: repeat(4, 1fr); } }
   .steps li { display: grid; gap: var(--space-1); padding-top: var(--space-3); border-top: 2px solid var(--color-text); }
-  .steps .c-a { border-top-color: var(--color-a-fill); }
+  .steps .c-a { border-top-color: var(--color-a-fill); border-top-width: 3px; }
   .steps .c-b { border-top-color: var(--color-b); }
   .steps li > span:last-child { color: var(--color-text-muted); font-size: var(--text-sm); }
   .verticals { font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.02em; }

@@ -2,9 +2,9 @@
 // The gallery wall: real covers hung like prints, each a little crooked until you look at it.
 // Projects without a cover are listed underneath as plain lines.
 import { href } from '../lib/href';
-interface Work { title: string; tags: string[]; year: string; link: string; cover?: string; coverAlt?: string }
-interface Props { items: Work[]; start?: number; limit?: number }
-const { items, start = 4, limit } = Astro.props;
+interface Work { title: string; tags: string[]; year: string; link: string; cover?: string; coverAlt?: string; summary?: string }
+interface Props { items: Work[]; start?: number; limit?: number; details?: boolean }
+const { items, start = 4, limit, details = false } = Astro.props;
 const covered = items.filter((w) => w.cover).slice(0, limit);
 const plain = items.filter((w) => !w.cover);
 ---
@@ -17,6 +17,7 @@ const plain = items.filter((w) => !w.cover);
         <span class="cap">
           <span class="label fig">Fig. {start + i}</span>
           <span class="t">{w.title}</span>
+          {details && w.summary && <span class="d">{w.summary}</span>}
           <span class="label m">{w.tags.join(', ')} · {w.year} ↗</span>
         </span>
       </a>
@@ -62,4 +63,5 @@ const plain = items.filter((w) => !w.cover);
   @media (prefers-reduced-motion: reduce) { .print a { transition: none; } }
   .also { margin-top: var(--space-12); color: var(--color-text-muted); }
   .also a { color: var(--color-b); }
+  .print .d { display: block; margin-top: 2px; font-size: var(--text-sm); line-height: 1.4; color: var(--color-text-muted); }
 </style>
