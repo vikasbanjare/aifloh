@@ -21,7 +21,7 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 export type Room = { dispose: () => void; frameTimes: number[] };
 
 const BG = new Color('#1c1a1e');
-const LIME = '#b8f000';
+const LIME = '#f6b23c';
 const COBALT = '#2b4bff';
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -415,7 +415,7 @@ export function mountRoom(stage: HTMLElement, getProgress: () => number, onFirst
 
   // shelf with books on the left wall, nearer the front
   room.add(rbox(0.3, 0.05, 1.2, 0.02, wood, -2.8, 1.55, 0.95));
-  const bookCols = ['#2b4bff', '#e9e3d6', '#b8f000', '#3a3f4b', '#c96f4a', '#e9e3d6', '#2a2a2e'];
+  const bookCols = ['#2b4bff', '#e9e3d6', '#f6b23c', '#3a3f4b', '#c96f4a', '#e9e3d6', '#2a2a2e'];
   bookCols.forEach((col, i) => {
     const h = 0.26 + ((i * 37) % 9) / 60;
     const b = rbox(0.2, h, 0.07, 0.015, clay(col), -2.8, 1.575 + h / 2, 0.5 + i * 0.085);

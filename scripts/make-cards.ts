@@ -14,12 +14,12 @@ const fonts = [
   { name: 'Inter', data: font(400), weight: 400 as const, style: 'normal' as const },
   { name: 'Inter', data: font(800), weight: 800 as const, style: 'normal' as const },
 ];
-const C = { bg: '#f3f1ea', text: '#141414', muted: '#5b5850', a: '#b8f000', b: '#2b4bff', line: '#141414' };
+const C = { bg: '#f3f1ea', text: '#141414', muted: '#5b5850', a: '#f6b23c', b: '#2b4bff', line: '#141414' };
 const SITE = (process.env.SITE_URL || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 // Fig. 1 in miniature: the hand line (lime) finished by the machine (cobalt). Same shape as the home hero.
 const FIG = 'data:image/svg+xml;base64,' + Buffer.from(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 96"><path d="M8 62 C 16 40, 24 78, 34 64 S 42 40, 54 52 C 62 60, 58 72, 50 68 C 44 64, 52 48, 66 52 S 82 76, 94 62 S 108 36, 122 50 S 140 66, 150 50" fill="none" stroke="${'#b8f000'}" stroke-width="7" stroke-linecap="round"/><path d="M150 50 L170 50 L170 30 L200 30 L200 70 L230 70 L230 40 L260 40 L260 60 L292 60" fill="none" stroke="${'#2b4bff'}" stroke-width="3"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 96"><path d="M8 62 C 16 40, 24 78, 34 64 S 42 40, 54 52 C 62 60, 58 72, 50 68 C 44 64, 52 48, 66 52 S 82 76, 94 62 S 108 36, 122 50 S 140 66, 150 50" fill="none" stroke="${'#f6b23c'}" stroke-width="7" stroke-linecap="round"/><path d="M150 50 L170 50 L170 30 L200 30 L200 70 L230 70 L230 40 L260 40 L260 60 L292 60" fill="none" stroke="${'#2b4bff'}" stroke-width="3"/></svg>`,
 ).toString('base64');
 
 type Node = { type: string; props: Record<string, unknown> };

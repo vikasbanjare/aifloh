@@ -273,3 +273,6 @@ Time-of-day headers on inner pages, with the light shifting from day to dusk to 
 
 ## iter-41 · Home as one day, morning to night (Vikas's request)
 Film blooms to afternoon paper (title ink-mixes faster than the wash so it stays readable mid-fade); afternoon sky (cream to gold) for end card through Studio; 7 PM sunset still (dusk grade of the film's city frame) as the turn; dusk-to-night sky for Tools and About into the 4 AM footer. Colour bands removed. Film scroll captions removed on request. Checks: verify 21/21 e2e, axe clean on / and /about/ at 390 and 1440, LH (gzip) home 98/100/100/100, LCP 2.2 s, CLS 0.001, no console errors or overflow. Screens: iterations/screens/iter-41.
+
+## iter-42 · Marigold replaces lime; sun path replaces the rope thread (Vikas's request)
+Token swap lime to marigold sitewide, plus the hard-coded spots. The margin thread is now a dashed track with a sun that travels each room by view timeline, a moon in the night rooms. Checks: verify 21/21 e2e; axe clean on /, /free/, /about/, /work/ and /contact/ at 390 and 1440; no console errors or overflow. Screens: iterations/screens/iter-42.

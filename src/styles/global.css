@@ -223,7 +223,7 @@ html.booting .rise, html.booting .rise-2, html.booting .rise-3 { animation-play-
   .cat-row .c-t { font-size: var(--t-row-sm); font-weight: 750; letter-spacing: -0.03em; line-height: 1.1; }
   .cat-big .cat-row .c-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
 }
-/* the highlighter: lime slides in under the row */
+/* the highlighter: marigold slides in under the row */
 .cat-row::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
 @media (hover: hover) { .cat-row:hover::before { transform: scaleX(1); } .cat-row:hover .c-n, .cat-row:hover .c-m, .cat-row:hover .c-y, .cat-row:hover .c-s { color: var(--color-text); } }
 .cat-row:focus-visible::before { transform: scaleX(1); }

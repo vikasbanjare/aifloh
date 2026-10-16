@@ -8,7 +8,8 @@
 :root {
   color-scheme: light;
 
-  /* Light theme (2026-10-15). Studio Night colours kept as the brand pair: lime + cobalt. */
+  /* Light theme (2026-10-15). Brand pair: marigold (hand) + cobalt (machine). Marigold replaced lime on 2026-10-16:
+     the film's afternoon sun and the lit window at 4 AM. */
   --color-bg: #f3f1ea;
   --color-panel: #fbfaf6;
   --color-surface: #fbfaf6;
@@ -19,18 +20,18 @@
   --color-line-strong: #a9a596;
   --color-focus: #2b4bff;
 
-  /* Colour A = made by hand. Lime is a fill/highlight only on light (1.2:1 as text). */
-  --color-a: #3d5c00;          /* text-safe "by hand" green, 7:1 */
-  --color-a-fill: #b8f000;     /* lime: fills, highlights, buttons with ink text (14:1) */
+  /* Colour A = made by hand. Marigold is a fill/highlight only on light (1.9:1 as text). */
+  --color-a: #8a4b00;          /* text-safe "by hand" amber, 6.1:1 */
+  --color-a-fill: #f6b23c;     /* marigold: fills, highlights, buttons with ink text (10:1) */
   --color-a-ink: #0e0e10;
-  --color-a-soft: rgba(184, 240, 0, 0.35);
+  --color-a-soft: rgba(246, 178, 60, 0.35);
   /* Colour B = AI or automated. */
   --color-b: #2b4bff;          /* cobalt text, 5.4:1 on bg */
   --color-b-strong: #2b4bff;
   --color-b-ink: #ffffff;
   --color-b-soft: rgba(43, 75, 255, 0.12);
 
-  --color-highlight: #b8f000;
+  --color-highlight: #f6b23c;
   --color-on-highlight: #0e0e10;
 
   --color-standin-bg: #ffe36e;

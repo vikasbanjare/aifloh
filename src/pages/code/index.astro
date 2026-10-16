@@ -17,7 +17,7 @@ const groups: { key: string; label: string }[] = [
   { key: 'site', label: 'This site' },
 ];
 const fmt = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
-const PALETTE = ['#b8f000', '#9aa8ff', '#f2f3f5', '#ffb547', '#6b6e78'];
+const PALETTE = ['#f6b23c', '#9aa8ff', '#f2f3f5', '#e8875f', '#6b6e78'];
 function bar(langs: Record<string, number>) {
   const total = Object.values(langs).reduce((a, b) => a + b, 0);
   if (!total) return [];
@@ -76,7 +76,7 @@ function bar(langs: Record<string, number>) {
   </section>
 </Base>
 <style>
-  .sw0 { background: #b8f000; } .sw1 { background: #9aa8ff; } .sw2 { background: #f2f3f5; } .sw3 { background: #ffb547; } .sw4 { background: #6b6e78; }
+  .sw0 { background: #f6b23c; } .sw1 { background: #9aa8ff; } .sw2 { background: #f2f3f5; } .sw3 { background: #e8875f; } .sw4 { background: #6b6e78; }
   .group { margin-top: var(--space-12); }
   .grid-cards { list-style: none; padding: 0; margin: 0; }
   h2 { font-size: var(--text-lg); }

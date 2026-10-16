@@ -361,27 +361,27 @@ const posters = HV
   .room-h .n { color: var(--color-b); letter-spacing: 0.06em; font-weight: 500; }
 
   .more { margin: var(--space-8) 0 0; }
-  /* ---------- the margin ledger: one thread down the page. Hand (lime wobble) through most rooms,
-     machine (straight cobalt) through Tools. Drawn by scroll where supported; simply there elsewhere. ---------- */
+  /* ---------- the sun path: down the left margin, a faint track with the sun on it. As each room scrolls past,
+     the sun travels down it; in the night rooms it is the moon. Desktop only (the gutter is too narrow on phones);
+     with reduced motion or no scroll timelines it simply rests beside the room's title. ---------- */
   @media (min-width: 64rem) {
     .room { position: relative; }
     .room::before {
-      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 10px); top: 0; bottom: 0; width: 20px;
-      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNjAiIHZpZXdCb3g9IjAgMCAyMCAxNjAiPjxwYXRoIGQ9Ik0xMCAwIEMgMTYgMjAsIDQgMzgsIDEwIDU4IFMgMTcgOTYsIDkgMTE4IFMgNCAxNDYsIDEwIDE2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjhmMDAwIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==") repeat-y center top / 20px 160px; pointer-events: none;
+      content: ''; position: absolute; left: calc(var(--gutter) * 0.25); top: var(--space-8); bottom: var(--space-8); width: 0;
+      border-left: 1px dashed currentColor; opacity: 0.22; pointer-events: none;
     }
-    .room-m::before { background: linear-gradient(var(--color-b), var(--color-b)) center top / 3px 100% no-repeat; }
     .room::after {
-      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 6px); top: calc(var(--space-16) + 0.45em); width: 12px; height: 12px;
-      background: var(--color-bg); border: 2px solid var(--color-text); pointer-events: none;
+      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 7px); top: calc(var(--space-16) + 0.45em); width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffe2a3, var(--color-a-fill) 60%, #e08a1e);
+      box-shadow: 0 0 0 5px rgb(246 178 60 / 0.18), 0 0 22px 4px rgb(246 178 60 / 0.55); pointer-events: none;
     }
-    .room-m::after { border-color: var(--color-b); }
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
-        .room::before { transform-origin: top; animation-name: thread; animation-timing-function: linear; animation-fill-mode: both; animation-duration: auto; animation-timeline: view(); animation-range: entry 20% cover 55%; }
+        .room::after { animation-name: sun-path; animation-timing-function: ease-in-out; animation-fill-mode: both; animation-duration: auto; animation-timeline: view(); animation-range: cover 20% cover 80%; }
       }
     }
   }
-  @keyframes thread { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes sun-path { from { top: calc(var(--space-16) + 0.45em); } to { top: calc(100% - var(--space-8) - 14px); } }
 
 
   /* ---------- index rows: wall labels ---------- */
@@ -423,7 +423,7 @@ const posters = HV
   .steps { list-style: none; margin: var(--space-12) 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-4); }
   .steps li { position: relative; display: grid; gap: var(--space-1); padding-top: var(--space-4); border-top: 3px solid var(--color-text); }
   .steps .s-a { border-top-color: transparent; }
-  .steps .s-a::before { content: ''; position: absolute; top: -8.5px; left: 0; right: 0; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14' viewBox='0 0 120 14'%3E%3Cpath d='M0 7 C15 1 25 13 40 7 S65 1 80 7 S105 13 120 7' fill='none' stroke='%23b8f000' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0 / 120px 14px; }
+  .steps .s-a::before { content: ''; position: absolute; top: -8.5px; left: 0; right: 0; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14' viewBox='0 0 120 14'%3E%3Cpath d='M0 7 C15 1 25 13 40 7 S65 1 80 7 S105 13 120 7' fill='none' stroke='%23f6b23c' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0 / 120px 14px; }
   .steps .s-b, .steps .s-c { border-top-color: var(--color-b); }
   .steps .s-c::after { content: ''; position: absolute; top: -7px; right: 0; width: 11px; height: 11px; background: var(--color-surface); border: 2px solid var(--color-b); }
   .s-n { font-size: clamp(3rem, 2rem + 3vw, 5rem); font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; color: var(--color-text); }
@@ -483,7 +483,7 @@ const posters = HV
   .side { border-radius: 22px; border-color: rgb(20 20 20 / 0.14); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
   .side-a { border-top-width: 10px; } .side-b { border-top-width: 10px; }
   @media (hover: hover) { .side:hover { transform: translateY(-6px); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 34px 60px -28px rgb(60 40 10 / 0.55); } }
-  .cw-plate { border-radius: 18px; box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.7), 0 0 0 6px rgb(184 240 0 / 0.9); }
+  .cw-plate { border-radius: 18px; box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.7), 0 0 0 6px rgb(246 178 60 / 0.9); }
   .stat-more { border-radius: 18px; }
   .plate { border-radius: 16px; overflow: hidden; }
   .still { margin: var(--space-12) 0 0; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 40px 80px -40px rgb(60 40 10 / 0.6); }
@@ -508,7 +508,7 @@ const posters = HV
   .dusk figcaption { position: absolute; left: 0; right: 0; bottom: var(--space-8); }
   .dusk figcaption span { display: inline-block; padding: 0.45em 0.8em; border-radius: 999px; background: rgb(22 21 24 / 0.72); color: #fff; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
   .day-dark { background: linear-gradient(to bottom, #2b2d6b 0%, #1d2150 45%, #0c1122 100%);
-    --color-text: #f1ede4; --color-text-muted: #b8bed6; --color-line-strong: rgb(255 255 255 / 0.28); --color-b: #9db0ff; --color-focus: #b8f000;
+    --color-text: #f1ede4; --color-text-muted: #b8bed6; --color-line-strong: rgb(255 255 255 / 0.28); --color-b: #9db0ff; --color-focus: #f6b23c;
     --glow: transparent; color: var(--color-text); }
   .day-dark .room-h .chip { background: rgb(255 255 255 / 0.12); color: #fff; }
   .day-dark .ix::before { background: #f1ede4; }
@@ -521,7 +521,8 @@ const posters = HV
   .day-dark .stat-more { background: #f1ede4; color: #141414; }
   @media (hover: hover) { .day-dark .stat-more:hover { background: var(--color-a-fill); } }
   .day-dark :global(.stand-in) { color: inherit; border-color: currentColor; }
-  @media (min-width: 64rem) { .day-dark .room::after { background: #1d2150; border-color: #f1ede4; } .day-dark .room-m::before { background: linear-gradient(#9db0ff, #9db0ff) center top / 3px 100% no-repeat; } .day-dark .room-m::after { border-color: #9db0ff; } }
+  /* night rooms: the sun on the margin becomes the moon */
+  @media (min-width: 64rem) { .day-dark .room::after { background: radial-gradient(circle at 35% 35%, #ffffff, #dfe5ff 55%, #a9b6ea); box-shadow: 0 0 0 5px rgb(220 228 255 / 0.12), 0 0 22px 4px rgb(200 212 255 / 0.4); } }
   /* the night runs straight into the 4 AM footer */
   :global(.site-footer) { margin-top: 0; }
 </style>
