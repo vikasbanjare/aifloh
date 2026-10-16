@@ -55,7 +55,7 @@ const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kin
       li.append(a);
       return li;
     }));
-    count.textContent = `${hits.length} result${hits.length === 1 ? '' : 's'}`;
+    count.textContent = hits.length ? `${hits.length} result${hits.length === 1 ? '' : 's'}` : `Nothing matches “${q.value.trim()}”. Try one word, or set Kind to all kinds.`;
     const result = hits.length ? 'match' : 'no-match';
     if (terms.length && result !== reported) { reported = result; (window as any).aiflohTrack?.('Site Search', { result }); }
   }

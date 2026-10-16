@@ -76,3 +76,11 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
   - (10) The time chips carry a hover title: "His day, told like the film".
   - (11) The nav pill reads "Free stuff".
   - Not done: (9) Pulse still needs a real screenshot and status from Vikas.
+- 2026-10-16 · UX writing pass ·
+  - Empty states now give a way out:
+    - Free filter with no matches: "Nothing matches both of those yet." plus a "Show everything" button. It used to show a bare "0 of 17".
+    - Library search with no results: "Nothing matches “…”. Try one word, or set Kind to all kinds." It used to show "0 results".
+    - Code word not found: "No resource uses that word yet. Check the spelling, or see everything free" (a link). It used to say "listed below", which was wrong on home.
+  - Buttons say what they do: "Go" is now "Get it"; "Open to copy all" is now "Open the full text"; "All 13 on Behance", "All 17 free" and "Tools, lab and code" now start with "See".
+  - Voice correction: the critique pass had changed Studio to "I make it". SITE-BUILD Section 2 says "we" on Studio and Automate, so it is back to "We make it." and "We build the machine.". The labels now say who "we" is: "AI-Floh studio" and "AI-Floh automate". Home and About stay first person ("I keep the craft").
+  - Kept as recorded decisions: uppercase mono button labels (the catalogue voice, decided 15 Oct).

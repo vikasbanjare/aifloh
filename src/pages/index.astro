@@ -83,7 +83,7 @@ const posters = HV
   <section class="room wrap" id="work" aria-labelledby="work-h">
     <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
     <Wall items={homeWork} start={1} limit={6} />
-    <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
+    <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">See all {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="free-h">
@@ -101,20 +101,20 @@ const posters = HV
         </li>
       ))}
     </ol>
-    <p class="more"><a class="btn btn-primary" href={href('/free/')}>All {c.resources.length} free <span class="arrow" aria-hidden="true">→</span></a></p>
+    <p class="more"><a class="btn btn-primary" href={href('/free/')}>See all {c.resources.length} free <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="studio-h">
     <h2 id="studio-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">4:30 PM</span> <span>Studio<span class="stop-a">.</span></span></h2>
     <div class="pair">
       <a class="side side-a" href={href('/studio/')}>
-        <span class="label"><i class="k k-a" aria-hidden="true"></i>Studio</span>
-        <span class="side-t">I make it.</span>
+        <span class="label"><i class="k k-a" aria-hidden="true"></i>AI-Floh studio</span>
+        <span class="side-t">We make it.</span>
         <ul class="side-l" role="list">{studioServices.map((s: any) => <li><b>{s.title}</b> <span>{s.tags.slice(0, 3).join(' · ')}</span></li>)}</ul>
       </a>
       <a class="side side-b" href={href('/studio/')}>
-        <span class="label"><i class="k k-b" aria-hidden="true"></i>Automate</span>
-        <span class="side-t">I build the machine.</span>
+        <span class="label"><i class="k k-b" aria-hidden="true"></i>AI-Floh automate</span>
+        <span class="side-t">We build the machine.</span>
         <ul class="side-l" role="list">
           {automateService && <li><b>{automateService.title}</b> <span>{automateService.tags.join(' · ')}</span></li>}
           <li><b>Tools</b> <span>ContentIntel · CutPilot · Pulse</span></li>
@@ -161,7 +161,7 @@ const posters = HV
         <figcaption class="label">Fig. 9 · ContentIntel</figcaption>
       </figure>
     </div>
-    <p class="more"><a class="btn" href={href('/tools/')}>Tools, lab and code <span class="arrow" aria-hidden="true">→</span></a></p>
+    <p class="more"><a class="btn" href={href('/tools/')}>See tools, lab and code <span class="arrow" aria-hidden="true">→</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="about-h">

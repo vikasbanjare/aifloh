@@ -60,7 +60,7 @@ const copyable = (r: Resource) => preview(r) === copyText(r);
           <div class="body">
             <pre class="copy-box" id={`copy-${r.slug}`} tabindex="0" aria-label={`${r.title}: text`}>{preview(r)}</pre>
             <div class="row-actions">
-              {copyable(r) ? <CopyButton target={`copy-${r.slug}`} slug={r.slug} /> : <a class="btn btn-primary" href={href(`/free/${r.slug}/`)}>Open to copy all</a>}
+              {copyable(r) ? <CopyButton target={`copy-${r.slug}`} slug={r.slug} /> : <a class="btn btn-primary" href={href(`/free/${r.slug}/`)}>Open the full text</a>}
               {isDownload(r) && (
                 <a class="btn dl-btn" href={href(r.skill!.zip!)} download data-track="Resource Download" data-track-slug={r.slug}>
                   Download .zip
@@ -75,7 +75,8 @@ const copyable = (r: Resource) => preview(r) === copyText(r);
   }
 </ol>
 {items.length > pageSize && <button type="button" class="btn more" hidden>Show {pageSize} more</button>}
-{items.length === 0 && <p class="muted">Nothing here yet.</p>}
+{items.length === 0 && <p class="muted">Nothing here yet. New resources land here when they're posted.</p>}
+{filter && items.length > 1 && <p class="filter-empty muted" hidden>Nothing matches both of those yet. <button type="button" class="btn filter-reset">Show everything</button></p>}
 
 <script>
   document.querySelectorAll<HTMLElement>('.ledger').forEach((ledger) => {
@@ -93,10 +94,17 @@ const copyable = (r: Resource) => preview(r) === copyText(r);
       if (more) more.hidden = match.length <= limit;
       const count = form?.querySelector('.filter-count');
       if (count) count.textContent = `${match.length} of ${rows.length}`;
+      const empty = document.querySelector<HTMLElement>('.filter-empty');
+      if (empty) empty.hidden = match.length > 0;
       ledger.classList.remove('fade');
       void ledger.offsetWidth;
       ledger.classList.add('fade');
     }
+    document.querySelector('.filter-reset')?.addEventListener('click', () => {
+      form?.querySelectorAll('select').forEach((s) => (s.value = ''));
+      limit = PAGE;
+      apply();
+    });
     if (form) {
       form.hidden = false;
       form.addEventListener('change', (e) => {
@@ -158,4 +166,6 @@ const copyable = (r: Resource) => preview(r) === copyText(r);
     summary:hover .chev { border-color: var(--color-text); }
   }
   @media (max-width: 30rem) { .body { padding-left: 0; } summary { grid-template-columns: 1.75rem 1fr 2rem; gap: var(--space-3); } }
+  .filter-empty { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
+  .filter-empty[hidden] { display: none; }
 </style>

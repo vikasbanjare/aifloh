@@ -11,7 +11,7 @@ const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord,
   <label for={id} class="cw-label">Got a word from a post? Type it.</label>
   <div class="cw-row">
     <input id={id} name="w" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="24" required autofocus={autofocus} placeholder="e.g. hooks" />
-    <button class="btn btn-primary" type="submit">Go</button>
+    <button class="btn btn-primary" type="submit">Get it</button>
   </div>
   <p class="cw-msg" role="status" aria-live="polite"></p>
   <noscript><p class="muted cw-help">You can also type the word straight after the address, like <code>/hooks</code>.</p></noscript>
@@ -61,7 +61,10 @@ const words = Object.fromEntries(loadContent().resources.map((r) => [r.codeWord,
           msg.append(a, i < close.length - 1 ? ', ' : '?');
         });
       } else {
-        msg.textContent = 'No resource uses that word yet. Everything free is listed below.';
+        const all = document.createElement('a');
+        all.href = base;
+        all.textContent = 'see everything free';
+        msg.append('No resource uses that word yet. Check the spelling, or ', all, '.');
       }
     });
   });
