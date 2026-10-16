@@ -53,12 +53,6 @@ const posters = HV
         <img src={href(posters.end)} alt={posters.alt} width="1600" height="900" decoding="async" />
       </picture>
       <p class="hud" aria-hidden="true"><span data-hud-time>12:57</span><span class="hud-pm">PM</span><span class="hud-where label">in India</span></p>
-      <ol class="caps" aria-hidden="true">
-        <li class="c1">His day starts at 1 PM.</li>
-        <li class="c2">Alarm.</li>
-        <li class="c3">Coffee can wait.</li>
-        <li class="c4">The edit can't.</li>
-      </ol>
       <h1 id="hero-h" class="subs">
         <span class="s1">I keep the <span class="hand">craft</span><span class="stop-a">.</span></span>
         <span class="s2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
@@ -68,6 +62,7 @@ const posters = HV
     </div>
   </section>
 
+  <div class="day day-light">
   <section class="endcard wrap" id="start" aria-label="Who and how to start">
     <div class="who-wrap">
       <p class="who">Vikas Banjare, or Bubu. Designer, editor, storyteller. 8+&nbsp;years, 1000+&nbsp;projects.</p>
@@ -78,13 +73,13 @@ const posters = HV
     </div>
   </section>
 
-  <section class="room room-dark wrap" id="work" aria-labelledby="work-h">
+  <section class="room wrap" id="work" aria-labelledby="work-h">
     <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
     <Wall items={P.projects} start={1} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
-  <section class="room room-lime wrap" aria-labelledby="free-h">
+  <section class="room wrap" aria-labelledby="free-h">
     <h2 id="free-h" class="room-h"><span class="label n chip" aria-hidden="true">3:00 PM</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
@@ -127,7 +122,15 @@ const posters = HV
     </ol>
   </section>
 
-  <section class="room room-m room-blue wrap" aria-labelledby="built-h">
+  </div>
+
+  <figure class="dusk">
+    <img src={href('/media/day/dusk-7pm.webp')} srcset={`${href('/media/day/dusk-7pm-960.webp')} 960w, ${href('/media/day/dusk-7pm.webp')} 1920w`} sizes="100vw" width="1920" height="1080" loading="lazy" decoding="async" alt="Animated still from the film, graded to sunset: the city glows orange under a violet sky, and Vikas is still at his desk in the lit window." />
+    <figcaption class="label wrap"><span>Fig. 8 · 7:00 PM, the sun goes down. He's still at it.</span></figcaption>
+  </figure>
+
+  <div class="day day-dark">
+  <section class="room room-m wrap" aria-labelledby="built-h">
     <h2 id="built-h" class="room-h"><span class="label n chip" aria-hidden="true">7:00 PM</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
@@ -144,7 +147,7 @@ const posters = HV
       </ol>
       <figure class="plate">
         <img src={href('/media/portfolio/contentintel-site.webp')} alt="The ContentIntel website: a dark landing page reading Know it'll work before you hit publish" width="900" height="1347" loading="lazy" decoding="async" />
-        <figcaption class="label">Fig. 8 · ContentIntel</figcaption>
+        <figcaption class="label">Fig. 9 · ContentIntel</figcaption>
       </figure>
     </div>
     <p class="more"><a class="btn" href={href('/tools/')}>Tools, lab and code <span class="arrow" aria-hidden="true">→</span></a></p>
@@ -156,11 +159,11 @@ const posters = HV
       <div class="me-pair">
         <figure class="me me-real">
           <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" />
-          <figcaption class="label">Fig. 9 · {P.profile.nickname}</figcaption>
+          <figcaption class="label">Fig. 10 · {P.profile.nickname}</figcaption>
         </figure>
         <figure class="me me-toon">
           <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} as the animated character from the film`} width="720" height="720" loading="lazy" decoding="async" />
-          <figcaption class="label">Fig. 10 · animated</figcaption>
+          <figcaption class="label">Fig. 11 · animated</figcaption>
         </figure>
       </div>
       <div class="stats">
@@ -171,6 +174,7 @@ const posters = HV
       </div>
     </div>
   </section>
+  </div>
 </Base>
 
 <script>
@@ -203,7 +207,7 @@ const posters = HV
         const minutes = progress < ALARM ? 57 + (progress / ALARM) * 3 : 60 + ((progress - ALARM) / (1 - ALARM)) * 14;
         const t = minutes >= 60 ? `1:${String(Math.floor(minutes - 60)).padStart(2, '0')}` : `12:${String(Math.floor(minutes))}`;
         if (t !== lastTime) { lastTime = t; hudTime.textContent = t; }
-        // the last tenth of the scroll: the closing frame pushes in and dims into the end card's black
+        // the last tenth of the scroll: the closing frame pushes in and blooms into the afternoon light of the end card
         stage.style.setProperty('--out', String(Math.min(1, Math.max(0, (progress - 0.9) / 0.1)).toFixed(3)));
       };
       let queued = false;
@@ -284,10 +288,11 @@ const posters = HV
   .film.is-live .poster-end { display: none; }
   .film-stage.is-3d .film-poster, .film-stage.is-video .film-poster { visibility: hidden; }
   .film-video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; background: var(--night);
-    transform: scale(calc(1 + var(--out, 0) * 0.06)); filter: brightness(calc(1 - var(--out, 0) * 0.5)); }
-  /* the end of the film melts into the end card: a dark fade rises from the bottom as the last frame dims */
+    transform: scale(calc(1 + var(--out, 0) * 0.06)); filter: brightness(calc(1 + var(--out, 0) * 0.15)); }
+  /* the end of the film blooms into the afternoon: the last frame washes out to the end card's sunlit paper,
+     and the title card turns from white to ink as it does */
   .film-stage::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: var(--out, 0);
-    background: linear-gradient(to bottom, transparent 20%, rgb(14 12 15 / 0.55) 55%, #0e0c0f 100%); }
+    background: linear-gradient(to bottom, rgb(251 244 228 / 0.7), #fbf4e4 60%); }
   /* vignette: the sides and top fall off like a lens; the bottom stays clean so the film runs into the end card */
   .film-stage:global(.no-vignette)::after { display: none; }
   .film-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgb(0 0 0 / 0.32), transparent 16%, transparent 84%, rgb(0 0 0 / 0.32)), linear-gradient(rgb(0 0 0 / 0.3), transparent 22%); }
@@ -300,28 +305,26 @@ const posters = HV
   .hud-where { color: #b9b6ad; margin-left: 0.6em; }
   .film-stage[data-shot='2'] .hud [data-hud-time] { color: var(--color-a-fill); }
 
-  /* captions: one line at a time, like a film */
-  .caps { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(5.5rem, 14vh, 8rem); margin: 0; padding: 0; list-style: none; text-align: center; }
-  .caps li { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: max-content; max-width: 100%; padding: 0.3em 0.75em; border-radius: 14px; background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem); font-weight: 650; letter-spacing: -0.02em; color: var(--color-bg); opacity: 0; transition: opacity var(--dur-slow) var(--ease-standard); }
-  .film-stage[data-shot='1'] .c1, .film-stage[data-shot='2'] .c2, .film-stage[data-shot='3'] .c3, .film-stage[data-shot='4'] .c3, .film-stage[data-shot='5'] .c4 { opacity: 1; }
-  .film:not(.is-live) .caps { display: none; }
 
   /* the headline is the title card at the end (and the whole story in the still version) */
   .subs {
     position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(5rem, 13vh, 7.5rem);
     margin: 0; max-width: none; font-size: clamp(2.25rem, 1rem + 4.6vw, 6rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95;
     color: var(--color-bg); text-shadow: 0 2px 24px rgb(0 0 0 / 0.55); transition: opacity 600ms var(--ease-standard);
+    color: color-mix(in srgb, #141414 calc(min(1, var(--out, 0) * 2.5) * 100%), var(--color-bg));
+    text-shadow: 0 2px 24px rgb(0 0 0 / calc(0.55 * (1 - min(1, var(--out, 0) * 2.5))));
   }
+  .subs .hand { color: color-mix(in srgb, var(--color-a) calc(min(1, var(--out, 0) * 2.5) * 100%), var(--color-a-fill)); }
   .subs .s1, .subs .s2 { display: block; }
   .film.is-live .subs { opacity: 0; }
   .film.is-live [data-shot='6'] .subs { opacity: 1; }
   .hand { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; padding-inline: 0.04em; color: var(--color-a-fill); }
   .stop-a { color: var(--color-a-fill); }
   .stop-b { color: var(--color-b); }
-  .subs .stop-b { color: #6f86ff; }
+  .subs .stop-b { color: #6f86ff; color: color-mix(in srgb, var(--color-b) calc(min(1, var(--out, 0) * 2.5) * 100%), #6f86ff); }
   /* on paper the hand stop is outlined in ink so it holds */
   .room .stop-a { -webkit-text-stroke: 0.035em var(--color-text); paint-order: stroke fill; }
-  .status { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: var(--space-6); margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: #b9b6ad; }
+  .status { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: var(--space-6); margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: #b9b6ad; color: color-mix(in srgb, #4f4c45 calc(min(1, var(--out, 0) * 2.5) * 100%), #b9b6ad); }
   .film.is-live .status { opacity: 0; transition: opacity 600ms var(--ease-standard); }
   .film.is-live [data-shot='6'] .status { opacity: 1; }
   /* like a streaming player: the film never stands between someone and the work */
@@ -333,15 +336,14 @@ const posters = HV
   .live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--color-a-fill); margin-right: 0.6em; vertical-align: 0.05em; }
 
   /* the end card: who, and how to start */
-  .endcard { display: grid; gap: var(--space-8); align-items: end; padding-block: var(--space-16); background: #0e0c0f; color: var(--color-bg); box-shadow: 0 0 0 100vmax #0e0c0f; clip-path: inset(0 -100vmax); }
+  .endcard { display: grid; gap: var(--space-8); align-items: end; padding-block: var(--space-16); }
   .endcard > * { min-width: 0; }
   .who-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 0; }
-  .see { color: #b9b6ad; font-size: var(--text-sm); }
+  .see { color: var(--color-text-muted); font-size: var(--text-sm); }
   .who { font-size: var(--t-lede); line-height: 1.35; letter-spacing: -0.015em; max-width: 26ch; margin: 0; }
   .btn-lime { background: var(--color-a-fill); color: var(--color-a-ink); border-color: var(--color-a-fill); }
   @media (hover: hover) { .btn-lime:hover { background: var(--color-bg); border-color: var(--color-bg); color: var(--color-text); } }
-  .endcard :focus-visible { outline-color: var(--color-a-fill); }
-  .cw-plate { position: relative; border: 1px solid var(--color-bg); background: var(--color-surface); color: var(--color-text); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-a-fill); }
+  .cw-plate { position: relative; border: 1px solid rgb(20 20 20 / 0.14); background: var(--color-surface); color: var(--color-text); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-a-fill); }
   .cw-plate :focus-visible { outline-color: var(--color-text); }
   @media (min-width: 56rem) {
     .endcard { grid-template-columns: 1fr minmax(0, 28rem); }
@@ -404,46 +406,6 @@ const posters = HV
   .ix::before { content: ''; position: absolute; inset: 0 -0.75rem; z-index: -1; background: var(--color-a-fill); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-standard); }
   @media (hover: hover) { .ix:hover::before { transform: scaleX(1); } .ix:hover .ix-n, .ix:hover .ix-m, .ix:hover .ix-w { color: var(--color-text); } }
   .ix:focus-visible::before { transform: scaleX(1); }
-  /* the gallery: a full-bleed ink wall for the prints */
-  .room-dark { color: var(--color-bg); background: #0e0c0f; box-shadow: 0 0 0 100vmax #0e0c0f; clip-path: inset(0 -100vmax); padding-block: var(--space-16) var(--space-24); }
-  .room-dark .room-h .n { color: #9fb0ff; }
-  .room-dark .stop-b { color: #9fb0ff; }
-  .room-dark.room-dark :global(.print a) { box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.85), 0 0 0 1px rgb(255 255 255 / 0.06); border-color: transparent; }
-  @media (hover: hover) { .room-dark.room-dark :global(.print a:hover) { box-shadow: 0 44px 80px -28px rgb(0 0 0 / 0.9), 0 0 0 2px var(--color-a-fill); } }
-  .room-dark :global(.print .t) { color: var(--color-text); }
-  .room-dark.room-dark :global(.also) { color: #b9b6ad; }
-  .room-dark.room-dark :global(.also a) { color: #9fb0ff; }
-  .room-dark .btn { color: var(--color-bg); border-color: var(--color-bg); }
-  @media (hover: hover) { .room-dark .btn:hover { background: var(--color-bg); color: var(--color-text); } }
-  .room-dark::before, .room-dark::after { display: none; }
-  .room-dark :focus-visible { outline-color: var(--color-a-fill); }
-  .room-dark.room-dark :global(.print a:focus-visible) { outline: 3px solid var(--color-a-fill); outline-offset: 6px; }
-
-  /* colour rooms: Free on lime (made by hand), Tools on cobalt (the machine) */
-  .room-lime, .room-blue { box-shadow: 0 0 0 100vmax var(--bandc); clip-path: inset(0 -100vmax); background: var(--bandc); }
-  .room-lime { --bandc: var(--color-a-fill); color: var(--color-a-ink); }
-  .room-blue { --bandc: var(--color-b); color: var(--color-b-ink); }
-  .room-lime::before, .room-lime::after, .room-blue::before, .room-blue::after { display: none; }
-  .room-lime .room-h .n, .room-lime .stop-a { color: var(--color-a-ink); -webkit-text-stroke: 0; }
-  .room-blue .room-h .n, .room-blue .stop-b { color: var(--color-b-ink); }
-  .room-lime .index, .room-lime .index li { border-color: rgba(20, 20, 20, 0.35); }
-  .room-blue .index, .room-blue .index li { border-color: rgba(255, 255, 255, 0.4); }
-  .room-lime .ix-n, .room-lime .ix-m, .room-lime .ix-w { color: rgba(20, 20, 20, 0.75); }
-  .room-blue .ix-n, .room-blue .ix-m, .room-blue .ix-w { color: rgba(255, 255, 255, 0.85); }
-  .room-lime .ix::before { background: var(--color-text); }
-  .room-blue .ix::before { background: var(--color-bg); }
-  @media (hover: hover) {
-    .room-lime .ix:hover, .room-lime .ix:hover .ix-n, .room-lime .ix:hover .ix-m, .room-lime .ix:hover .ix-w { color: var(--color-a-fill); }
-    .room-blue .ix:hover, .room-blue .ix:hover .ix-n, .room-blue .ix:hover .ix-m, .room-blue .ix:hover .ix-w { color: var(--color-b); }
-  }
-  .room-lime .ix:focus-visible, .room-lime .ix:focus-visible * { color: var(--color-a-fill); }
-  .room-blue .ix:focus-visible, .room-blue .ix:focus-visible * { color: var(--color-b); }
-  .room-blue .btn { color: var(--color-b-ink); border-color: var(--color-b-ink); }
-  @media (hover: hover) { .room-blue .btn:hover { background: var(--color-b-ink); color: var(--color-b); } }
-  .room-blue .plate { border-color: var(--color-b-ink); box-shadow: 8px 8px 0 var(--color-text); }
-  .room-blue :global(.stand-in), .room-lime :global(.stand-in) { color: inherit; border-color: currentColor; }
-  .room-lime :focus-visible, .room-blue :focus-visible { outline-color: var(--color-text); }
-
   /* ---------- commissions ---------- */
   .pair { display: grid; gap: var(--space-4); }
   @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } .side { min-height: 15rem; } }
@@ -513,12 +475,9 @@ const posters = HV
   /* ---------- the rest of his day: the film's warmth carries down the page ---------- */
   /* each room is a time of day, shown like the film's clock */
   .room-h .chip { padding: 0.45em 0.8em 0.4em; border-radius: 999px; background: rgb(22 21 24 / 0.86); color: var(--color-bg); letter-spacing: 0.04em; font-weight: 600; white-space: nowrap; }
-  .room-dark .room-h .chip { background: rgb(255 255 255 / 0.12); color: var(--color-bg); }
-  .room-lime .room-h .chip { background: var(--color-a-ink); color: var(--color-a-fill); }
-  .room-blue .room-h .chip { background: rgb(14 12 15 / 0.32); color: #fff; }
-  /* paper rooms get the afternoon window light from the film */
-  .room:not(.room-dark):not(.room-lime):not(.room-blue) { background:
-    radial-gradient(70% 55% at 88% 8%, rgb(255 214 150 / 0.38), transparent 70%),
+  /* every room gets the window light of its hour */
+  .room { background:
+    radial-gradient(70% 55% at 88% 8%, var(--glow, rgb(255 214 150 / 0.38)), transparent 70%),
     linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
   /* softer, rounder, lit like a set: soft shadows instead of hard ink offsets */
   .side { border-radius: 22px; border-color: rgb(20 20 20 / 0.14); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
@@ -527,7 +486,6 @@ const posters = HV
   .cw-plate { border-radius: 18px; box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.7), 0 0 0 6px rgb(184 240 0 / 0.9); }
   .stat-more { border-radius: 18px; }
   .plate { border-radius: 16px; overflow: hidden; }
-  .room-blue .plate { box-shadow: 0 30px 60px -24px rgb(0 0 30 / 0.6); }
   .still { margin: var(--space-12) 0 0; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 40px 80px -40px rgb(60 40 10 / 0.6); }
   .still img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
   .still figcaption { position: absolute; left: var(--space-4); bottom: var(--space-4); padding: 0.45em 0.8em; border-radius: 999px; background: rgb(22 21 24 / 0.7); color: var(--color-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
@@ -537,4 +495,33 @@ const posters = HV
   .me-real { transform: rotate(-3deg); }
   .me-toon { transform: rotate(2.5deg) translateY(14px); }
 
+  /* ---------- one day, top to bottom ----------
+     The page is the rest of his day after the film: sunlit afternoon paper that warms to gold (end card to Studio),
+     the sunset still as the turn, then dusk to night (Tools, About) running into the 4 AM footer. Text colours flip
+     only at the sunset still, so every room keeps AA contrast end to end. */
+  .day-light { background: linear-gradient(to bottom, #fbf4e4 0%, #faecd2 38%, #f6deb6 72%, #f1cb94 100%);
+    --color-text-muted: #4f4c45; --color-surface: #fffaf0; }
+  .dusk { position: relative; margin: 0; height: clamp(24rem, 52vw, 46rem); background: #f1cb94; isolation: isolate; }
+  .dusk img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .dusk::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(to bottom, #f1cb94 0%, rgb(241 203 148 / 0) 30%, rgb(43 45 107 / 0) 70%, #2b2d6b 100%); }
+  .dusk figcaption { position: absolute; left: 0; right: 0; bottom: var(--space-8); }
+  .dusk figcaption span { display: inline-block; padding: 0.45em 0.8em; border-radius: 999px; background: rgb(22 21 24 / 0.72); color: #fff; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .day-dark { background: linear-gradient(to bottom, #2b2d6b 0%, #1d2150 45%, #0c1122 100%);
+    --color-text: #f1ede4; --color-text-muted: #b8bed6; --color-line-strong: rgb(255 255 255 / 0.28); --color-b: #9db0ff; --color-focus: #b8f000;
+    --glow: transparent; color: var(--color-text); }
+  .day-dark .room-h .chip { background: rgb(255 255 255 / 0.12); color: #fff; }
+  .day-dark .ix::before { background: #f1ede4; }
+  @media (hover: hover) { .day-dark .ix:hover, .day-dark .ix:hover * { color: #141414; } }
+  .day-dark .ix:focus-visible, .day-dark .ix:focus-visible * { color: #141414; }
+  .day-dark .btn { color: #f1ede4; border-color: #f1ede4; }
+  @media (hover: hover) { .day-dark .btn:hover { background: #f1ede4; color: #141414; } }
+  .day-dark .plate, .day-dark .me { border-color: transparent; box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.7); }
+  .day-dark .plate figcaption, .day-dark .me figcaption { color: #141414; border-color: rgb(20 20 20 / 0.14); }
+  .day-dark .stat-more { background: #f1ede4; color: #141414; }
+  @media (hover: hover) { .day-dark .stat-more:hover { background: var(--color-a-fill); } }
+  .day-dark :global(.stand-in) { color: inherit; border-color: currentColor; }
+  @media (min-width: 64rem) { .day-dark .room::after { background: #1d2150; border-color: #f1ede4; } .day-dark .room-m::before { background: linear-gradient(#9db0ff, #9db0ff) center top / 3px 100% no-repeat; } .day-dark .room-m::after { border-color: #9db0ff; } }
+  /* the night runs straight into the 4 AM footer */
+  :global(.site-footer) { margin-top: 0; }
 </style>

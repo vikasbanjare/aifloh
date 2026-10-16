@@ -270,3 +270,6 @@ Time chips replace room numbers so the page continues the film's day (1:15 PM to
 
 ## iter-40 · A day, 1 PM to 4 AM (Vikas's request)
 Time-of-day headers on inner pages, with the light shifting from day to dusk to night. A 4 AM night footer sitewide: a day-for-night grade of the film's last shot with his window lit. A film-still share card. A large animated portrait on /about. Checks: verify 21/21 e2e; axe clean on /, /about/, /tools/, /contact/, /work/ and /free/ at 390 and 1440; LH (gzip) home 98/100/100/100 (LCP 2.3 s, CLS 0.001), /about 100/100/100/100 (LCP 1.7 s). Screens: iterations/screens/iter-40.
+
+## iter-41 · Home as one day, morning to night (Vikas's request)
+Film blooms to afternoon paper (title ink-mixes faster than the wash so it stays readable mid-fade); afternoon sky (cream to gold) for end card through Studio; 7 PM sunset still (dusk grade of the film's city frame) as the turn; dusk-to-night sky for Tools and About into the 4 AM footer. Colour bands removed. Film scroll captions removed on request. Checks: verify 21/21 e2e, axe clean on / and /about/ at 390 and 1440, LH (gzip) home 98/100/100/100, LCP 2.2 s, CLS 0.001, no console errors or overflow. Screens: iterations/screens/iter-41.
