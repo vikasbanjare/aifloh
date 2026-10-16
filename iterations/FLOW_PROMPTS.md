@@ -18,6 +18,31 @@ Character turnaround sheet of the young Indian man in the reference photo, rende
 Isometric cutaway miniature diorama of a small, tidy creator's bedroom, floating on a deep charcoal background, like a handmade clay and wood scale model photographed with a macro lens. Two walls and a thick floor slab with clean cut edges. Left side: low wooden bed with a cobalt blue blanket and white pillow, a small wooden bedside table with a black digital alarm clock, a cream lamp and a lime green mug. Three bold typographic posters framed on the left wall. A floating wooden shelf with a few colourful books. Right side: white desk under a window with soft curtains, one large monitor, keyboard, mouse, a small plant, and a lime green office chair. Light pale wood floor with an oval cream rug and a tall potted plant. Palette: warm off-white walls, pale wood, cobalt blue and lime green accents only. Soft global illumination, gentle contact shadows, shallow tilt-shift depth of field. Premium, calm, aesthetic. No people, no text, no logos, no watermark.
 ```
 
+## No reference images? Use these
+
+Ready-made references are in `iterations/flow-refs/`:
+- **`ref-you-photo.jpg`:** your site portrait, enlarged. Use it as the face reference in Step 0A. A sharper selfie works even better.
+- **`ref-room-wide.jpg`:** the current 3D room, as the layout reference for Step 0B.
+- **`ref-bedside-closeup.jpg`:** the opening shot, as the reference for clip 1.
+
+### Text-only character (no photo at all)
+
+Use this as Step 0A. Generate it, pick the best result, then use that image as the character Ingredient in every clip.
+
+```
+Character turnaround sheet of one young South Asian man, mid-20s, slim build, warm medium-brown skin, short thick black hair swept up at the front, neat short beard, friendly calm face, as a premium stylized 3D animated film character (Pixar / Disney feature quality, soft subsurface skin, realistic proportions, not cartoonish). Outfit: plain off-white crew-neck T-shirt, charcoal grey joggers, white socks. Three views side by side: front, three-quarter, side. Neutral standing pose, relaxed expression. Plain warm grey studio background, soft even light. No text, no logos, no watermark.
+```
+
+### Text-only room
+
+Use the Step 0B room prompt as it is; it needs no images. In Flow choose **Create image**, paste the prompt, and generate 4 options. Pick the one closest to `ref-room-wide.jpg` (bed on the left, desk under the window on the right) and keep using that one.
+
+### Order in Flow
+
+1. **Create image:** character (photo + prompt, or the text-only prompt). Save the best result.
+2. **Create image:** room (prompt, optionally with `ref-room-wide.jpg` attached). Save the best result.
+3. **Video, Ingredients:** attach both saved images, paste clip 1. For clip 2 onward use **Frames to Video** (first frame = last frame of the previous clip) and keep both images attached.
+
 ## Shared style line
 
 Paste this at the end of every clip prompt:
