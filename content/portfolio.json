@@ -4,7 +4,7 @@
     "name": "Vikas Banjare",
     "nickname": "Bubu",
     "roles": "designer, editor and storyteller · founder of AI-Floh",
-    "photo": "/media/portfolio/vikas.webp",
+    "photo": "/media/day/bubu-portrait.webp",
     "email": "vikas.banjare@gmail.com",
     "behance": "https://www.behance.net/vikas-banjare",
     "linkedin": "https://www.linkedin.com/in/vikasbanjare/",
@@ -35,6 +35,78 @@
   ],
   "projects": [
     {
+      "title": "Logo Designs",
+      "tags": [
+        "Logo design",
+        "Brand identity"
+      ],
+      "year": "2026",
+      "summary": "Four marks, one system: a sub-brand family for partner contests, business communications and a fund podcast.",
+      "link": "https://www.behance.net/gallery/255679657/Logo-Designs",
+      "cover": "/media/portfolio/work-logos.webp",
+      "coverAlt": "Cover: \"Logo Designs\" in pixel letters on purple, with sketch and ideas speech bubbles",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
+      }
+    },
+    {
+      "title": "Bazaar & Beyond Logo Redesign",
+      "tags": [
+        "Logo design",
+        "Brand identity"
+      ],
+      "year": "2026",
+      "summary": "A logo redesign.",
+      "link": "https://www.behance.net/gallery/255679453/Bazaar-Beyond-Logo-Redesign",
+      "cover": "/media/portfolio/work-logo-redesign.webp",
+      "coverAlt": "Cover: \"Logo Redesign\" in white and orange on blue",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
+      }
+    },
+    {
+      "title": "Creative Designs",
+      "tags": [
+        "Graphic design",
+        "Campaigns"
+      ],
+      "year": "2026",
+      "summary": "Campaign creatives for a stock-broking app: offers, account opening and brand ads.",
+      "link": "https://www.behance.net/gallery/250526649/Creative-Designs",
+      "cover": "/media/portfolio/work-creative.webp",
+      "coverAlt": "Three campaign creatives for a stock-broking app: a margin offer, a free demat account and a no-cost account",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
+      }
+    },
+    {
+      "title": "Emailer Design",
+      "tags": [
+        "Emailers",
+        "Graphic design"
+      ],
+      "year": "2026",
+      "summary": "Emailers for webinars, product updates and partner programmes.",
+      "link": "https://www.behance.net/gallery/250525969/Emailer-Design",
+      "cover": "/media/portfolio/work-emailer.webp",
+      "coverAlt": "A grid of orange and blue emailers for webinars, product updates and a partner programme",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
+      }
+    },
+    {
       "title": "AI YT Thumbnails",
       "tags": [
         "YouTube",
@@ -43,8 +115,8 @@
       "year": "2025",
       "summary": "Click-worthy YouTube thumbnails made with AI tools.",
       "link": "https://www.behance.net/gallery/232938571/AI-YT-Thumbnails-design",
-      "cover": "/media/portfolio/work-thumbnails.webp",
-      "coverAlt": "Cover: \"YouTube Thumbnails\" in 3D gold letters with game coins",
+      "cover": "/media/portfolio/work-ai-designs.webp",
+      "coverAlt": "Cover: \"AI Designs\" in gold letters on deep red",
       "approval": {
         "status": "approved",
         "by": "Vikas Banjare",
@@ -53,20 +125,21 @@
       }
     },
     {
-      "title": "AI Videos",
+      "title": "Wealthy YT Ads CAMPAIGN Videos",
       "tags": [
-        "AI video"
+        "Advertising",
+        "YouTube"
       ],
       "year": "2025",
-      "summary": "Video generation and editing experiments with Runway, HeyGen and others.",
-      "link": "https://www.behance.net/gallery/232940741/AI-Videos",
-      "cover": "/media/portfolio/work-ai-videos.webp",
-      "coverAlt": "Cover: \"AI Videos\" in red serif letters on a stage with gold curtains",
+      "summary": "YouTube ad campaign videos.",
+      "link": "https://www.behance.net/gallery/232522589/Wealthy-YT-Ads-CAMPAIGN-Videos",
+      "cover": "/media/portfolio/work-ads.webp",
+      "coverAlt": "Cover: a paper note reading \"ads campaign\" pegged to a line under a blue sky",
       "approval": {
         "status": "approved",
         "by": "Vikas Banjare",
-        "on": "2026-10-15",
-        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
       }
     },
     {
@@ -106,6 +179,41 @@
       }
     },
     {
+      "title": "AI Videos",
+      "tags": [
+        "AI video"
+      ],
+      "year": "2025",
+      "summary": "Video generation and editing experiments with Runway, HeyGen and others.",
+      "link": "https://www.behance.net/gallery/232940741/AI-Videos",
+      "cover": "/media/portfolio/work-ai-videos.webp",
+      "coverAlt": "Cover: \"AI Videos\" in red serif letters on a stage with gold curtains",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-15",
+        "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
+    },
+    {
+      "title": "Shorts Videos",
+      "tags": [
+        "Shorts",
+        "Reels"
+      ],
+      "year": "2025",
+      "summary": "YouTube Shorts and reels.",
+      "link": "https://www.behance.net/gallery/217992545/Shorts-Videos",
+      "cover": "/media/portfolio/work-shorts.webp",
+      "coverAlt": "Cover: \"shorts videos\" over a hill of flowers with a play-button clapperboard",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
+      }
+    },
+    {
       "title": "Trailer Video",
       "tags": [
         "Video",
@@ -138,6 +246,24 @@
         "by": "Vikas Banjare",
         "on": "2026-10-15",
         "note": "Behance project contains employer/client work; Vikas approved showing the cover and linking to it."
+      }
+    },
+    {
+      "title": "Thumbnail Designs",
+      "tags": [
+        "YouTube",
+        "Thumbnails"
+      ],
+      "year": "2025",
+      "summary": "YouTube thumbnail designs.",
+      "link": "https://www.behance.net/gallery/217991035/Thumbnail-Designs",
+      "cover": "/media/portfolio/work-thumbnails.webp",
+      "coverAlt": "Cover: \"YouTube Thumbnails\" in 3D gold letters with game coins",
+      "approval": {
+        "status": "approved",
+        "by": "Vikas Banjare",
+        "on": "2026-10-16",
+        "note": "Vikas approved adding every project on his Behance profile, client work included (16 Oct 2026)."
       }
     }
   ],

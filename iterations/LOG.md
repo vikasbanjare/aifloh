@@ -282,3 +282,6 @@ Full-page review of home and ten inner pages at 1440 and 375. Fixed: (1) a pale 
 
 ## iter-43 · Audit items 1 to 8
 See DECISIONS 16 Oct "Audit pass". Checks: verify 21/21 e2e; axe clean on ten pages at 390 and 1440; LH (gzip) home 98/100/100/100, LCP 2.1 to 2.2 s, CLS 0.001, TBT 0 ms (one noisy run at 82 discarded after two clean re-runs); no console errors or overflow. Screens: iterations/screens/iter-43.
+
+## iter-44 · 13 Behance projects, Pulse naming, animated-only portraits, graded film
+See DECISIONS 16 Oct. Checks: verify 21/21 e2e; axe clean on /, /work/, /about/, /contact/, /tools/ and /code/ at 390 and 1440; no console errors or overflow. Screens: iterations/screens/iter-44.

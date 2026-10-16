@@ -11,12 +11,12 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
   <section class="wrap section about">
     <div class="duo">
       <figure class="me me-toon">
-        <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} as the animated character from the film on the home page`} width="720" height="720" />
-        <figcaption class="label">Fig. 1 · {P.profile.nickname}, animated</figcaption>
+        <img src={href(P.profile.photo)} alt={`${P.profile.name}, or ${P.profile.nickname}, as the animated character from the film on the home page, in his room with posters behind him`} width="800" height="800" />
+        <figcaption class="label">Fig. 1 · {P.profile.nickname}</figcaption>
       </figure>
       <figure class="me me-real">
-        <img src={href(P.profile.photo)} alt={P.profile.name} width="230" height="230" loading="lazy" decoding="async" />
-        <figcaption class="label">Fig. 2 · the real one</figcaption>
+        <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} at his desk, a still from the film`} width="720" height="720" loading="lazy" decoding="async" />
+        <figcaption class="label">Fig. 2 · at his desk</figcaption>
       </figure>
     </div>
     <div class="txt">

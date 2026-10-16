@@ -12,8 +12,8 @@ items:
     note: ContentIntel. Outbound link to contentintel.in. Add aifloh.yml; turn on Enforce HTTPS for the custom domain.
   - repo: vikasbanjare/caption-and-video-editor
     group: tool
-    publish: true
-    note: CutPilot AI Caption Studio. Add aifloh.yml, description, topics and a screenshot.
+    publish: false
+    note: Unpublished 2026-10-16 (Vikas - Pulse is the real product name; CutPilot Caption Studio comes off the site). CutPilot AI Caption Studio. Add aifloh.yml, description, topics and a screenshot.
   - repo: vikasbanjare/YT-Thumbnail-downloader
     group: tool
     publish: true

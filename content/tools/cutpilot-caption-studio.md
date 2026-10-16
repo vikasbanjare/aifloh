@@ -17,6 +17,6 @@ howItWorks:
   - Export an SRT file. Burned-in MP4 export comes in a later phase.
 requirements: [A desktop browser]
 repo: vikasbanjare/caption-and-video-editor
-publish: true
+publish: false
 ---
 The caption engine is the same one the CutPilot Premiere plugin uses, rebuilt for the browser.
