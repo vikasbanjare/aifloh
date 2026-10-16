@@ -7,7 +7,7 @@ const errs = []; p.on('console', (m) => m.type() === 'error' && errs.push(m.text
 await p.goto('http://localhost:4331/');
 await p.evaluate(() => document.documentElement.classList.remove('booting'));
 await p.mouse.move(10, 10);
-await p.waitForSelector('.film-stage.is-3d', { timeout: 20000 }).catch(() => errs.push('no 3d'));
+await p.waitForSelector('.film-stage.is-3d, .film-stage.is-video', { timeout: 20000 }).catch(() => errs.push('no 3d'));
 const run = await p.evaluate(() => { const f = document.querySelector('.film'); return { top: f.offsetTop, run: f.offsetHeight - innerHeight }; });
 for (const q of (process.env.PTS || '0,0.22,0.45,0.66,0.95').split(',').map(Number)) {
   await p.evaluate((y) => scrollTo(0, y), run.top + run.run * q);

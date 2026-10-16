@@ -24,6 +24,16 @@ const work = P.projects.slice(0, 6);
 const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
 const pad = (n: number) => String(n).padStart(2, '0');
 
+// The film: a real scroll-scrubbed video when content/hero.json has one, otherwise the 3D clay room.
+const HERO = JSON.parse(readFileSync(join(process.cwd(), 'content/hero.json'), 'utf8'));
+const HV = HERO.video as null | { wide: string; tall?: string; posterStart: string; posterStartTall?: string; posterEnd: string; posterEndTall?: string; alt: string; alarmAt?: number; shots?: number[] };
+const filmShots = JSON.stringify(HV?.shots ?? [0.1, 0.26, 0.34, 0.5, 0.78, 0.94]);
+const filmAlarm = String(HV?.alarmAt ?? 0.26);
+const posters = HV
+  ? { start: HV.posterStart, startTall: HV.posterStartTall ?? HV.posterStart, end: HV.posterEnd, endTall: HV.posterEndTall ?? HV.posterEnd, alt: HV.alt }
+  : { start: '/media/film/room-start.webp', startTall: '/media/film/room-start-tall.webp', end: '/media/film/room-end.webp', endTall: '/media/film/room-end-tall.webp',
+      alt: 'A miniature clay bedroom: an unmade bed with a blue blanket, a bedside clock, type posters on the wall, and a young man at his desk editing a video under a sunny window.' };
+
 ---
 <Base title="Vikas Banjare" description="Vikas Banjare (Bubu): designer, editor and storyteller. Video, design, UI/UX and AI workflows. Founder of AI-Floh." intro>
   <Boot />
@@ -32,14 +42,15 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <!-- The film: a miniature clay room. Scrolling is the playhead. Without JS or with reduced motion it is one still
        frame (the whole room) with the headline. -->
   <section class="film" aria-labelledby="hero-h">
-    <div class="film-stage" data-shot="0">
+    <div class="film-stage" data-shot="0" data-shots={filmShots} data-alarm={filmAlarm}>
+      {HV && <video class="film-video" muted playsinline preload="none" aria-hidden="true" tabindex="-1" data-wide={href(HV.wide)} data-tall={HV.tall ? href(HV.tall) : undefined} data-wide-webm={href(HV.wide.replace(/\.mp4$/, '.webm'))} data-tall-webm={HV.tall ? href(HV.tall.replace(/\.mp4$/, '.webm')) : undefined}></video>}
       <picture class="film-poster poster-start">
-        <source media="(max-aspect-ratio: 4/5)" srcset={href('/media/film/room-start-tall.webp')} width="900" height="1600" />
-        <img src={href('/media/film/room-start.webp')} alt="" width="1600" height="900" fetchpriority="high" decoding="async" />
+        <source media="(max-aspect-ratio: 4/5)" srcset={href(posters.startTall)} width="900" height="1600" />
+        <img src={href(posters.start)} alt="" width="1600" height="900" fetchpriority="high" decoding="async" />
       </picture>
       <picture class="film-poster poster-end">
-        <source media="(max-aspect-ratio: 4/5)" srcset={href('/media/film/room-end-tall.webp')} width="900" height="1600" />
-        <img src={href('/media/film/room-end.webp')} alt="A miniature clay bedroom: an unmade bed with a blue blanket, a bedside clock, type posters on the wall, and a young man at his desk editing a video under a sunny window." width="1600" height="900" decoding="async" />
+        <source media="(max-aspect-ratio: 4/5)" srcset={href(posters.endTall)} width="900" height="1600" />
+        <img src={href(posters.end)} alt={posters.alt} width="1600" height="900" decoding="async" />
       </picture>
       <p class="hud" aria-hidden="true"><span data-hud-time>12:57</span><span class="hud-pm">PM</span><span class="hud-where label">in India</span></p>
       <ol class="caps" aria-hidden="true">
@@ -169,7 +180,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
       film.classList.add('is-live');
       let progress = 0;
       // shots: 0 clock close-up · 1 asleep · 2 alarm · 3 up · 4 walk · 5 at work · 6 title
-      const SHOTS = [0, 0.1, 0.26, 0.34, 0.5, 0.78, 0.94];
+      const SHOTS = [0, ...JSON.parse(stage.dataset.shots || '[]')];
+      const ALARM = Number(stage.dataset.alarm || 0.26);
       let shot = -1, lastTime = '';
       const measure = () => {
         const r = film.getBoundingClientRect();
@@ -178,15 +190,32 @@ const pad = (n: number) => String(n).padStart(2, '0');
         let s = 0;
         while (s < SHOTS.length - 1 && progress >= SHOTS[s + 1]) s++;
         if (s !== shot) { shot = s; stage.dataset.shot = String(s); }
-        const minutes = progress < 0.26 ? 57 + (progress / 0.26) * 3 : 60 + ((progress - 0.26) / 0.74) * 14;
+        const minutes = progress < ALARM ? 57 + (progress / ALARM) * 3 : 60 + ((progress - ALARM) / (1 - ALARM)) * 14;
         const t = minutes >= 60 ? `1:${String(Math.floor(minutes - 60)).padStart(2, '0')}` : `12:${String(Math.floor(minutes))}`;
         if (t !== lastTime) { lastTime = t; hudTime.textContent = t; }
+        // the last tenth of the scroll: the closing frame pushes in and dims into the end card's black
+        stage.style.setProperty('--out', String(Math.min(1, Math.max(0, (progress - 0.9) / 0.1)).toFixed(3)));
       };
       let queued = false;
       addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; measure(); }); } }, { passive: true });
       addEventListener('resize', measure, { passive: true });
       measure();
 
+      const video = stage.querySelector<HTMLVideoElement>('.film-video');
+      if (video) {
+        // the real film: scroll scrubs the video; the poster stays until its first frame is painted
+        let started = false;
+        const go = async () => {
+          if (started) return;
+          started = true;
+          VEVENTS.forEach((ev) => removeEventListener(ev, go));
+          const { mountScrub } = await import('../scripts/scrub');
+          mountScrub(stage, video, () => progress, () => { stage.classList.add('is-video'); report('video'); });
+        };
+        const VEVENTS = ['pointermove', 'scroll', 'touchstart', 'keydown'] as const;
+        VEVENTS.forEach((ev) => addEventListener(ev, go, { passive: true, once: true }));
+        setTimeout(go, 1200);
+      } else {
       const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
       if (!gl) report('static-no-webgl');
       else {
@@ -217,6 +246,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1));
         setTimeout(() => idle(go, { timeout: 2000 }), 2500);
       }
+      }
     }
   }
 
@@ -242,7 +272,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
   .poster-start { display: none; }
   .film.is-live .poster-start { display: block; }
   .film.is-live .poster-end { display: none; }
-  .film-stage.is-3d .film-poster { visibility: hidden; }
+  .film-stage.is-3d .film-poster, .film-stage.is-video .film-poster { visibility: hidden; }
+  .film-video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; background: var(--night);
+    transform: scale(calc(1 + var(--out, 0) * 0.06)); filter: brightness(calc(1 - var(--out, 0) * 0.5)); }
+  /* the end of the film melts into the end card: a dark fade rises from the bottom as the last frame dims */
+  .film-stage::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: var(--out, 0);
+    background: linear-gradient(to bottom, transparent 20%, rgb(14 12 15 / 0.55) 55%, #0e0c0f 100%); }
   /* vignette: the sides and top fall off like a lens; the bottom stays clean so the film runs into the end card */
   .film-stage:global(.no-vignette)::after { display: none; }
   .film-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgb(0 0 0 / 0.32), transparent 16%, transparent 84%, rgb(0 0 0 / 0.32)), linear-gradient(rgb(0 0 0 / 0.3), transparent 22%); }

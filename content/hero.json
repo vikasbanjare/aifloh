@@ -1,0 +1,22 @@
+{
+  "_comment": "Home film. When video is null the 3D clay room plays. To use a real film, run scripts/encode-hero.sh on the master file and fill video in (paths are under public/). alarmAt is the scroll progress (0-1) where the clock hits 1:00 PM; shots are the progress points where captions change: [asleep, alarm, up, walk, at work, title].",
+  "video": {
+    "wide": "/media/film/hero-wide.mp4",
+    "tall": "/media/film/hero-tall.mp4",
+    "posterStart": "/media/film/hero-wide-start.webp",
+    "posterStartTall": "/media/film/hero-tall-start.webp",
+    "posterEnd": "/media/film/hero-wide-end.webp",
+    "posterEndTall": "/media/film/hero-tall-end.webp",
+    "alt": "Animated film still: a young man with curly hair and glasses at his desk editing video on two monitors, seen through the open window of a sunny apartment building in an Indian city.",
+    "alarmAt": 0.03,
+    "shots": [
+      0.02,
+      0.25,
+      0.25,
+      0.4,
+      0.55,
+      0.84
+    ],
+    "source": "Made by Vikas Banjare in Google Flow (Veo), 10 s, 16 Oct 2026; encoded with scripts/encode-hero.sh"
+  }
+}

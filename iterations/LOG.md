@@ -261,3 +261,6 @@ Lens: mobile. Phones flick-scroll, so 7.2 screen-heights of film meant a lot of 
 
 ## Measurement 07:28 IST (iter-37 build)
 Lighthouse mobile on gzip serving: perf 98, a11y 100, best practices 100, SEO 100; LCP 2.3 s, TBT 60 ms, CLS 0.001. axe 0 on / and /free/ at 390 and 1440. Live aifloh.com verified serving the room film, HUD clock, Skip intro and Work-first order.
+
+## iter-38 · Video hero from Vikas's Google Flow film (brand-level, his direct request)
+Scroll-scrubbed 10 s animated film replaces the clay room (room stays as fallback). Encoded with 2-frame GOP H.264 + VP9 twins, phone crop tracks him (keyframes read off a 10% grid contact sheet), posters from first/last frames. End transition: last 10% of scroll scales the frame 6% and dims it 50% under a rising dark gradient into the end card. Found locally that python http.server has no Range support, which makes video unseekable; added iterations/tools/rangeserve.py (GitHub Pages serves ranges). Checks: verify 21/21 e2e, axe clean, LH (gzip) 94/100/100/100, LCP 2.3 s, CLS 0.001.
