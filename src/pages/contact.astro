@@ -11,8 +11,8 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
   <PageHead kicker="Contact" title="Tell me what you're making." lede="A few lines is enough: what it is, who it's for, and when." />
   <section class="wrap section reach">
     <figure class="me">
-      <img src={href(P.profile.photo)} alt={`${P.profile.nickname} as the animated character from the film on the home page`} width="800" height="800" loading="lazy" decoding="async" />
-      <figcaption class="label">Fig. 1 · {P.profile.nickname}, animated</figcaption>
+      <img src={href(P.profile.photo)} alt={`${P.profile.name} as the animated character from the film on the home page`} width="800" height="800" loading="lazy" decoding="async" />
+      <figcaption class="label">Fig. 1 · Vikas, animated</figcaption>
     </figure>
     <div>
     <a class="mail" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="contact-email">{P.profile.email}<span aria-hidden="true"> →</span></a>

@@ -32,7 +32,7 @@ const jsonLd = {
   '@graph': [
     { '@type': 'Organization', '@id': '#org', name: SITE_NAME, url: new URL(href('/'), Astro.site).toString(), founder: { '@id': '#vikas' } },
     {
-      '@type': 'Person', '@id': '#vikas', name: 'Vikas Banjare', alternateName: 'Bubu',
+      '@type': 'Person', '@id': '#vikas', name: 'Vikas Banjare',
       jobTitle: 'Designer, video editor and storyteller', url: new URL(href('/about/'), Astro.site).toString(),
       sameAs: [LINKEDIN_URL, BEHANCE_URL, GITHUB_URL].filter(Boolean),
     },

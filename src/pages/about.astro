@@ -7,15 +7,15 @@ import { href } from '../lib/href';
 const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
 ---
 <Base title="About" description="I'm Vikas Banjare, founder of AI-Floh. 8+ years and 1000+ projects in video, motion, design, UI/UX and content.">
-  <PageHead kicker="About" title="I'm Vikas Banjare, or Bubu." />
+  <PageHead kicker="About" title="I'm Vikas Banjare." />
   <section class="wrap section about">
     <div class="duo">
       <figure class="me me-toon">
-        <img src={href(P.profile.photo)} alt={`${P.profile.name}, or ${P.profile.nickname}, as the animated character from the film on the home page, in his room with posters behind him`} width="800" height="800" />
-        <figcaption class="label">Fig. 1 · {P.profile.nickname}</figcaption>
+        <img src={href(P.profile.photo)} alt={`${P.profile.name} as the animated character from the film on the home page, in his room with posters behind him`} width="800" height="800" />
+        <figcaption class="label">Fig. 1 · Vikas</figcaption>
       </figure>
       <figure class="me me-real">
-        <img src={href('/media/day/bubu-animated.webp')} alt={`${P.profile.nickname} at his desk, a still from the film`} width="720" height="720" loading="lazy" decoding="async" />
+        <img src={href('/media/day/vikas-at-desk.webp')} alt={`${P.profile.name} at his desk, a still from the film`} width="720" height="720" loading="lazy" decoding="async" />
         <figcaption class="label">Fig. 2 · at his desk</figcaption>
       </figure>
     </div>

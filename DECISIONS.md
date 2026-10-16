@@ -97,3 +97,10 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
   - (7) Long uppercase labels are now sentence case: "The person behind it" and the Contact privacy line.
   - (8) Footer links are 44px tall on phones.
   - (9) The time chips are explained once in words under Work: "The rest of my day, hour by hour. The film was 1 PM; the night ends at 4 AM."
+- 2026-10-16 · No nickname · Vikas asked to remove "Bubu" everywhere. Removed from:
+  - the home who-line, the meta description and the JSON-LD (alternateName);
+  - the /about title (now "I'm Vikas Banjare.");
+  - all alt text and figure captions (now "Vikas");
+  - content/portfolio.json (the nickname field);
+  - the image file names (bubu-portrait → vikas-portrait, bubu-animated → vikas-at-desk).
+  The built site contains no "Bubu". Older entries in this file, the LOG and SITE-BUILD Section 2 are historical records, not published.
