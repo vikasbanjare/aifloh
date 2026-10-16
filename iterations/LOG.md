@@ -276,3 +276,6 @@ Film blooms to afternoon paper (title ink-mixes faster than the wash so it stays
 
 ## iter-42 · Marigold replaces lime; sun path replaces the rope thread (Vikas's request)
 Token swap lime to marigold sitewide, plus the hard-coded spots. The margin thread is now a dashed track with a sun that travels each room by view timeline, a moon in the night rooms. Checks: verify 21/21 e2e; axe clean on /, /free/, /about/, /work/ and /contact/ at 390 and 1440; no console errors or overflow. Screens: iterations/screens/iter-42.
+
+## Audit 16 Oct · three bugs fixed
+Full-page review of home and ten inner pages at 1440 and 375. Fixed: (1) a pale stripe between About and the 4 AM footer on home, where the footer's scoped margin outranked the home override; (2) faint box edges from the per-room window glow in the afternoon rooms, where the sky gradient now does the job; (3) /about still said "Lime: made by hand" after the marigold change. Proposals sent to Vikas. Screens: iterations/screens/audit.

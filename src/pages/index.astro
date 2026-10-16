@@ -500,7 +500,9 @@ const posters = HV
      the sunset still as the turn, then dusk to night (Tools, About) running into the 4 AM footer. Text colours flip
      only at the sunset still, so every room keeps AA contrast end to end. */
   .day-light { background: linear-gradient(to bottom, #fbf4e4 0%, #faecd2 38%, #f6deb6 72%, #f1cb94 100%);
-    --color-text-muted: #4f4c45; --color-surface: #fffaf0; }
+    --color-text-muted: #4f4c45; --color-surface: #fffaf0;
+    /* the sky is the light here; a per-room glow would show the room's box edge */
+    --glow: transparent; }
   .dusk { position: relative; margin: 0; height: clamp(24rem, 52vw, 46rem); background: #f1cb94; isolation: isolate; }
   .dusk img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
   .dusk::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -524,5 +526,6 @@ const posters = HV
   /* night rooms: the sun on the margin becomes the moon */
   @media (min-width: 64rem) { .day-dark .room::after { background: radial-gradient(circle at 35% 35%, #ffffff, #dfe5ff 55%, #a9b6ea); box-shadow: 0 0 0 5px rgb(220 228 255 / 0.12), 0 0 22px 4px rgb(200 212 255 / 0.4); } }
   /* the night runs straight into the 4 AM footer */
-  :global(.site-footer) { margin-top: 0; }
+  /* doubled class: outranks the footer's own scoped margin */
+  :global(body > .site-footer.site-footer) { margin-top: 0; }
 </style>
