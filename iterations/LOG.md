@@ -258,3 +258,6 @@ From the iter-35 review: too many colour switches after the film, and the work (
 Lens: mobile. Phones flick-scroll, so 7.2 screen-heights of film meant a lot of thumb travel before the work. Below 48rem the film section is now 560svh; the story is mapped to progress, so every beat (alarm, reach, walk, the edit, the title) still plays, just a little quicker. Checked at 390x844 at 0.28 / 0.6 / 0.88. Note: the session's worker restarted around 01:00 IST and the 01:36 check-in was held until 07:22 IST, so roughly six hours of loop time were lost; the loop resumed at 07:22 with about an hour before STOP_AT.
 - Scores: H9 T9 C9 S9 D10 M9 I10 K9 A10 P9 = 93.
 - Decision: KEPT.
+
+## Measurement 07:28 IST (iter-37 build)
+Lighthouse mobile on gzip serving: perf 98, a11y 100, best practices 100, SEO 100; LCP 2.3 s, TBT 60 ms, CLS 0.001. axe 0 on / and /free/ at 390 and 1440. Live aifloh.com verified serving the room film, HUD clock, Skip intro and Work-first order.
