@@ -66,5 +66,23 @@ for (const r of resources) {
   await render(card(1200, 630, r.title, `( Free ) · ${TYPE_LABEL[r.type]}`, r.codeWord, stamp), 1200, 630, join(ROOT, `public/og/${r.slug}.png`));
   await render(card(1080, 1920, r.title, `( Free ) · ${TYPE_LABEL[r.type]}`, r.codeWord, stamp), 1080, 1920, join(ROOT, `public/story/${r.slug}.png`));
 }
-await render(card(1200, 630, 'I keep the craft.\nI automate the grind.', '( Vikas Banjare ) · Designer, editor, storyteller', null, 'Free prompts, Claude skills and tools'), 1200, 630, join(ROOT, 'public/og/site.png'));
+// Site card: a still from his Google Flow film (scripts/cards/at-work.jpg, cut from public/media/day/at-work.webp)
+// beside the line, so a shared link looks like the home page does.
+const STILL = 'data:image/jpeg;base64,' + readFileSync(join(ROOT, 'scripts/cards/at-work.jpg')).toString('base64');
+const siteCard = h(
+  'div',
+  { width: 1200, height: 630, background: C.bg, color: C.text, fontFamily: 'Inter' },
+  h('div', { width: 520, height: 630, flexDirection: 'column', justifyContent: 'space-between', padding: 56 },
+    h('div', { alignItems: 'center', gap: 14, fontSize: 20, letterSpacing: 2, textTransform: 'uppercase', color: C.muted },
+      h('div', { background: '#161518', color: C.bg, borderRadius: 999, padding: '6px 14px', fontWeight: 800, letterSpacing: 1 }, '1:15 PM'),
+      h('div', { color: C.b }, 'Vikas Banjare')),
+    h('div', { fontSize: 58, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2.5, whiteSpace: 'pre-wrap' }, 'I keep the craft.\nI automate the grind.'),
+    h('div', { flexDirection: 'column', gap: 12 },
+      h('div', { fontSize: 22, color: C.muted }, 'Designer, editor, storyteller'),
+      h('div', { fontSize: 24, fontWeight: 800, letterSpacing: -0.5 }, 'AI-Floh · free prompts and tools')),
+  ),
+  h('div', { width: 680, height: 630, padding: '28px 28px 28px 0' },
+    { type: 'img', props: { src: STILL, width: 652, height: 574, style: { width: 652, height: 574, objectFit: 'cover', borderRadius: 28 } } }),
+);
+await render(siteCard, 1200, 630, join(ROOT, 'public/og/site.png'));
 console.log(`make-cards: ${resources.length * 2 + 1} share cards written`);

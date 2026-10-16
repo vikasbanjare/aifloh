@@ -267,3 +267,6 @@ Scroll-scrubbed 10 s animated film replaces the clay room (room stays as fallbac
 
 ## iter-39 · The rest of his day (post-film tone pass, Vikas's request)
 Time chips replace room numbers so the page continues the film's day (1:15 PM to 11:30 PM); warm window light on paper rooms; rounded, soft-shadow prints, cards, plates and portraits; two film stills (Studio Fig. 7, About animated portrait Fig. 10 next to the real photo). About column widened from 16rem to 24rem so the pair reads. Checks: verify 21/21 e2e, axe clean on /, /free/, /about/ at 390 and 1440 (one contrast miss on the cobalt chip fixed), no console errors or overflow at 375/768/1440. Screens: iterations/screens/iter-39.
+
+## iter-40 · A day, 1 PM to 4 AM (Vikas's request)
+Time-of-day headers on inner pages, with the light shifting from day to dusk to night. A 4 AM night footer sitewide: a day-for-night grade of the film's last shot with his window lit. A film-still share card. A large animated portrait on /about. Checks: verify 21/21 e2e; axe clean on /, /about/, /tools/, /contact/, /work/ and /free/ at 390 and 1440; LH (gzip) home 98/100/100/100 (LCP 2.3 s, CLS 0.001), /about 100/100/100/100 (LCP 1.7 s). Screens: iterations/screens/iter-40.

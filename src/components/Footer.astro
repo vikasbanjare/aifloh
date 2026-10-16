@@ -25,11 +25,17 @@ const isHome = Astro.url.pathname === import.meta.env.BASE_URL || Astro.url.path
 const ctaId = isHome ? 'home-talk' : 'nav-talk';
 ---
 <footer class="site-footer">
+  <div class="night">
+    <img class="night-img" src={href('/media/day/night-4am.webp')} srcset={`${href('/media/day/night-4am-960.webp')} 960w, ${href('/media/day/night-4am.webp')} 1920w`} sizes="100vw" width="1920" height="1080" loading="lazy" decoding="async" alt="Animated still from the film, graded to night: the city asleep at 4 AM, one window still lit where Vikas is editing." />
+    <div class="wrap night-copy">
+      <span class="label clock" aria-hidden="true">4:00 AM</span>
+      <a class="big-cta" href={href('/contact/')} data-track="CTA Click" data-track-id={ctaId}>
+        <span class="muted">Have something that needs doing?</span>
+        <span class="big-cta-line">Let's talk <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
   <div class="wrap">
-    <a class="big-cta" href={href('/contact/')} data-track="CTA Click" data-track-id={ctaId}>
-      <span class="muted">Have something that needs doing?</span>
-      <span class="big-cta-line">Let's talk <span class="arrow" aria-hidden="true">→</span></span>
-    </a>
     <div class="cols">
       {groups.map((g) => (
         <nav aria-label={g.label}><h2>{g.label}</h2><ul role="list">{g.links.map((l) => <li><a href={href(l.path)}>{l.label}</a></li>)}</ul></nav>
@@ -53,8 +59,20 @@ const ctaId = isHome ? 'home-talk' : 'nav-talk';
   <p class="wordmark" aria-hidden="true">vikas<em class="ws">banjare</em></p>
 </footer>
 <style>
-  .site-footer { container-type: inline-size; margin-top: var(--space-16); border-top: 1px solid var(--color-text); padding-top: var(--space-16); overflow: hidden; font-size: var(--text-sm); }
-  .big-cta { display: grid; gap: var(--space-2); text-decoration: none; padding-bottom: var(--space-12); border-bottom: 1px solid var(--color-line); }
+  /* 4:00 AM: the end of his day. The film's city shot graded to night (iterations/tools/day-for-night.py). */
+  .site-footer {
+    --color-text: #f1ede4; --color-text-muted: #aab2cc; --color-line: rgb(255 255 255 / 0.14); --color-b: #9db0ff; --color-focus: #b8f000;
+    container-type: inline-size; margin-top: var(--space-16); overflow: hidden; font-size: var(--text-sm);
+    color: var(--color-text); background: #0c1122;
+  }
+  .night { position: relative; isolation: isolate; min-height: clamp(30rem, 56.25vw, 52rem); display: flex; background: #0c1122; }
+  .night-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .night::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(to bottom, rgb(12 17 34 / 0.55), transparent 32%, transparent 70%, #0c1122 100%); }
+  .night-copy { width: 100%; padding-block: var(--space-16) var(--space-8); }
+  .clock { display: inline-block; padding: 0.45em 0.8em 0.4em; border-radius: 999px; background: rgb(255 255 255 / 0.12); color: #fff; font-family: var(--font-mono); font-weight: 600; letter-spacing: 0.04em; margin-bottom: var(--space-4); }
+  .big-cta { display: grid; gap: var(--space-2); text-decoration: none; width: fit-content; }
+  .big-cta .muted { color: #d6dbea; }
   .big-cta-line { font-size: var(--text-hero); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
   .big-cta .arrow { display: inline-block; color: var(--color-b); transition: transform var(--dur-base) var(--ease-standard); }
   @media (hover: hover) { .big-cta:hover .arrow { transform: translateX(0.15em); } }

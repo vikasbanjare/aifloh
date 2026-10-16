@@ -1,10 +1,29 @@
 ---
 interface Props { kicker: string; title: string; lede?: string; count?: number }
 const { kicker, title, lede, count } = Astro.props;
+// The rest of his day: each section keeps the time it has on home, and the light in the header follows the clock
+// (afternoon sun, evening dusk, late-night lamp). A story device, not a claim about his hours. Footer is 4:00 AM.
+const DAY: Record<string, [string, 'day' | 'dusk' | 'night']> = {
+  Work: ['1:15 PM', 'day'], Free: ['3:00 PM', 'day'], Library: ['3:30 PM', 'day'], Studio: ['4:30 PM', 'day'],
+  Tools: ['7:00 PM', 'dusk'], Lab: ['8:30 PM', 'dusk'], Code: ['9:45 PM', 'night'], About: ['11:30 PM', 'night'],
+  Contact: ['2:00 AM', 'night'],
+};
+const at = DAY[kicker];
 ---
-<header class="page-head wrap">
-  <p class="kicker rise"><span class="idx">{kicker}</span>{count !== undefined && <span>{count} {count === 1 ? 'item' : 'items'}</span>}</p>
+<header class:list={['page-head wrap', at && `light-${at[1]}`]}>
+  <p class="kicker rise">{at && <span class="clock" aria-hidden="true">{at[0]}</span>}<span class="idx">{kicker}</span>{count !== undefined && <span>{count} {count === 1 ? 'item' : 'items'}</span>}</p>
   <h1 class="rise-2">{title}</h1>
   {lede && <p class="lede rise-3">{lede}</p>}
   <slot />
 </header>
+<style>
+  .page-head { position: relative; isolation: isolate; }
+  .page-head[class*='light-']::before {
+    content: ''; position: absolute; z-index: -1; pointer-events: none;
+    inset: 0 calc(50% - 50vw); background: radial-gradient(60% 70% at 90% 0%, var(--glow), transparent 70%);
+  }
+  .light-day { --glow: rgb(255 214 150 / 0.42); }
+  .light-dusk { --glow: rgb(255 168 140 / 0.38); }
+  .light-night { --glow: rgb(150 170 255 / 0.26); }
+  .clock { padding: 0.45em 0.8em 0.4em; border-radius: 999px; background: rgb(22 21 24 / 0.86); color: var(--color-bg); font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
+</style>
