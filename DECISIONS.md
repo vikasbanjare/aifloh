@@ -104,3 +104,11 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
   - content/portfolio.json (the nickname field);
   - the image file names (bubu-portrait → vikas-portrait, bubu-animated → vikas-at-desk).
   The built site contains no "Bubu". Older entries in this file, the LOG and SITE-BUILD Section 2 are historical records, not published.
+- 2026-10-16 · Sharper, smoother film, with free tools · Vikas asked whether the jerky, soft film could be remade in high quality with code or free tools. Rebuilding a Pixar-style character film in code (or Blender) is not realistic, so the existing film was improved instead, all locally and free:
+  - (1) Real-ESRGAN realesr-animevideov3 (BSD-3) cleaned and sharpened all 240 colour-graded frames. The model is defined in iterations/tools/esrgan-frames.py; it runs on CPU at about 18 s per frame, upscaling from the full 1080p input and resizing back.
+  - (2) ffmpeg minterpolate (motion-compensated) took it from 24 to 48 fps. RIFE's weights are only on hosts blocked here (Hugging Face, Google Drive). Interpolated frames were checked by eye on the fast fly-out: no warping.
+  - (3) Re-encoded with scripts/encode-hero.sh FPS=48 GOP=4, which keeps the same keyframe spacing in time. Sizes: desktop 7.8 MB (was 7.3), phone 3.0 MB (was 2.7).
+  - Seek benchmark in Chromium (iterations/tools/seek-bench.mjs, 80 scroll-like seeks): median 24 ms after vs 25 ms before, so twice the frames to scrub through at no seek cost.
+  - A frame-by-frame image sequence was considered and rejected: about 1 GB of decoded frames would crash phones.
+  - Stills (at work, at his desk), the 7 PM and 4 AM grades and the share card are regenerated from the sharpened frames.
+  - Not fixable this way: stutter inside Veo's own animation, and the AI-garbled poster lettering.

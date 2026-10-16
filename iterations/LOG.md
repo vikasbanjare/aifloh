@@ -291,3 +291,6 @@ See DECISIONS 16 Oct "Design critique fixes". Checks: verify 21/21 e2e; axe clea
 
 ## iter-46 · Design review fixes
 Radius and elevation tokens, pill buttons, transform-only sun path and progress line, one focal point after the film, focus on the code-word input, sentence-case long labels, 44px footer links, chips explained. Checks: verify 21/21 e2e; axe clean on seven pages at 390 and 1440; LH (gzip) home 98/100/100/100, LCP 2.2 s, CLS 0.001, TBT 0 ms; no console errors or overflow. Screens: iterations/screens/iter-46.
+
+## iter-47 · Sharpened 48 fps film
+Real-ESRGAN (animevideov3, CPU) on all frames, ffmpeg minterpolate to 48 fps, FPS=48 GOP=4 encode. Checks: scrub-check 2.97/5.95/8.94 s at 0.3/0.6/0.9; seek median 24 ms (was 25); verify 21/21 e2e; frames checked at 1440 and 390. Screens: iterations/screens/iter-47.
