@@ -21,6 +21,9 @@ const c = loadContent();
 const byDate = [...c.resources].sort((a, b) => +new Date(b.date) - +new Date(a.date));
 const studioServices = P.services.filter((x: any) => x.title !== 'AI workflows');
 const automateService = P.services.find((x: any) => x.title === 'AI workflows');
+// the home wall leads with video (the film is an editor's day); /work keeps all of them in Behance order
+const HOME_WORK = ['AI Videos', 'Trailer Video', 'Podcast Videos', 'Shorts Videos', 'Motion Graphic', 'Logo Designs'];
+const homeWork = HOME_WORK.map((t) => P.projects.find((p: any) => p.title === t)).filter(Boolean);
 const freePicks = [...byDate.filter((r) => !r.standIn), ...byDate.filter((r) => r.standIn)].slice(0, 5);
 const work = P.projects.slice(0, 6);
 const STATUS: Record<string, string> = { live: 'Live', beta: 'Beta', 'private-beta': 'Private beta', 'in-development': 'In development', archived: 'Archived' };
@@ -55,11 +58,13 @@ const posters = HV
         <img src={href(posters.end)} alt={posters.alt} width="1600" height="900" decoding="async" />
       </picture>
       <p class="hud" aria-hidden="true"><span data-hud-time>12:57</span><span class="hud-pm">PM</span><span class="hud-where label">in India</span></p>
+      <p class="hud-who">Vikas Banjare · video, design, automation</p>
       <h1 id="hero-h" class="subs">
         <span class="s1">I keep the <span class="hand">craft</span><span class="stop-a">.</span></span>
         <span class="s2">I automate the&nbsp;grind<span class="stop-b">.</span></span>
       </h1>
       <a class="skip-film" href="#start">Skip intro <span aria-hidden="true">↓</span></a>
+      <a class="word-chip" href="#cw-home">Got a word from a post? <span aria-hidden="true">↓</span></a>
       <p class="status label"><span><span class="live" aria-hidden="true"></span>{P.profile.availability}</span> <span data-clock>India</span></p>
     </div>
   </section>
@@ -76,13 +81,13 @@ const posters = HV
   </section>
 
   <section class="room wrap" id="work" aria-labelledby="work-h">
-    <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
-    <Wall items={P.projects} start={1} limit={6} />
+    <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
+    <Wall items={homeWork} start={1} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">All {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
 
   <section class="room wrap" aria-labelledby="free-h">
-    <h2 id="free-h" class="room-h"><span class="label n chip" aria-hidden="true">3:00 PM</span> <span>Free<span class="stop-a">.</span></span></h2>
+    <h2 id="free-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">3:00 PM</span> <span>Free<span class="stop-a">.</span></span></h2>
     <ol class="index" role="list">
       {freePicks.map((r, i) => (
         <li>
@@ -100,16 +105,16 @@ const posters = HV
   </section>
 
   <section class="room wrap" aria-labelledby="studio-h">
-    <h2 id="studio-h" class="room-h"><span class="label n chip" aria-hidden="true">4:30 PM</span> <span>Studio<span class="stop-a">.</span></span></h2>
+    <h2 id="studio-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">4:30 PM</span> <span>Studio<span class="stop-a">.</span></span></h2>
     <div class="pair">
       <a class="side side-a" href={href('/studio/')}>
         <span class="label"><i class="k k-a" aria-hidden="true"></i>Studio</span>
-        <span class="side-t">We make it.</span>
+        <span class="side-t">I make it.</span>
         <ul class="side-l" role="list">{studioServices.map((s: any) => <li><b>{s.title}</b> <span>{s.tags.slice(0, 3).join(' · ')}</span></li>)}</ul>
       </a>
       <a class="side side-b" href={href('/studio/')}>
         <span class="label"><i class="k k-b" aria-hidden="true"></i>Automate</span>
-        <span class="side-t">We build the machine.</span>
+        <span class="side-t">I build the machine.</span>
         <ul class="side-l" role="list">
           {automateService && <li><b>{automateService.title}</b> <span>{automateService.tags.join(' · ')}</span></li>}
           <li><b>Tools</b> <span>ContentIntel · CutPilot · Pulse</span></li>
@@ -137,7 +142,7 @@ const posters = HV
 
   <div class="day day-dark">
   <section class="room room-m wrap" aria-labelledby="built-h">
-    <h2 id="built-h" class="room-h"><span class="label n chip" aria-hidden="true">7:00 PM</span> <span>Tools<span class="stop-b">.</span></span></h2>
+    <h2 id="built-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">7:00 PM</span> <span>Tools<span class="stop-b">.</span></span></h2>
     <div class="built">
       <ol class="index" role="list">
         {c.tools.map((t, i) => (
@@ -160,7 +165,7 @@ const posters = HV
   </section>
 
   <section class="room wrap" aria-labelledby="about-h">
-    <h2 id="about-h" class="room-h"><span class="label n chip" aria-hidden="true">11:30 PM</span> <span>About<span class="stop-a">.</span></span></h2>
+    <h2 id="about-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">11:30 PM</span> <span>About<span class="stop-a">.</span></span></h2>
     <div class="maker">
       <div class="me-pair">
         <figure class="me me-real">
@@ -215,6 +220,7 @@ const posters = HV
         const t = minutes >= 60 ? `1:${String(Math.floor(minutes - 60)).padStart(2, '0')}` : `12:${String(Math.floor(minutes))}`;
         if (t !== lastTime) { lastTime = t; hudTime.textContent = t; }
         // the last tenth of the scroll: the closing frame pushes in and blooms into the afternoon light of the end card
+        stage.style.setProperty('--p', progress.toFixed(3));
         stage.style.setProperty('--out', String(Math.min(1, Math.max(0, (progress - 0.9) / 0.1)).toFixed(3)));
       };
       let queued = false;
@@ -552,4 +558,18 @@ const posters = HV
   /* 4. the night's call to action: marigold, like the lit window */
   .day-dark .btn-primary { background: var(--color-a-fill); border-color: var(--color-a-fill); color: #141414; }
   @media (hover: hover) { .day-dark .btn-primary:hover { background: #f1ede4; border-color: #f1ede4; color: #141414; } }
+  /* ---------- critique pass, 16 Oct ---------- */
+  /* who this is, from the first frame */
+  .hud-who { position: absolute; z-index: 3; left: var(--gutter); top: calc(clamp(5rem, 13vh, 7.5rem) + clamp(4.2rem, 3rem + 4vw, 7.6rem)); margin: 0; padding: 0.4em 0.8em; border-radius: 999px; font-size: var(--text-sm); font-weight: 650; color: var(--color-bg); background: rgb(22 21 24 / 0.62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: opacity 600ms var(--ease-standard); }
+  .film:not(.is-live) .hud-who, .film.is-live [data-shot='6'] .hud-who { opacity: 0; }
+  /* how much film is left: a line along the bottom of the clock fills from 1:00 to 1:14 */
+  .hud { position: absolute; overflow: hidden; }
+  .hud::after { content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: calc(var(--p, 0) * 100%); background: var(--color-a-fill); }
+  /* the code word, one tap from the first frame */
+  .word-chip { position: absolute; z-index: 4; left: var(--gutter); bottom: var(--space-6); display: none; align-items: center; gap: 0.4em; min-height: 44px; padding: 0 1.1em; border-radius: 999px; color: #141414; text-decoration: none; font-size: var(--text-sm); font-weight: 650; background: var(--color-a-fill); }
+  .film.is-live .word-chip { display: inline-flex; }
+  .film.is-live [data-shot='6'] .word-chip { display: none; }
+  @media (hover: hover) { .word-chip:hover { background: var(--color-bg); } }
+  .word-chip:focus-visible { outline: 3px solid var(--color-bg); outline-offset: 3px; }
+  @media (max-width: 30rem) { .skip-film, .word-chip { padding: 0 0.9em; font-size: 0.8125rem; } }
 </style>

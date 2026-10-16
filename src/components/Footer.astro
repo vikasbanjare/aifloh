@@ -3,11 +3,11 @@ import { href } from '../lib/href';
 import { SOCIALS, GITHUB_URL, BEHANCE_URL } from '../lib/config';
 const groups = [
   { label: 'Free', links: [
-    { path: '/free/', label: 'Everything free' },
+    { path: '/free/', label: 'All free resources' },
     { path: '/prompts/image/', label: 'Image prompts' },
     { path: '/prompts/video/', label: 'Video prompts' },
     { path: '/skills/', label: 'Claude skills' },
-    { path: '/library/', label: 'Search it all' },
+    { path: '/library/', label: 'Search everything' },
   ] },
   { label: 'Studio', links: [
     { path: '/studio/', label: 'Services' },
@@ -25,7 +25,7 @@ const isHome = Astro.url.pathname === import.meta.env.BASE_URL || Astro.url.path
 const ctaId = isHome ? 'home-talk' : 'nav-talk';
 ---
 <footer class="site-footer">
-  <div class="night">
+  <div class:list={["night", { "night-short": !isHome }]}>
     <img class="night-img" src={href('/media/day/night-4am.webp')} srcset={`${href('/media/day/night-4am-960.webp')} 960w, ${href('/media/day/night-4am.webp')} 1920w`} sizes="100vw" width="1920" height="1080" loading="lazy" decoding="async" alt="Animated still from the film, graded to night: the city asleep at 4 AM, one window still lit where Vikas is editing." />
     <div class="wrap night-copy">
       <span class="label clock" aria-hidden="true">4:00 AM</span>
@@ -66,6 +66,8 @@ const ctaId = isHome ? 'home-talk' : 'nav-talk';
     color: var(--color-text); background: #0c1122;
   }
   .night { position: relative; isolation: isolate; min-height: clamp(30rem, 56.25vw, 52rem); display: flex; background: #0c1122; }
+  /* inner pages: the same window, a shorter scene, so the links are not a long scroll away */
+  .night-short { min-height: clamp(20rem, 30vw, 26rem); }
   .night-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
   .night::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
     background: linear-gradient(to bottom, rgb(12 17 34 / 0.55), transparent 32%, transparent 70%, #0c1122 100%); }

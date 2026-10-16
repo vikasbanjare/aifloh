@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import PageHead from '../components/PageHead.astro';
 import Base from '../layouts/Base.astro';
 import { href } from '../lib/href';
+import CopyButton from '../components/CopyButton.astro';
 const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'), 'utf8'));
 ---
 <Base title="Contact" description="Tell me what you're making. Email me or message me on LinkedIn.">
@@ -15,6 +16,7 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
     </figure>
     <div>
     <a class="mail" href={`mailto:${P.profile.email}`} data-track="CTA Click" data-track-id="contact-email">{P.profile.email}<span aria-hidden="true"> →</span></a>
+    <p class="copy-row"><span id="mail-text" class="visually-hidden">{P.profile.email}</span><CopyButton target="mail-text" slug="contact-email" label="Copy email" primary={false} /></p>
     <p class="label alt">Or <a href={P.profile.linkedin} rel="me noopener">LinkedIn</a> · <span class="muted">nothing you type here is stored by this site</span></p>
     </div>
   </section>
@@ -24,7 +26,8 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
   @media (hover: hover) { .mail:hover { background-size: 100% 0.28em; } }
   .mail:focus-visible { background-size: 100% 0.28em; }
   .mail span { color: var(--color-b); }
-  .alt { margin-top: var(--space-8); }
+  .copy-row { margin-top: var(--space-4); }
+  .alt { margin-top: var(--space-6); }
   .reach { display: grid; gap: var(--space-8); align-items: center; }
   @media (min-width: 56rem) { .reach { grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); column-gap: var(--space-12); } }
   .me { margin: 0; max-width: 18rem; border: 1px solid rgb(20 20 20 / 0.14); border-radius: 22px; overflow: hidden; background: var(--color-surface); box-shadow: 0 40px 70px -34px rgb(40 30 10 / 0.5); transform: rotate(-2deg); }

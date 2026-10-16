@@ -18,7 +18,7 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
     <a class:list={['brand', { 'brand-home': isHome }]} href={href('/')}>
       <span>vikas</span><em class="brand-s">banjare</em><span class="visually-hidden"> home</span>
     </a>
-    <a class="nav-free" href={href('/free/')} aria-current={isCurrent('/free') ? 'page' : undefined}>Free</a>
+    <a class="nav-free" href={href('/free/')} aria-current={isCurrent('/free') ? 'page' : undefined}>Free stuff</a>
     <ul class="nav-links" role="list">
       {links.map((l) => <li><a href={href(`${l.path}/`)} aria-current={isCurrent(l.path) ? 'page' : undefined}>{l.label}</a></li>)}
     </ul>
@@ -31,7 +31,7 @@ const isCurrent = (p: string) => current === p || current.startsWith(`${p}/`);
       <div class="menu-panel">
         <ul role="list">
           {links.map((l) => <li><a href={href(`${l.path}/`)}>{l.label}</a></li>)}
-          <li><a href={href('/library/')}>Search</a></li>
+          <li><a href={href('/library/')}>Search everything</a></li>
           <li><a href={href('/contact/')} data-track="CTA Click" data-track-id="nav-talk">Let's talk</a></li>
         </ul>
       </div>

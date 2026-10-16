@@ -61,3 +61,18 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
 - 2026-10-16 · Tools naming · Pulse by AI-Floh is the real product name. CutPilot Caption Studio is unpublished (tool page publish: false and its repo off /code). CutPilot (the Premiere extension) stays. Pulse keeps its STAND-IN label until real status, screenshots and steps arrive.
 - 2026-10-16 · Only the animated Vikas · Vikas asked that the site show only animated images of him, not his real photo. The real photo (media/portfolio/vikas.webp) is removed. The portrait is now cut from his clean Flow keyframe (media/day/bubu-portrait.webp, 800 px): it is the large Fig. 1 on /about, Fig. 10 on home and the face on /contact. The film still at his desk is the second figure.
 - 2026-10-16 · Film colour fix · Applied to the hero now, on Vikas's word, rather than waiting for a higher-res export: one fixed colour transform, fitted from his clean first and last keyframes (iterations/tools/grade-match.py → film-grade.cube), at 70% strength, with light denoise and sharpening. It is re-encoded with scripts/encode-hero.sh (same sizes, about 7 MB desktop and 2.7 MB phone). The film stills, the 7 PM and 4 AM grades and the share card are regenerated from the graded film.
+- 2026-10-16 · Design critique fixes (Vikas: "fix all of that") ·
+  - (1) The film's first frame says who this is: a "Vikas Banjare · video, design, automation" pill under the clock. It hides at the title card.
+  - (2) A marigold "Got a word from a post?" chip on the film jumps to the code-word box. "Skip intro" stays on the right.
+  - (3) The clock box has a marigold line along its bottom that fills from 1:00 to 1:14, so people can see how much film is left. No "scroll to explore" text, per Section 1.
+  - (4) One voice: "I make it." and "I build the machine." on home and /studio. Third person stays only in film captions, like credits.
+  - (5) The home wall leads with video work: AI Videos, Trailer, Podcast, Shorts, Motion Graphic, Logo Designs. /work keeps all 13 in Behance order.
+  - (6) The 4 AM footer scene is shorter on inner pages (20 to 26rem); home keeps the full scene.
+  - (7) Clearer Free and Library roles:
+    - The footer now reads "All free resources" and "Search everything".
+    - The mobile menu reads "Search everything".
+    - Library has a lede: "Search across all of it: free resources, tools, experiments and work."
+  - (8) /contact has a "Copy email" button with a "Copied" confirmation.
+  - (10) The time chips carry a hover title: "His day, told like the film".
+  - (11) The nav pill reads "Free stuff".
+  - Not done: (9) Pulse still needs a real screenshot and status from Vikas.

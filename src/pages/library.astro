@@ -8,7 +8,7 @@ const kinds = [...new Set(items.map((i) => i.kind))].sort();
 const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kind === k).length]));
 ---
 <Base title="Library" description="Everything on the site in one searchable list: free resources, skills, tools, experiments, work and code.">
-  <PageHead kicker="Library" title="Everything, in one list." count={items.length} />
+  <PageHead kicker="Library" title="Everything, in one list." lede="Search across all of it: free resources, tools, experiments and work." count={items.length} />
   <section class="wrap section">
     <form class="lib-search" role="search" data-index={href('/search-index.json')} data-base={href('/')}>
       <label for="q" class="label">Search everything</label>

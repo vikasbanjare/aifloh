@@ -21,12 +21,12 @@ const steps = [
     <div class="pair">
       <div class="side side-a">
         <p class="label">Studio · done for you</p>
-        <h2 class="side-t">We make it.</h2>
+        <h2 class="side-t">I make it.</h2>
         <ul class="plain" role="list">{studio.map((s: any) => <li><b>{s.title}</b><span>{s.tags.join(' · ')}</span></li>)}</ul>
       </div>
       <div class="side side-b">
         <p class="label">Automate · built for you</p>
-        <h2 class="side-t">We build the machine.</h2>
+        <h2 class="side-t">I build the machine.</h2>
         <ul class="plain" role="list">
           {automate && <li><b>{automate.title}</b><span>{automate.tags.join(' · ')}</span></li>}
           <li><b>Tools</b><span><a href={href('/tools/')}>ContentIntel · CutPilot · Pulse</a></span></li>

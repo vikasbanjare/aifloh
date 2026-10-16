@@ -11,7 +11,7 @@ const DAY: Record<string, [string, 'day' | 'dusk' | 'night']> = {
 const at = DAY[kicker];
 ---
 <header class:list={['page-head wrap', at && `light-${at[1]}`]}>
-  <p class="kicker rise">{at && <span class="clock" aria-hidden="true">{at[0]}</span>}<span class="idx">{kicker}</span>{count !== undefined && <span>{count} {count === 1 ? 'item' : 'items'}</span>}</p>
+  <p class="kicker rise">{at && <span class="clock" aria-hidden="true" title="His day, told like the film on the home page">{at[0]}</span>}<span class="idx">{kicker}</span>{count !== undefined && <span>{count} {count === 1 ? 'item' : 'items'}</span>}</p>
   <h1 class="rise-2">{title}</h1>
   {lede && <p class="lede rise-3">{lede}</p>}
   <slot />
