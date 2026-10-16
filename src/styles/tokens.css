@@ -74,8 +74,12 @@
   --gutter: 1rem;
   --measure: 66ch;
   --page-max: 84rem;
-  --radius: 0px;
-  --radius-xl: 0px;
+  /* Shape and depth (16 Oct 2026): one soft, rounded language, like the film's set. */
+  --radius: 14px;              /* small: inputs, figures, tags, boxes */
+  --radius-xl: 22px;           /* large: cards, prints, portraits */
+  --radius-pill: 999px;        /* buttons, chips, tabs */
+  --elev-1: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45);
+  --elev-2: 0 40px 70px -34px rgb(40 30 10 / 0.55);
   --target-min: 24px;
 
   /* Glass: the machine's control layer floating over the paper (nav, menu, dock).

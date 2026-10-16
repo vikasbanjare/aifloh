@@ -35,11 +35,11 @@ const P = JSON.parse(readFileSync(join(process.cwd(), 'content/portfolio.json'),
   .about { display: grid; gap: var(--space-12); }
   @media (min-width: 56rem) { .about { grid-template-columns: minmax(0, 28rem) minmax(0, 1fr); align-items: center; column-gap: var(--space-16); } }
   .duo { position: relative; max-width: 28rem; padding-bottom: var(--space-12); }
-  .me { margin: 0; border: 1px solid rgb(20 20 20 / 0.16); border-radius: 22px; overflow: hidden; background: var(--color-surface); box-shadow: 0 40px 70px -34px rgb(40 30 10 / 0.55); }
+  .me { margin: 0; border: 1px solid rgb(20 20 20 / 0.16); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-surface); box-shadow: 0 40px 70px -34px rgb(40 30 10 / 0.55); }
   .me img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
   .me figcaption { padding: var(--space-2) var(--space-3); }
   .me-toon { transform: rotate(-1.5deg); }
-  .me-real { position: absolute; right: -0.5rem; bottom: 0; width: 42%; border-radius: 14px; transform: rotate(4deg); }
+  .me-real { position: absolute; right: -0.5rem; bottom: 0; width: 42%; border-radius: var(--radius); transform: rotate(4deg); }
   .me-real figcaption { font-size: 0.7rem; }
   .big { font-size: var(--t-row-sm); font-weight: 750; letter-spacing: -0.03em; line-height: 1.15; max-width: 26ch; }
   .key { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-top: var(--space-6); }

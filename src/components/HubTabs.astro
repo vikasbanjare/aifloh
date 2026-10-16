@@ -29,7 +29,7 @@ const here = Astro.url.pathname.replace(/\/?$/, '/');
   @media (max-width: 40rem) { .tabs ul { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); } .tabs ul::-webkit-scrollbar { display: none; } .tabs li { flex: none; } }
   .tabs a {
     display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; padding: 0 var(--space-4);
-    border: 1px solid var(--color-line-strong); border-radius: 0; text-decoration: none;
+    border: 1px solid var(--color-line-strong); border-radius: var(--radius-pill); text-decoration: none;
     font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted);
     transition: color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard);
   }

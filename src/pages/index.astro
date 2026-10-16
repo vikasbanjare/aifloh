@@ -82,6 +82,7 @@ const posters = HV
 
   <section class="room wrap" id="work" aria-labelledby="work-h">
     <h2 id="work-h" class="room-h"><span class="label n chip" aria-hidden="true" title="His day, told like the film above">1:15 PM</span> <span>Work<span class="stop-b">.</span></span></h2>
+    <p class="room-sub">The rest of my day, hour by hour. The film was 1 PM; the night ends at 4 AM.</p>
     <Wall items={homeWork} start={1} limit={6} />
     <p class="more"><a class="btn" href={P.profile.behance} rel="noopener">See all {P.projects.length} on Behance <span class="arrow" aria-hidden="true">↗</span></a></p>
   </section>
@@ -181,7 +182,7 @@ const posters = HV
         <dl>
           {P.stats.map((s: any) => <div><dt class="label">{s.label}</dt><dd>{s.value}</dd></div>)}
         </dl>
-        <a class="stat-more" href={href('/about/')}><span class="label">The person behind it</span><span class="sm-t">About me <span class="arrow" aria-hidden="true">→</span></span></a>
+        <a class="stat-more" href={href('/about/')}><span class="sm-l">The person behind it</span><span class="sm-t">About me <span class="arrow" aria-hidden="true">→</span></span></a>
       </div>
     </div>
     <p class="more"><a class="btn btn-primary" href={href('/contact/')} data-track="CTA Click" data-track-id="about-room-talk">Say hello <span class="arrow" aria-hidden="true">→</span></a></p>
@@ -277,6 +278,11 @@ const posters = HV
     }
   }
 
+  // "Got a word from a post?": land in the box ready to type, not just next to it
+  document.querySelector<HTMLAnchorElement>('.word-chip')?.addEventListener('click', () => {
+    setTimeout(() => document.querySelector<HTMLInputElement>('#cw-home')?.focus({ preventScroll: true }), 450);
+  });
+
   const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
   const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', hour12: false });
   const tick = () => clocks.forEach((el) => (el.textContent = `${fmt.format(new Date())} in India`));
@@ -356,7 +362,7 @@ const posters = HV
   .who { font-size: var(--t-lede); line-height: 1.35; letter-spacing: -0.015em; max-width: 26ch; margin: 0; }
   .btn-lime { background: var(--color-a-fill); color: var(--color-a-ink); border-color: var(--color-a-fill); }
   @media (hover: hover) { .btn-lime:hover { background: var(--color-bg); border-color: var(--color-bg); color: var(--color-text); } }
-  .cw-plate { position: relative; border: 1px solid rgb(20 20 20 / 0.14); background: var(--color-surface); color: var(--color-text); padding: var(--space-6); max-width: min(30rem, calc(100% - 6px)); box-shadow: 6px 6px 0 var(--color-a-fill); }
+  .cw-plate { position: relative; border: 1px solid rgb(20 20 20 / 0.14); background: var(--color-surface); color: var(--color-text); padding: var(--space-6); max-width: 30rem; }
   .cw-plate :focus-visible { outline-color: var(--color-text); }
   @media (min-width: 56rem) {
     .endcard { grid-template-columns: 1fr minmax(0, 28rem); }
@@ -383,10 +389,11 @@ const posters = HV
       content: ''; position: absolute; left: calc(var(--gutter) * 0.25); top: var(--space-8); bottom: var(--space-8); width: 0;
       border-left: 1px dashed currentColor; opacity: 0.22; pointer-events: none;
     }
+    /* the pseudo spans the whole track with the sun drawn at its top; moving it is transform-only (no layout) */
     .room::after {
-      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 7px); top: calc(var(--space-16) + 0.45em); width: 14px; height: 14px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffe2a3, var(--color-a-fill) 60%, #e08a1e);
-      box-shadow: 0 0 0 5px rgb(246 178 60 / 0.18), 0 0 22px 4px rgb(246 178 60 / 0.55); pointer-events: none;
+      content: ''; position: absolute; left: calc(var(--gutter) * 0.25 - 7px); top: calc(var(--space-16) + 0.45em); bottom: var(--space-8); width: 14px; pointer-events: none;
+      background: radial-gradient(circle 7px at 50% 7px, #ffe2a3 0, var(--color-a-fill) 4px, #e08a1e 6.4px, transparent 7px) no-repeat;
+      filter: drop-shadow(0 0 9px rgb(246 178 60 / 0.8));
     }
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
@@ -394,7 +401,7 @@ const posters = HV
       }
     }
   }
-  @keyframes sun-path { from { top: calc(var(--space-16) + 0.45em); } to { top: calc(100% - var(--space-8) - 14px); } }
+  @keyframes sun-path { from { transform: translateY(0); } to { transform: translateY(calc(100% - 14px)); } }
 
 
   /* ---------- index rows: wall labels ---------- */
@@ -424,14 +431,13 @@ const posters = HV
   @media (min-width: 48rem) { .pair { grid-template-columns: 1fr 1fr; } .side { min-height: 15rem; } }
   .side { display: flex; flex-direction: column; gap: var(--space-2); min-height: 9rem; padding: var(--space-6); border: 1px solid var(--color-text); text-decoration: none; transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
   /* paper cards: the full colour belongs to the bands; here it is a thick top edge + key */
-  .side { background: var(--color-surface); box-shadow: 6px 6px 0 var(--color-text); }
+  .side { background: var(--color-surface); }
   .side-a { border-top: 10px solid var(--color-a-fill); }
   .side-b { border-top: 10px solid var(--color-b); }
   .side-b .side-t { color: var(--color-b); }
   .side-t { font-size: var(--t-row); font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; margin-top: auto; }
   .side .label { color: inherit; }
   .side-m { font-size: var(--text-sm); }
-  @media (hover: hover) { .side:hover { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 var(--color-text); } }
   /* the method as one line: hand (lime, loose) for the first half, machine (cobalt, square) for the second */
   .steps { list-style: none; margin: var(--space-12) 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8) var(--space-4); }
   .steps li { position: relative; display: grid; gap: var(--space-1); padding-top: var(--space-4); border-top: 3px solid var(--color-text); }
@@ -478,7 +484,7 @@ const posters = HV
   .stats dt { color: var(--color-text-muted); }
   .stats dd { margin: 0; font-size: var(--t-row); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
   .stat-more { justify-content: flex-end; padding-left: var(--space-4); background: var(--color-text); color: var(--color-bg); text-decoration: none; transition: background 200ms var(--ease-standard); }
-  .stat-more .label { color: inherit; opacity: 0.75; }
+  .stat-more .sm-l { font-size: var(--text-sm); opacity: 0.75; }
   .sm-t { font-size: var(--t-lede); font-weight: 800; letter-spacing: -0.03em; }
   .stat-more .arrow { display: inline-block; transition: transform 200ms var(--ease-standard); }
   @media (hover: hover) { .stat-more:hover { background: var(--color-b); } .stat-more:hover .arrow { transform: translateX(4px); } }
@@ -493,18 +499,18 @@ const posters = HV
     radial-gradient(70% 55% at 88% 8%, var(--glow, rgb(255 214 150 / 0.38)), transparent 70%),
     linear-gradient(var(--color-text), var(--color-text)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat; }
   /* softer, rounder, lit like a set: soft shadows instead of hard ink offsets */
-  .side { border-radius: 22px; border-color: rgb(20 20 20 / 0.14); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
+  .side { border-radius: var(--radius-xl); border-color: rgb(20 20 20 / 0.14); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 24px 48px -28px rgb(60 40 10 / 0.45); }
   .side-a { border-top-width: 10px; } .side-b { border-top-width: 10px; }
   @media (hover: hover) { .side:hover { transform: translateY(-6px); box-shadow: 0 1px 0 rgb(255 255 255 / 0.7) inset, 0 34px 60px -28px rgb(60 40 10 / 0.55); } }
-  .cw-plate { border-radius: 18px; box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.7), 0 0 0 6px rgb(246 178 60 / 0.9); }
-  .stat-more { border-radius: 18px; }
-  .plate { border-radius: 16px; overflow: hidden; }
-  .still { margin: var(--space-12) 0 0; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 40px 80px -40px rgb(60 40 10 / 0.6); }
+  .cw-plate { border-radius: var(--radius-xl); box-shadow: var(--elev-1); }
+  .stat-more { border-radius: var(--radius-xl); }
+  .plate { border-radius: var(--radius); overflow: hidden; }
+  .still { margin: var(--space-12) 0 0; border-radius: var(--radius-xl); overflow: hidden; position: relative; box-shadow: 0 40px 80px -40px rgb(60 40 10 / 0.6); }
   .still img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
   .still figcaption { position: absolute; left: var(--space-4); bottom: var(--space-4); padding: 0.45em 0.8em; border-radius: 999px; background: rgb(22 21 24 / 0.7); color: var(--color-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
   @media (min-width: 64rem) { .still img { aspect-ratio: 21 / 9; object-position: 50% 30%; } }
   .me-pair { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); max-width: 26rem; }
-  .me { border-radius: 14px; border-color: rgb(20 20 20 / 0.12); box-shadow: 0 24px 50px -26px rgb(60 40 10 / 0.55); overflow: hidden; }
+  .me { border-radius: var(--radius); border-color: rgb(20 20 20 / 0.12); box-shadow: 0 24px 50px -26px rgb(60 40 10 / 0.55); overflow: hidden; }
   .me-real { transform: rotate(-3deg); }
   .me-toon { transform: rotate(2.5deg) translateY(14px); }
 
@@ -537,7 +543,7 @@ const posters = HV
   @media (hover: hover) { .day-dark .stat-more:hover { background: var(--color-a-fill); } }
   .day-dark :global(.stand-in) { color: inherit; border-color: currentColor; }
   /* night rooms: the sun on the margin becomes the moon */
-  @media (min-width: 64rem) { .day-dark .room::after { background: radial-gradient(circle at 35% 35%, #ffffff, #dfe5ff 55%, #a9b6ea); box-shadow: 0 0 0 5px rgb(220 228 255 / 0.12), 0 0 22px 4px rgb(200 212 255 / 0.4); } }
+  @media (min-width: 64rem) { .day-dark .room::after { background: radial-gradient(circle 7px at 50% 7px, #ffffff 0, #dfe5ff 4px, #a9b6ea 6.4px, transparent 7px) no-repeat; filter: drop-shadow(0 0 9px rgb(200 212 255 / 0.6)); } }
   /* the night runs straight into the 4 AM footer */
   /* doubled class: outranks the footer's own scoped margin */
   :global(body > .site-footer.site-footer) { margin-top: 0; }
@@ -564,7 +570,7 @@ const posters = HV
   .film:not(.is-live) .hud-who, .film.is-live [data-shot='6'] .hud-who { opacity: 0; }
   /* how much film is left: a line along the bottom of the clock fills from 1:00 to 1:14 */
   .hud { position: absolute; overflow: hidden; }
-  .hud::after { content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: calc(var(--p, 0) * 100%); background: var(--color-a-fill); }
+  .hud::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--color-a-fill); transform-origin: left; transform: scaleX(var(--p, 0)); }
   /* the code word, one tap from the first frame */
   .word-chip { position: absolute; z-index: 4; left: var(--gutter); bottom: var(--space-6); display: none; align-items: center; gap: 0.4em; min-height: 44px; padding: 0 1.1em; border-radius: 999px; color: #141414; text-decoration: none; font-size: var(--text-sm); font-weight: 650; background: var(--color-a-fill); }
   .film.is-live .word-chip { display: inline-flex; }
@@ -572,4 +578,6 @@ const posters = HV
   @media (hover: hover) { .word-chip:hover { background: var(--color-bg); } }
   .word-chip:focus-visible { outline: 3px solid var(--color-bg); outline-offset: 3px; }
   @media (max-width: 30rem) { .skip-film, .word-chip { padding: 0 0.9em; font-size: 0.8125rem; } }
+  /* the clock chips, said once in words */
+  .room-sub { margin: calc(-1 * var(--space-8)) 0 var(--space-10, 2.5rem); color: var(--color-text-muted); font-size: var(--text-sm); max-width: 44ch; }
 </style>

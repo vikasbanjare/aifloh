@@ -288,3 +288,6 @@ See DECISIONS 16 Oct. Checks: verify 21/21 e2e; axe clean on /, /work/, /about/,
 
 ## iter-45 · Design-critique fixes
 See DECISIONS 16 Oct "Design critique fixes". Checks: verify 21/21 e2e; axe clean on /, /contact/, /studio/, /library/, /free/ and /work/ at 390 and 1440; LH (gzip) home 98/100/100/100, LCP 2.1 s, CLS 0.001, TBT 20 ms; no console errors or overflow. Screens: iterations/screens/iter-45.
+
+## iter-46 · Design review fixes
+Radius and elevation tokens, pill buttons, transform-only sun path and progress line, one focal point after the film, focus on the code-word input, sentence-case long labels, 44px footer links, chips explained. Checks: verify 21/21 e2e; axe clean on seven pages at 390 and 1440; LH (gzip) home 98/100/100/100, LCP 2.2 s, CLS 0.001, TBT 0 ms; no console errors or overflow. Screens: iterations/screens/iter-46.

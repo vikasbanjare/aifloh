@@ -84,3 +84,16 @@ One line per decision made without asking (SITE-BUILD.md Section 0, rule 5).
   - Buttons say what they do: "Go" is now "Get it"; "Open to copy all" is now "Open the full text"; "All 13 on Behance", "All 17 free" and "Tools, lab and code" now start with "See".
   - Voice correction: the critique pass had changed Studio to "I make it". SITE-BUILD Section 2 says "we" on Studio and Automate, so it is back to "We make it." and "We build the machine.". The labels now say who "we" is: "AI-Floh studio" and "AI-Floh automate". Home and About stay first person ("I keep the craft").
   - Kept as recorded decisions: uppercase mono button labels (the catalogue voice, decided 15 Oct).
+- 2026-10-16 · Design review fixes (Vikas: "yes fix all of them") ·
+  - (1) One shape-and-depth language, set by tokens:
+    - Radius: --radius 14px, --radius-xl 22px, --radius-pill 999px.
+    - Elevation: --elev-1 and --elev-2, both soft and warm-tinted.
+    - Removed: every hard 6px offset shadow (code-word plate, library search, tool screenshot, home cards and plate) and every square corner (inputs, tabs, tags, STAND-IN badge, filter chevron).
+  - (4) Vikas's call, given as "fix all": buttons are now rounded pills with sentence-case text in the text face, like the film's pills. This replaces the 15 Oct uppercase-mono catalogue buttons. Short mono labels stay for metadata.
+  - (2) The sun path animates transform only: the pseudo-element spans the track, with the sun drawn at its top and a drop-shadow glow. It no longer animates `top`.
+  - (3) The film progress line uses scaleX, not width.
+  - (5) One marigold focal point after the film: the code-word box loses its marigold ring and takes --elev-1.
+  - (6) "Got a word from a post?" now focuses the input after scrolling, verified in a browser at 390px.
+  - (7) Long uppercase labels are now sentence case: "The person behind it" and the Contact privacy line.
+  - (8) Footer links are 44px tall on phones.
+  - (9) The time chips are explained once in words under Work: "The rest of my day, hour by hour. The film was 1 PM; the night ends at 4 AM."

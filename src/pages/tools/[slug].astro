@@ -47,9 +47,9 @@ const out = t.url ? t.url + (t.url.includes('?') ? '&' : '?') + `utm_source=aifl
 <style>
   .row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
   .cta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0; align-items: center; }
-  .shot { margin: 0 0 var(--space-8); max-width: 26rem; border: 1px solid var(--color-text); background: var(--color-surface); box-shadow: 6px 6px 0 var(--color-text); }
+  .shot { margin: 0 0 var(--space-8); max-width: 26rem; border: 1px solid rgb(20 20 20 / 0.14); border-radius: var(--radius-xl); overflow: hidden; background: var(--color-surface); box-shadow: var(--elev-2); }
   .shot img { display: block; width: 100%; height: auto; }
-  .shot figcaption { padding: var(--space-2) var(--space-3); border-top: 1px solid var(--color-text); }
+  .shot figcaption { padding: var(--space-2) var(--space-3); }
   h2 { font-size: var(--text-lg); margin-top: var(--space-8); }
   .steps { padding-left: 1.2em; max-width: var(--measure); }
   .steps li { margin-bottom: var(--space-2); }

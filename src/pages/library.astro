@@ -65,9 +65,9 @@ const counts = Object.fromEntries(kinds.map((k) => [k, items.filter((i) => i.kin
 </script>
 <style>
   .lib-search { display: grid; gap: var(--space-3); max-width: 48rem; margin: 0 0 var(--space-8); }
-  .lib-search input { min-height: 72px; padding: 0 var(--space-4); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-text); border-radius: 0; font: inherit; font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.02em; box-shadow: 6px 6px 0 var(--color-text); }
+  .lib-search input { min-height: 72px; padding: 0 var(--space-4); background: var(--color-surface); color: var(--color-text); border: 1px solid rgb(20 20 20 / 0.18); border-radius: var(--radius-xl); font: inherit; font-size: var(--t-row-sm); font-weight: 700; letter-spacing: -0.02em; box-shadow: var(--elev-1); }
   .lib-search input::placeholder { color: var(--color-text-muted); font-weight: 500; }
-  .lib-search select { justify-self: start; min-height: 44px; padding: 0 var(--space-3); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line-strong); font: inherit; font-size: var(--text-sm); }
+  .lib-search select { justify-self: start; min-height: 44px; padding: 0 var(--space-3); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line-strong); border-radius: var(--radius-pill); font: inherit; font-size: var(--text-sm); }
   .lib-count { margin: 0; min-height: 1.4em; color: var(--color-text-muted); }
   .lib :global(.cat-row) { grid-template-columns: minmax(0, 1fr) auto; }
   .lib :global(.cat-row .c-t), .lib :global(.cat-row .c-s) { grid-column: 1; }
